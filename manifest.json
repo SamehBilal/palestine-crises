@@ -1,0 +1,17 @@
+{
+    "name": "Palestine Crisis",
+    "short_name": "Palestine Crisis",
+    "start_url": "index.php/en/live-tracker",
+    "background_color": "#292833",
+    "description": "Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause.",
+    "display": "standalone",
+    "theme_color": "#292833",
+    "icons": [
+        {
+            "src": "logo.PNG",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

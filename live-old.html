@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Palestine Crisis</title>
+    <meta name="description"
+        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+    <meta content="Sameh Bilal" name="author" />
+    <meta name="twitter:title" content="Palestine Crisis" />
+    <meta name="twitter:site" content="{{ url()->current() }}" />
+    <meta name="twitter:creator" content="Sameh Bilal" />
+    <meta name="twitter:description"
+        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="assets/img/logo2.png" />
+    <meta property="og:title" content="Palestine Crisis" />
+    <meta property="og:description"
+        content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/img/logo2.png" />
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- PWA  -->
+    <meta name="theme-color" content="#292833" />
+    <link rel="apple-touch-icon" href="logo.PNG">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- build:css assets/css/app.min.css -->
+    <!--== jqvmap Min CSS ==-->
+    <link href="assets/css/jqvmap.min.css" rel="stylesheet" />
+    <!--== ChartJS Min CSS ==-->
+    <link href="assets/css/chart.min.css" rel="stylesheet" />
+    <!--== DataTables Min CSS ==-->
+    <link href="assets/css/datatables.min.css" rel="stylesheet" />
+    <!--== Select2 Min CSS ==-->
+    <link href="assets/css/select2.min.css" rel="stylesheet" />
+    <!--== Bootstrap Min CSS ==-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--== Material Design Icons Min CSS ==-->
+    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet" />
+    <!--== Material Design Icons Min CSS ==-->
+    <!-- <link href="assets/css/line.css" rel="stylesheet" /> -->
+
+    <!--== Main Style CSS ==-->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <!-- endbuild -->
+
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "Website",
+        "name": "Palestine Crisis",
+        "alternateName": "Palestine Crisis",
+        "url": "{{ url()->current() }}",
+        "logo": "assets/img/logo2.png",
+        }
+    </script>
+</head>
+
+<body class="body-dark" style="height:100vh!Important;">
+
+    <!--== Start Header Wrapper ==-->
+    <header class="header-wrapper">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-4">
+                    <div class="logo-wrap">
+                        <a href="live.html"><img src="assets/img/logo2.png" alt="logo" /></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="last-update-wrap text-center">
+                        <!-- @php
+                        $live = App\Models\Livetracker::findOrFail(1);
+                        $attacks = App\Models\Attack::orderBy('total_deaths','desc')->get();
+                        @endphp -->
+                        <p class="mb-0">Updated: <span class="last-update"><!-- {{
+                                $live->last_update->format('Y-m-d G:i A') }} -->2024-02-19 23:59 PM</span> <img src="assets/img/live.gif"
+                                alt="" height="40px"></p>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="navbar-wrap">
+                        <nav class="menubar">
+                            <ul class="nav">
+                                <li><a href="live.html">Live Tracker</a></li>
+                                <li><a href="map.html">Original Map</a>
+                                </li>
+                                <li><a href="brands.html">Support</a></li>
+                                <li><a href="live-ar.html" class="language-link">AR</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--== End Header Wrapper ==-->
+
+    <!--== Start Main Content Wrapper ==-->
+    <main class="main-content-wrapper">
+        <div class="content-section-1">
+            <div class="container">
+                <div class="row justify-content-center help-button ">
+                    <a class="text-highlight underline text-center" href="https://www.buymeacoffee.com/samehbilal"
+                        target="_blank" rel="noreferrer">Help keep this website running! 🙏</a>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="row mtn-25 worldwide-stats">
+                            <div class="col-sm-6">
+                                <div class="tracker-block-style-1">
+                                    <div class="tracker-block">
+                                        <div class="tracker-block__icon">
+                                            <img src="assets/img/people.png" alt="corona-icon" />
+                                        </div>
+                                        <div class="tracker-block__content">
+                                            <h4>Total Deaths</h4>
+                                            <h2><span class="cases-no infected"><!-- {{ number_format($live->total_deaths)
+                                                    }} -->29,496</span> <span class="new-no">(+<span
+                                                        class="today_infected">9,528</span>)</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="tracker-block-style-1">
+                                    <div class="tracker-block">
+                                        <div class="tracker-block__icon">
+                                            <img src="assets/img/patient.png" alt="corona-icon" />
+                                        </div>
+                                        <div class="tracker-block__content">
+                                            <h4>Total Injured</h4>
+                                            <h2><span class="cases-no current_cases"><!-- {{
+                                                    number_format($live->total_injuries) }} -->72,030</span> <span
+                                                    class="new-no">(+<span class="today_injuries">16,584</span>)</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="tracker-block-style-1">
+                                    <div class="tracker-block">
+                                        <div class="tracker-block__icon">
+                                            <img src="assets/img/man (2).png" alt="corona-icon" />
+                                        </div>
+                                        <div class="tracker-block__content">
+                                            <h4>Total Children</h4>
+                                            <h2><span class="cases-no deaths"><!-- {{ number_format($live->children_deaths)
+                                                    }} -->12,730</span> <span class="new-no">(+<span
+                                                        class="today_deaths">4,660</span>)</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="tracker-block-style-1">
+                                    <div class="tracker-block">
+                                        <div class="tracker-block__icon">
+                                            <img src="assets/img/woman (3).png" alt="corona-icon" />
+                                        </div>
+                                        <div class="tracker-block__content">
+                                            <h4>Total Women</h4>
+                                            <h2><span class="cases-no recovered"><!-- {{ number_format($live->women_deaths)
+                                                    }} -->8,573</span> <span class="new-no">(+<span
+                                                        class="today_recovered">2,370</span>)</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 country-choose-stats">
+                                <div class="tracker-block tracker-block--2">
+                                    <div class="tracker-block__header with-option">
+                                        <div class="section-head">
+                                            <h2>From OCT the 7th</h2>
+                                            <p>Updated <span class="last-update"></span> <!-- {{
+                                                $live->last_update->diffForHumans() }} -->1 year ago</p>
+                                        </div>
+                                        <div class="select-country">
+                                            <!-- {{-- <label for="select1" class="sr-only">Region</label> --}} -->
+                                            <select class="country" id="select1" name="country"
+                                                style="width: 164px!Important;">
+                                                <!-- @foreach ($attacks as $attack)
+                                                <option value="{{ $attack->regions->code }}"
+                                                    class="{{ $attack->regions->name }}"
+                                                    data-image="assets/img/palestine.webp">
+                                                    {{ __('content.'.$attack->regions->name) }}
+                                                </option>
+                                                @endforeach -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="tracker-block__body">
+                                        <div class="track-item">
+                                            <p class="track-item__title track-item__title-deaths">Total Displaced</p>
+                                            <h4 class="track-item__no infected"><!-- {{ number_format($live->total_displaced)
+                                                }} -->2,001,014 <span class="new-no-new">(+<span
+                                                        class="today_recovered">101,041</span>)</span></h4>
+                                        </div>
+
+                                        <div class="track-item">
+                                            <p class="track-item__title track-item__title-recovered">Total Elders</p>
+                                            <h4 class="track-item__no deaths"><!-- {{ number_format($live->elders_deaths) }} -->
+                                                699<span class="new-no-new">(+<span
+                                                        class="today_recovered">5</span>)</span></h4>
+                                        </div>
+
+                                        <div class="track-item">
+                                            <p class="track-item__title">Destroyed Residential Units
+                                            </p>
+                                            <h4 class="track-item__no recovered"><!-- {{
+                                                number_format($live->total_destroyed_residential_units) }} -->306,600 <span
+                                                    class="new-no-new">(+<span
+                                                        class="today_recovered">16,600</span>)</span></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6">
+                        <div class="map-status-wrap" id="map-status-report">
+                            <div class="map-status-colors">
+                                <ul class="colors d-flex">
+                                    <li><span class="min"></span>&#60;10</li>
+                                    <li><span class="mid"></span>&#60;100</li>
+                                    <li><span class="max"></span>&#62;1000</li>
+                                </ul>
+                            </div>
+
+                            <div class="map-status" id="map-statuss">
+                                <svg class="palestine-map map-dashboard" xmlns:mapsvg="http://mapsvg.com"
+                                    xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                                    xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg"
+                                    mapsvg:geoViewBox="34.228663 33.434207 35.935383 29.496766"
+                                    preserveAspectRatio="xMidYMid meet" viewBox="0 0 294.61548 792.60669"
+                                    style="max-width: 300px; transform: scale(2.49817);">
+                                    <path
+                                        d="m 224.27948,277.11794 -0.49,0.98 0.37,8.72 1.9,2.18 0.28,1.38 -1.61,2.34 2.88,6.34 -1.09,7.22 -3.11,2.99 1.68,8.52 3,1.9 -1.68,3.33 1.79,2.87 -1.35,3.83 2.12,11.79 -4.17,7.47 0,0 -6.64,-6.04 -0.93,-1.49 -0.38,-2.73 -2.38,-1.5 -0.65,-0.19 -1.7,-0.07 -2.54,0.32 -1.27,0.36 -2.45,1.07 -1.2,0.16 -1.17,-0.33 -2.89,-1.72 -0.58,-0.75 -0.11,-0.49 0.33,-0.87 0.65,-0.81 0.07,-0.6 -0.43,-0.95 -0.6,-0.66 -1.32,-0.39 -0.48,-0.49 -0.23,-0.98 -0.21,-4.25 0,0 3.2,0.64 2.29,0.16 0.84,-0.77 0.33,-0.79 0.16,-1 0.02,-1.05 -0.71,-2.89 0.4,-3.5 0.31,-0.79 1.26,-1.89 0.28,-0.8 -0.02,-0.51 -0.06,-0.49 -1.44,-2.66 -0.2,-0.7 -0.06,-0.51 0.26,-2.55 -0.14,-1 -0.65,-1.33 -0.16,-0.61 0.14,-0.49 1.31,-1.09 1.18,-2.45 0.25,-0.8 0.02,-0.91 -0.14,-0.42 -0.31,-0.3 -2.23,-0.8 -2.77,-2.52 -0.18,-0.56 0.04,-0.37 0.34,-0.31 0.44,-0.09 1.81,0.07 1.17,-0.47 0.2,-0.42 0.04,-0.51 -0.36,-0.68 -0.57,-0.65 -0.39,-0.25 0,0 0.09,-0.01 -0.39,-0.64 -0.53,-1.63 -0.16,-0.78 0.08,-2.47 -0.08,-1.19 -0.26,-0.88 -1.05,-2.22 -0.05,-0.69 0.29,-1.15 0.7,-1.35 0.65,-0.52 1.28,-0.34 1.96,-0.13 2.4,-0.59 1,-0.52 0.3,-0.81 -0.11,-0.84 -1.15,-1.97 -0.33,-1.15 0.65,-3.44 -0.04,-1.05 -0.37,-1.58 -0.1,-1.23 0.21,-1.37 0.73,-2.26 -0.07,-1.35 -0.31,-0.69 -0.33,-0.36 -0.6,-0.21 -0.9,0.01 -1.32,0.42 -0.47,0.01 -0.22,-0.11 -0.21,-0.32 -0.01,-0.6 0.5,-0.87 1.56,-1.35 1.22,-1.63 2.46,-5.92 0,0 3.42,1.78 1.11,0.93 2.09,3.3 1.28,3.97 0.73,1.02 0.56,0.35 0.5,0.05 0.55,-0.26 2.19,-1.98 1.03,-0.69 0.44,-0.14 4.36,-0.1 3.08,-0.25 0,0 -1.49,2.95 -1.11,5.05 -0.49,5.4 -0.66,2.26 -2.43,3.29 -0.56,3.59 z"
+                                        title="Jericho" id="PS-JRH" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 209.73948,209.61794 -0.74,0.45 -1.32,2.27 -0.65,0.38 -1.43,0.47 -0.71,0.8 -1.52,0.88 -1.09,1.74 -0.38,0.26 -0.61,0.1 -0.41,-0.08 -1.32,-0.77 -0.65,-0.09 -0.83,0.42 -1.05,1.13 -0.69,0.45 -2.29,0.32 -0.58,0.23 -0.24,0.27 -0.21,0.57 -0.14,1.88 -0.84,2.27 0.07,1.11 0.31,1.63 -0.05,1.3 -0.38,0.92 -1.12,1.76 -0.76,2 0,0 -2.71,-1.59 -1.34,-1.12 -1.92,-2 -0.34,-0.19 -0.47,0.09 -0.83,1.44 -0.61,0.61 -0.77,0.34 -1.06,0.11 -2.16,-0.08 -2.29,-0.65 -1.84,0.09 -1.6,-0.89 -0.9,-0.18 -1.89,0.04 -2.21,0.6 -1.24,0.13 -0.93,-0.28 -0.42,-0.28 -0.32,-0.39 -0.18,-0.58 0,0 0.35,-2.68 -0.16,-0.99 -0.22,-0.38 -1.65,-0.72 -1.77,-1.03 -1.69,-0.63 -1.66,-1.88 -0.6,-0.24 -1.58,-0.29 -0.34,-0.36 -0.04,-0.26 0.46,-1.76 0,-1.66 0.38,-1.28 -0.16,-2.23 0.09,-1.65 1.01,-2.42 0,-0.44 -0.24,-0.56 -0.33,-0.34 -0.59,-0.23 -0.94,-0.08 -1.44,0.09 -1.2,0.41 -1.81,1.23 -0.98,0.38 -0.59,-0.11 -0.75,-0.81 -0.2,-0.57 0.07,-0.47 0.24,-0.41 0.39,-0.29 1.86,-0.64 0.86,-0.65 0.51,-1.01 0.11,-1.08 -0.14,-1.08 -0.23,-0.53 -0.75,-0.85 -0.99,-0.42 -1.11,-0.12 -0.5,0.07 0,0 1.02,-1.93 1.31,-0.99 6.93,-2.62 4.3,-2.19 3.39,-2.47 2.07,-2 0.6,-1.24 3.16,-3.58 0.92,-0.46 1.67,-0.25 2.38,1.3 3.08,3.19 2.64,1.94 2.71,1.34 1.37,0.36 2.01,0.01 8.43,-1.55 3.31,0.06 1.46,0.36 2.79,2.08 2.8,4.74 0.54,4.36 -0.21,4.06 1,2.94 1.22,1.58 -0.05,1.03 z"
+                                        title="Jenin" id="PS-JEN" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 162.84948,241.84794 -2.8,0.54 -2.86,0.9 -1.74,0.24 -0.9,0.82 -0.98,1.31 -1.46,1.48 -0.14,0.82 -0.35,0.82 -2.23,0.73 -1.04,1.4 -0.7,0.24 -1.6,-0.08 -3.69,-2.46 -1.19,-1.72 -0.76,-0.65 -1.4,-2.13 -4.59,-6.04 0,0 0.36,-0.26 0.57,-1.5 -0.81,-5.81 0.19,-5.47 1.83,-3.44 1.15,-1.45 4.48,-2.01 1.2,-1.17 0.71,-5.15 1.5,-4.16 0.81,-5.21 0.76,-2.83 0.58,-1.07 0,0 0.5,-0.07 1.11,0.12 0.99,0.42 0.75,0.85 0.23,0.53 0.14,1.08 -0.11,1.08 -0.51,1.01 -0.86,0.65 -1.86,0.64 -0.39,0.29 -0.24,0.41 -0.07,0.47 0.2,0.57 0.75,0.81 0.59,0.11 0.98,-0.38 1.81,-1.23 1.2,-0.41 1.44,-0.09 0.94,0.08 0.59,0.23 0.33,0.34 0.24,0.56 0,0.44 -1.01,2.42 -0.09,1.65 0.16,2.23 -0.38,1.28 0,1.66 -0.46,1.76 0.04,0.26 0.34,0.36 1.58,0.29 0.6,0.24 1.66,1.88 1.69,0.63 1.77,1.03 1.65,0.72 0.22,0.38 0.16,0.99 -0.35,2.68 0,0 -1.8,-0.64 -1.24,-0.77 -1.83,-0.68 -0.05,2 0.3,1.56 0.46,0.6 2.16,1.32 0.38,0.38 0.49,1.02 0.13,1.62 -0.15,1.02 -0.35,0.61 -1.44,0.78 -0.34,0.59 -0.1,0.96 0.22,0.86 1.17,1.2 z"
+                                        title="Tulkarm" id="PS-TKM" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 229.65948,213.56794 -0.33,3.65 1.27,1.58 0.42,1.19 -0.49,3.04 -0.55,1.42 -0.12,1.63 1.34,3.63 -0.84,2.35 -0.04,1.45 1.18,2.93 -0.62,4.48 0.67,2.91 0.17,3.24 0.47,1.61 0.18,2.32 -0.42,1.72 0,0 -3.08,0.25 -4.36,0.1 -0.44,0.14 -1.03,0.69 -2.19,1.98 -0.55,0.26 -0.5,-0.05 -0.56,-0.35 -0.73,-1.02 -1.28,-3.97 -2.09,-3.3 -1.11,-0.93 -3.42,-1.78 0,0 -0.49,-1.39 -0.65,-2.57 -0.73,-2.02 -0.52,-1.08 -0.57,-0.61 -1.13,-0.33 -1.67,-0.04 -2.17,1.01 -2.32,0.43 -2.07,0.77 -1.16,-0.04 -0.63,-0.47 -0.78,-1.46 -0.63,-0.8 -0.62,-0.42 -2.1,-1.04 -1.45,-1.37 -0.81,-1.02 0,0 0.76,-2 1.12,-1.76 0.38,-0.92 0.05,-1.3 -0.31,-1.63 -0.07,-1.11 0.84,-2.27 0.14,-1.88 0.21,-0.57 0.24,-0.27 0.58,-0.23 2.29,-0.32 0.69,-0.45 1.05,-1.13 0.83,-0.42 0.65,0.09 1.32,0.77 0.41,0.08 0.61,-0.1 0.38,-0.26 1.09,-1.74 1.52,-0.88 0.71,-0.8 1.43,-0.47 0.65,-0.38 1.32,-2.27 0.74,-0.45 0,0 2.18,0.35 2.58,-0.75 3.92,0.17 2.16,0.66 5.08,2.37 z"
+                                        title="Tubas" id="PS-TBS" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 167.09948,281.13794 2.86,-3.55 1.6,-1.49 3.93,-2.11 2.57,-0.38 0.69,-0.28 0.41,-0.33 0.49,-0.75 0.26,-0.84 0.04,-1.6 -0.12,-0.5 -0.63,-1.04 -1.19,-0.92 -0.93,-0.36 -1.83,-0.32 -1.62,-0.69 -0.9,-0.14 -0.92,0.07 -0.43,0.14 -1.32,0.79 -0.71,0.18 -1.36,-0.11 -1.4,-0.57 -0.66,-0.56 -0.64,-0.86 -0.54,-1.14 -1.05,-2.95 -0.37,-0.57 -0.67,-0.55 0,0 0.35,-1.3 1.32,-2.27 0.83,-2.32 0.71,-4.02 0.1,-1.31 -0.15,-1.98 -1.12,-2.91 -0.72,-0.89 -1.13,-0.86 0,0 -0.76,-1.91 -1.17,-1.2 -0.22,-0.86 0.1,-0.96 0.34,-0.59 1.44,-0.78 0.35,-0.61 0.15,-1.02 -0.13,-1.62 -0.49,-1.02 -0.38,-0.38 -2.16,-1.32 -0.46,-0.6 -0.3,-1.56 0.05,-2 1.83,0.68 1.24,0.77 1.8,0.64 0,0 0.18,0.58 0.32,0.39 0.42,0.28 0.93,0.28 1.24,-0.13 2.21,-0.6 1.89,-0.04 0.9,0.18 1.6,0.89 1.84,-0.09 2.29,0.65 2.16,0.08 1.06,-0.11 0.77,-0.34 0.61,-0.61 0.83,-1.44 0.47,-0.09 0.34,0.19 1.92,2 1.34,1.12 2.71,1.59 0,0 0.81,1.02 1.45,1.37 2.1,1.04 0.62,0.42 0.63,0.8 0.78,1.46 0.63,0.47 1.16,0.04 2.07,-0.77 2.32,-0.43 2.17,-1.01 1.67,0.04 1.13,0.33 0.57,0.61 0.52,1.08 0.73,2.02 0.65,2.57 0.49,1.39 0,0 -2.46,5.92 -1.22,1.63 -1.56,1.35 -0.5,0.87 0.01,0.6 0.21,0.32 0.22,0.11 0.47,-0.01 1.32,-0.42 0.9,-0.01 0.6,0.21 0.33,0.36 0.31,0.69 0.07,1.35 -0.73,2.26 -0.21,1.37 0.1,1.23 0.37,1.58 0.04,1.05 -0.65,3.44 0.33,1.15 1.15,1.97 0.11,0.84 -0.3,0.81 -1,0.52 -2.4,0.59 -1.96,0.13 -1.28,0.34 -0.65,0.52 -0.7,1.35 -0.29,1.15 0.05,0.69 1.05,2.22 0.26,0.88 0.08,1.19 -0.08,2.47 0.16,0.78 0.53,1.63 0.39,0.64 -0.09,0.01 0,0 -1.03,0.01 -1.96,-0.46 -0.9,0.14 -1.84,1.74 -0.43,0.18 -0.47,-0.07 -1.07,-0.87 -0.96,-1.35 -0.23,-0.57 -0.35,-2.09 -0.32,-0.69 -0.24,-0.25 -1.26,-0.7 -5.16,-1.81 -1.05,-0.05 -1.52,0.43 -0.74,-0.05 -0.71,-0.39 -1.11,-0.89 -0.55,-0.17 -1.7,0.15 -1.69,-0.06 -2.15,0.13 -0.61,-0.28 -1.19,-1.14 -0.56,-0.16 -3.61,1.65 -1.14,0.2 z"
+                                        title="Nablus" id="PS-NBS" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 162.65948,259.70794 -3.08,0.37 -1.02,-0.03 -1.28,-0.21 -1.89,-0.46 -2.74,-1.25 -1.87,-0.51 -1.81,-0.76 -0.39,-0.09 -0.52,0.07 -0.49,0.37 -0.18,0.3 -0.54,2.44 -0.24,0.56 -2.16,3.75 -0.49,1.39 -0.46,0.61 -2.48,1.93 -0.97,0.57 -0.74,0.27 -2.61,0.45 -3.4,1.45 -0.87,0.76 -1.11,1.33 -0.95,0.46 0,0 0.1,-0.81 1.4,-2.65 0.55,-2.12 -0.21,-2.6 -1.31,-5.78 -0.93,-1.95 -2.35,-3.52 -0.08,-2.35 0.3,-2.37 3.11,-7.05 2.37,-3.43 1.1,-0.78 0,0 4.59,6.04 1.4,2.13 0.76,0.65 1.19,1.72 3.69,2.46 1.6,0.08 0.7,-0.24 1.04,-1.4 2.23,-0.73 0.35,-0.82 0.14,-0.82 1.46,-1.48 0.98,-1.31 0.9,-0.82 1.74,-0.24 2.86,-0.9 2.8,-0.54 0,0 1.13,0.86 0.72,0.89 1.12,2.91 0.15,1.98 -0.1,1.31 -0.71,4.02 -0.83,2.32 -1.32,2.27 z"
+                                        title="Qalqilya" id="PS-QQA" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 167.09948,281.13794 -1.33,-0.68 -1.73,-1.21 -0.94,-0.44 -1.22,-0.15 -1.91,0.44 -0.48,-0.02 -1.79,-0.98 -1.62,-0.59 -1.18,0.07 -0.77,0.35 -0.57,0.45 -0.92,1.29 -0.33,0.18 -2.22,0.34 -1.45,0.59 -1.13,0.69 -1.25,0.22 -0.86,-0.03 -1.66,-0.28 -2.75,-0.75 -2.55,-0.22 -1.3,-0.61 -0.94,-1.32 -0.5,-0.35 -0.82,-0.14 -2.03,0.01 0,0 -0.24,-0.45 -1.8,-1.92 -0.54,-1.35 0.1,-0.8 0,0 0.95,-0.46 1.11,-1.33 0.87,-0.76 3.4,-1.45 2.61,-0.45 0.74,-0.27 0.97,-0.57 2.48,-1.93 0.46,-0.61 0.49,-1.39 2.16,-3.75 0.24,-0.56 0.54,-2.44 0.18,-0.3 0.49,-0.37 0.52,-0.07 0.39,0.09 1.81,0.76 1.87,0.51 2.74,1.25 1.89,0.46 1.28,0.21 1.02,0.03 3.08,-0.37 0,0 0.67,0.55 0.37,0.57 1.05,2.95 0.54,1.14 0.64,0.86 0.66,0.56 1.4,0.57 1.36,0.11 0.71,-0.18 1.32,-0.79 0.43,-0.14 0.92,-0.07 0.9,0.14 1.62,0.69 1.83,0.32 0.93,0.36 1.19,0.92 0.63,1.04 0.12,0.5 -0.04,1.6 -0.26,0.84 -0.49,0.75 -0.41,0.33 -0.69,0.28 -2.57,0.38 -3.93,2.11 -1.6,1.49 z"
+                                        title="Salfit" id="PS-SLT" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 197.68948,325.57794 -0.77,-0.23 -0.48,0.03 -1.93,0.52 -0.44,-0.02 -0.55,-0.24 -0.92,-1.95 -0.99,-1.01 -0.7,-1.73 -0.26,-0.36 -0.55,-0.26 -1.6,-0.19 -1.36,-0.43 -1.37,-1.83 -0.56,-0.57 -0.44,-0.27 -1.82,-0.36 -1.57,-0.51 -0.88,-0.01 -0.8,0.35 -0.92,1.16 -0.3,0.11 -0.55,-0.23 -0.93,-1.07 -0.89,-0.39 -3.11,-0.21 -1.47,0.42 -2.2,-0.74 -1.17,0.28 -1.14,0.84 -0.58,1.1 0.05,1.4 -0.1,0.6 -0.3,0.29 -0.59,0.15 -3.11,-0.08 -1.65,-0.81 -4.45,0.1 -1.91,-0.08 -0.76,-0.21 -2.24,-0.98 -0.73,-0.02 -0.46,0.26 -0.48,0.79 -0.29,2.15 -0.35,0.94 -1.89,1.67 -0.71,0.77 0,0 -2.35,1.39 -3.24,3.52 -4.39,1.57 -4.76,-0.68 -3.33,-1.43 -1.44,-5.41 2.12,-3.14 8.61,-1.54 1.52,-4.72 -0.83,-3.24 -3.94,-3.14 -2.64,-3.56 -0.42,-4.58 2.36,-5.04 -0.75,-2 0.76,-0.62 -0.33,-1.09 -0.04,-1.36 1.38,-3.01 0.4,-2.99 -0.57,-2.33 -1.74,-3.32 0,0 2.03,-0.01 0.82,0.14 0.5,0.35 0.94,1.32 1.3,0.61 2.55,0.22 2.75,0.75 1.66,0.28 0.86,0.03 1.25,-0.22 1.13,-0.69 1.45,-0.59 2.22,-0.34 0.33,-0.18 0.92,-1.29 0.57,-0.45 0.77,-0.35 1.18,-0.07 1.62,0.59 1.79,0.98 0.48,0.02 1.91,-0.44 1.22,0.15 0.94,0.44 1.73,1.21 1.33,0.68 0,0 1.94,-0.04 1.14,-0.2 3.61,-1.65 0.56,0.16 1.19,1.14 0.61,0.28 2.15,-0.13 1.69,0.06 1.7,-0.15 0.55,0.17 1.11,0.89 0.71,0.39 0.74,0.05 1.52,-0.43 1.05,0.05 5.16,1.81 1.26,0.7 0.24,0.25 0.32,0.69 0.35,2.09 0.23,0.57 0.96,1.35 1.07,0.87 0.47,0.07 0.43,-0.18 1.84,-1.74 0.9,-0.14 1.96,0.46 1.03,-0.01 0,0 0.39,0.25 0.57,0.65 0.36,0.68 -0.04,0.51 -0.2,0.42 -1.17,0.47 -1.81,-0.07 -0.44,0.09 -0.34,0.31 -0.04,0.37 0.18,0.56 2.77,2.52 2.23,0.8 0.31,0.3 0.14,0.42 -0.02,0.91 -0.25,0.8 -1.18,2.45 -1.31,1.09 -0.14,0.49 0.16,0.61 0.65,1.33 0.14,1 -0.26,2.55 0.06,0.51 0.2,0.7 1.44,2.66 0.06,0.49 0.02,0.51 -0.28,0.8 -1.26,1.89 -0.31,0.79 -0.4,3.5 0.71,2.89 -0.02,1.05 -0.16,1 -0.33,0.79 -0.84,0.77 -2.29,-0.16 z"
+                                        title="Ramallah" id="PS-RBH" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 224.79948,348.97794 -0.2,0.36 -1.59,5.02 0,0 -6.89,-6.98 -0.77,-0.57 -0.76,-0.37 -2.18,-0.67 -0.74,-0.07 -1.73,0.48 -1.38,0.03 -1.56,-0.36 -3.03,-0.26 -2.27,-0.68 -0.41,-0.02 -0.7,0.17 -2.95,1.27 -0.85,0.2 -1.66,-0.04 -1.37,-0.47 -1.18,-0.16 -1.91,0.57 -1.87,1.28 -0.63,0.22 -2.86,0.49 -1.49,-0.22 -0.88,0.02 -3.49,1.36 -1.68,0.13 -1.1,-0.19 -0.51,-0.24 -5.23,-3.59 0,0 1.8,-2.81 0.51,-7.3 -3.14,-3.28 -7.99,0.04 -7.45,-3 -3.46,-1.66 -3.8,-3.51 -0.93,0.55 0,0 0.71,-0.77 1.89,-1.67 0.35,-0.94 0.29,-2.15 0.48,-0.79 0.46,-0.26 0.73,0.02 2.24,0.98 0.76,0.21 1.91,0.08 4.45,-0.1 1.65,0.81 3.11,0.08 0.59,-0.15 0.3,-0.29 0.1,-0.6 -0.05,-1.4 0.58,-1.1 1.14,-0.84 1.17,-0.28 2.2,0.74 1.47,-0.42 3.11,0.21 0.89,0.39 0.93,1.07 0.55,0.23 0.3,-0.11 0.92,-1.16 0.8,-0.35 0.88,0.01 1.57,0.51 1.82,0.36 0.44,0.27 0.56,0.57 1.37,1.83 1.36,0.43 1.6,0.19 0.55,0.26 0.26,0.36 0.7,1.73 0.99,1.01 0.92,1.95 0.55,0.24 0.44,0.02 1.93,-0.52 0.48,-0.03 0.77,0.23 0,0 0.21,4.25 0.23,0.98 0.48,0.49 1.32,0.39 0.6,0.66 0.43,0.95 -0.07,0.6 -0.65,0.81 -0.33,0.87 0.11,0.49 0.58,0.75 2.89,1.72 1.17,0.33 1.2,-0.16 2.45,-1.07 1.27,-0.36 2.54,-0.32 1.7,0.07 0.65,0.19 2.38,1.5 0.38,2.73 0.93,1.49 z"
+                                        title="Jerusalem" id="PS-JEM" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 196.61948,400.64794 -0.94,0.32 -1.5,-0.02 -0.78,-0.25 -3.26,-1.55 -0.81,-0.51 -1.59,-2.84 -0.33,-0.95 0.06,-0.99 0.68,-1.86 -0.13,-0.95 -0.36,-0.55 -2.65,-2.16 -2.37,-1.02 -1.62,-0.48 -0.6,-0.37 -1.49,-1.91 -1.73,-1.84 -1.9,-1.48 -0.38,-0.68 -0.03,-2.48 -1.42,-3.21 -1.91,-5.71 -0.49,-0.94 -1.6,-1.88 -0.35,-0.14 -0.24,0.05 -0.35,0.52 -0.3,3.76 -0.31,0.65 -0.49,0.38 -0.76,0.31 -0.88,0.04 -1.82,-0.32 -2.07,-0.18 -0.8,-0.23 -0.79,-0.38 -0.52,-0.44 -0.45,-0.66 -0.26,-0.72 0.18,-0.52 1.47,-0.71 0.65,-0.82 0.2,-0.61 -0.03,-0.57 -0.65,-0.99 -1.91,-1.21 -1.24,-0.51 -0.38,0.02 -1.22,0.55 -0.98,0.19 -0.99,-0.1 -0.55,-0.25 -0.23,-0.2 -0.32,-0.63 -0.34,-2.45 -0.42,-0.75 -1.12,-0.83 -3.99,-1.92 0,0 7.45,-7.37 7.34,-3.01 8.69,-0.22 0.24,-0.38 0,0 5.23,3.59 0.51,0.24 1.1,0.19 1.68,-0.13 3.49,-1.36 0.88,-0.02 1.49,0.22 2.86,-0.49 0.63,-0.22 1.87,-1.28 1.91,-0.57 1.18,0.16 1.37,0.47 1.66,0.04 0.85,-0.2 2.95,-1.27 0.7,-0.17 0.41,0.02 2.27,0.68 3.03,0.26 1.56,0.36 1.38,-0.03 1.73,-0.48 0.74,0.07 2.18,0.67 0.76,0.37 0.77,0.57 6.89,6.98 0,0 -3.74,11.77 -3.64,12.49 -0.35,8.99 -0.12,8.34 -11.39,-0.17 -2.72,0.96 z"
+                                        title="Bethlehem" id="PS-BTH" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 127.87948,372.88794 1.57,-2.62 5.26,-5.68 2.86,-2.5 8.08,-3.88 1.56,-1.54 0,0 3.99,1.92 1.12,0.83 0.42,0.75 0.34,2.45 0.32,0.63 0.23,0.2 0.55,0.25 0.99,0.1 0.98,-0.19 1.22,-0.55 0.38,-0.02 1.24,0.51 1.91,1.21 0.65,0.99 0.03,0.57 -0.2,0.61 -0.65,0.82 -1.47,0.71 -0.18,0.52 0.26,0.72 0.45,0.66 0.52,0.44 0.79,0.38 0.8,0.23 2.07,0.18 1.82,0.32 0.88,-0.04 0.76,-0.31 0.49,-0.38 0.31,-0.65 0.3,-3.76 0.35,-0.52 0.24,-0.05 0.35,0.14 1.6,1.88 0.49,0.94 1.91,5.71 1.42,3.21 0.03,2.48 0.38,0.68 1.9,1.48 1.73,1.84 1.49,1.91 0.6,0.37 1.62,0.48 2.37,1.02 2.65,2.16 0.36,0.55 0.13,0.95 -0.68,1.86 -0.06,0.99 0.33,0.95 1.59,2.84 0.81,0.51 3.26,1.55 0.78,0.25 1.5,0.02 0.94,-0.32 0,0 -1.66,1.47 -5.73,4.18 -5.58,2.48 -4.29,4.83 -5.03,5.15 -2.53,1.52 -4.14,0.78 -3.23,0.28 -3.73,0.64 -2.39,-0.55 -3.64,1.89 -9.94,-0.64 -7.05,-0.59 -7.22,1.8 -7.83,1.03 -4.28,-1.15 -2.77,-2.29 -1.93,-3.13 -0.47,-4 3.35,-6.73 3.82,-4.93 3.45,-6.55 0.64,-3.5 -0.75,-8.2 1.52,-7.57 z"
+                                        title="Hebron" id="PS-HBN" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 38.92948,383.80794 4.32,-6.24 1.86,-3 7.49,6.97 2.35,3.47 0.02,3.87 -1.53,2.71 -4.99,1.19 0,0 -1.84,-1.07 -1.51,-1.05 -0.74,-0.24 -1.06,-0.14 -0.46,-0.29 -0.46,-0.77 -0.15,-1.05 -0.23,-0.64 -0.53,-0.75 -1.98,-2.15 z"
+                                        title="North Gaza" id="PS-NGZ" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 32.49948,408.21794 -0.12,-2.48 -0.69,-2.61 -0.57,-0.88 -0.57,-0.28 -2.55,-0.74 -3.05,-0.13 0,0 1,-1.4 1.34,-1.57 3.79,-4.19 7.85,-10.13 0,0 0.56,0.82 1.98,2.15 0.53,0.75 0.23,0.64 0.15,1.05 0.46,0.77 0.46,0.29 1.06,0.14 0.74,0.24 1.51,1.05 1.84,1.07 0,0 z"
+                                        title="Gaza" id="PS-GZA" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 24.69948,419.18794 -1.56,-0.25 -0.46,-0.28 -1.47,-1.47 -0.37,-0.24 -5.6,-2.03 -1.05,-0.61 -0.64,-0.71 0,0 1.58,-1.45 3.21,-3.35 2.54,-2.79 4.07,-4.91 0,0 3.05,0.13 2.55,0.74 0.57,0.28 0.57,0.88 0.69,2.61 0.12,2.48 0,0 -1.38,1.33 -5.74,7.38 z"
+                                        title="Deir El Balah" id="PS-DEB"
+                                        class="[object SVGAnimatedString] mapsvg-region" data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 16.06948,442.15794 -1.03,-2.37 -0.94,-4.27 -0.25,-0.66 -0.31,-0.38 -0.6,-0.41 -3.41,-1.67 -2.62,-1.53 -5.06,-3.74 -1.18,-0.54 0,0 5.13,-5.01 5.89,-6.3 1.86,-1.68 0,0 0.64,0.71 1.05,0.61 5.6,2.03 0.37,0.24 1.47,1.47 0.46,0.28 1.56,0.25 0,0 -0.83,2.78 0.43,5.79 0.04,5.41 -1.9,3.49 z"
+                                        title="Khan Yunis" id="PS-KYS" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                    <path
+                                        d="m 7.00948,449.09794 -6.72,-22.22 0.38,-0.29 0,0 1.18,0.54 5.06,3.74 2.62,1.53 3.41,1.67 0.6,0.41 0.31,0.38 0.25,0.66 0.94,4.27 1.03,2.37 0,0 -1.3,1.12 z"
+                                        title="Rafah" id="PS-RFH" class="[object SVGAnimatedString] mapsvg-region"
+                                        data-stroke-width="1"
+                                        style="stroke: rgb(247, 247, 247); stroke-width: 0.400293px;"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="cases-by-country" id="cases-by-country">
+                            <div class="cases-by-country__top">
+                                <div class="header-content d-flex">
+                                    <h4>Deaths by Region</h4>
+                                </div>
+                            </div>
+
+                            <div class="cases-by-country__bottom">
+                                <ul class="cases-country-lists">
+                                    <li class="country-search">
+                                        <h6 class="country-name">All Regions</h6>
+                                        <span class="cases-no infected"><!-- {{ $attacks->take(2)->sum('total_deaths');
+                                            }} -->29496</span>
+                                    </li>
+                                    <!-- @foreach ($attacks as $key => $attack)
+                                    <li class="country-search {{ $key > 10 ? " region-disabled":"" }}"
+                                        style='{{  $key > 10 ? "display:none;":"" }}'>
+                                        <h6 class="country-name">{{ __('content.'.$attack->regions->name) }}</h6>
+                                        <span class="cases-no infected">{{ $attack->total_deaths }}</span>
+                                    </li>
+                                    @endforeach -->
+                                </ul>
+                                <div class="text-center">
+                                    <button class="btn-show-all" data-display="all"> View all Regions</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="list-view table-responsive" id="list-view">
+                            <table class="list-view__table display table">
+                                <thead class="list-view__head">
+                                    <tr>
+                                        <th>Region</th>
+                                        <th>Injured</th>
+                                        <th>Deaths</th>
+                                        <th>Women</th>
+                                        <th>Children</th>
+                                        <th>Elders</th>
+                                        <th>Deaths %</th>
+                                        <th>Destroyed Residential Units</th>
+                                        <th>Displaced</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="list-view__body">
+                                    <!-- @foreach ($attacks as $attack)
+                                    <tr class="country-item">
+                                        <td>
+                                            <img src="assets/img/palestine.webp" alt="Palestine"> {{
+                                            __('content.'.$attack->regions?->name) }}
+                                        </td>
+                                        <td>{{ number_format( $attack->total_injuries) }}</td>
+                                        <td>{{ number_format( $attack->total_deaths) }}</td>
+                                        <td>{{ number_format( $attack->women_deaths) }}</td>
+                                        <td>{{ number_format( $attack->children_deaths) }}</td>
+                                        <td>{{ number_format( $attack->elders_deaths) }}</td>
+                                        <td>{{ number_format($attack->total_injuries ?
+                                            ($attack->total_deaths/$attack->total_injuries)*100 :'100') }}%</td>
+                                        <td>{{ number_format( $attack->total_destroyed_residential_units) }}</td>
+                                        <td>{{ number_format( $attack->total_displaced) }}</td>
+                                    </tr>
+                                    @endforeach -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="corona-chart-stats report-item mt-0" id="chart-canvas">
+                            <div class="chart-status-top">
+                                <h3>Total Deaths By Day</h3>
+                            </div>
+                            <div class="chart-wrap">
+                                <canvas id="chart-canvas" style="width: 100%; height: 100%"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-xl-3">
+                        <div class="today-activities-chart report-item">
+                            <h3>Total Deaths By Classification</h3>
+
+                            <div class="activities-wrap worldwide-stats">
+                                <div class="activities-block">
+                                    <div class="activities-block-item">
+                                        <h6>Total Deaths</h6>
+                                        <h4 class="infected"><!-- {{ number_format($live->total_deaths) }} -->29,496</h4>
+                                    </div>
+                                    <div class="activities-block-item">
+                                        <h6>Total Women</h6>
+                                        <h4 class="current_cases"><!-- {{ number_format($live->women_deaths) }} -->8,573</h4>
+                                    </div>
+                                    <div class="activities-block-item">
+                                        <h6>Total Children</h6>
+                                        <h4 class="recovered"><!-- {{ number_format($live->children_deaths) }} -->12,730</h4>
+                                    </div>
+                                    <div class="activities-block-item">
+                                        <h6>Total Elders</h6>
+                                        <h4 class="deaths"><!-- {{ number_format($live->elders_deaths) }} -->699</h4>
+                                    </div>
+                                </div>
+                                <div class="charts">
+                                    <div class="chart chart--1" data-size="230" data-track-color="#F5F7FB"
+                                        data-bar-color="#71A8FF">
+                                        <div class="chart chart--2" data-size="175" data-track-color="#FFFFFF"
+                                            data-bar-color="#9EC4FF">
+                                            <div class="chart chart--3" data-size="120" data-track-color="#FFFFFF"
+                                                data-bar-color="#C1D8FC"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-xl-3 final-div-mobile">
+                        <div class="today-view report-item worldwide-stats">
+                            <h3>Medical Sector</h3>
+
+                            <div class="tracker-block tracker-block--3 text-center">
+                                <div class="tracker-block__top">
+                                    <h4>From OCT the 7th</h4>
+                                    <p>Updated <span class="last-update"></span> <!-- {{
+                                        $live->last_update->diffForHumans() }} -->1 year ago</p>
+                                    <h5 class="tracker-block__bottom__item-title track-item__title-recovered">Doctors/Medics</h5>
+                                    <h2 class="tracker-block__top-total-cases infected"><!-- {{
+                                        number_format($live->total_medical_deaths) }} -->345</h2>
+                                    <h6 class="new-no">+<span class="today_infected">220<!-- {{
+                                            number_format($live->total_medical_injured) }} --></span> (Injured)</h6>
+                                </div>
+
+                                <div class="tracker-block__bottom">
+                                    <div class="tracker-block__bottom-wrap">
+                                        <div class="tracker-block__bottom__item">
+                                            <h5 class="tracker-block__bottom__item-title title-deaths">Broken Ambulances</h5>
+                                            <h2 class="tracker-block__bottom__item-no deaths"><!-- {{
+                                                number_format($live->total_ambulances_broken) }} -->102</h2>
+                                            <h6 class="new-no">+<span class="today_deaths"><!-- {{
+                                                    number_format($live->total_ambulances_semi_broken) }} -->60</span> (Semi Broken)</h6>
+                                        </div>
+                                        <div class="tracker-block__bottom__item">
+                                            <h5 class="tracker-block__bottom__item-title title-active">Closed Health Care Centers</h5>
+                                            <h2 class="tracker-block__bottom__item-no current_cases"><!-- {{
+                                                number_format($live->total_clinics_broken) }} -->53</h2>
+                                            <h6 class="new-no"><span class="today_active_cases">Out Of</span> (72)</h6>
+                                        </div>
+                                    </div>
+                                    <div class="tracker-block__bottom__item recovered-item">
+                                        <h5 class="tracker-block__bottom__item-title title-recovered">Hospitals Out Of Service</h5>
+                                        <h2 class="tracker-block__bottom__item-no recovered"><!-- {{
+                                            number_format($live->total_hospitals_broken) }} -->26</h2>
+                                        <h6 class="new-no"><span class="today_recovered">Out Of</span> (35)</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="last-update-wrap text-center credits" dir="ltr">
+            <div class="text-center footer">
+                <p class="text-reset ">©
+                    <script>document.write(new Date().getFullYear())</script>. made with <svg
+                        xmlns="http://www.w3.org/2000/svg" height="1em"
+                        viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #00cbad
+                            }
+                        </style>
+                        <path
+                            d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z" />
+                    </svg> by Non-Palestinians.
+                </p>
+            </div>
+        </div>
+
+    </main>
+    <!--== End Main Content Wrapper ==-->
+
+
+    <!--=======================Javascript============================-->
+    <!-- build:js assets/js/app.min.js -->
+    <!--=== Modernizr Min Js ===-->
+    <script src="assets/js/modernizr.min.js"></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="assets/js/jquery.min.js"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="assets/js/jquery-migrate.min.js"></script>
+    <!--=== Popper Min Js ===-->
+    <script src="assets/js/popper.min.js"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!--=== Select2 Min Js ===-->
+    <script src="assets/js/select2.full.min.js"></script>
+    <!--=== Data Table Min Js ===-->
+    <script src="assets/js/datatables.min.js"></script>
+    <!--=== ChartJS Min Js ===-->
+    <script src="assets/js/chart.min.js"></script>
+    <!--=== jQuery Vector Map Min Js ===-->
+    <script src="assets/js/jquery.vmap.min.js"></script>
+    <!--=== jQuery Vector World Min Js ===-->
+    <script src="assets/js/jquery.vmap.world.js"></script>
+
+    <!--=== APP Js ===-->
+    <script src="assets/js/app.js"></script>
+    <!--=== Active Js ===-->
+    <script src="assets/js/active.js"></script>
+
+    <script>
+        var regions = [
+            @foreach($attacks as $attack)
+                {
+                "region_name": "{{ __('content.'.$attack->regions->name) }}",
+                "region_code": "{{ $attack->regions->code }}",
+                "deaths": {{ $attack-> total_deaths }}
+                },
+        @endforeach
+        {
+            "region_name": "{{ __('content.Jaffa') }}",
+                "region_code": "PS-JFA",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Nazaeth') }}",
+                "region_code": "PS-NAZ",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Dead Sea') }}",
+                "region_code": "PS-DS",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Allyd') }}",
+                "region_code": "PS-ALD",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Safad') }}",
+                "region_code": "PS-SAF",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Acre') }}",
+                "region_code": "PS-ACE",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Baysan') }}",
+                "region_code": "PS-BSN",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Tiberias') }}",
+                "region_code": "PS-TBA",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Lake Tiberias') }}",
+                "region_code": "PS-LTB",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Beersheba') }}",
+                "region_code": "PS-BSB",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Khan Yunis') }}",
+                "region_code": "PS-KYS",
+                    "deaths": 19667
+        },
+        {
+            "region_name": "{{ __('content.Alramlah') }}",
+                "region_code": "PS-ALR",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Haifa') }}",
+                "region_code": "PS-HFA",
+                    "deaths": 0
+        },
+        {
+            "region_name": "{{ __('content.Deir El Balah') }}",
+                "region_code": "PS-DEB",
+                    "deaths": 19667
+        },
+        {
+            "region_name": "{{ __('content.North Gaza') }}",
+                "region_code": "PS-NGZ",
+                    "deaths": 19667
+        },
+        {
+            "region_name": "{{ __('content.Rafah') }}",
+                "region_code": "PS-RFH",
+                    "deaths": 19667
+        },
+        ];
+
+
+        var temp_array = regions.map(function (item) {
+            return item.deaths;
+        });
+        var highest_value = Math.max.apply(Math, temp_array);
+
+        $(function () {
+
+            for (i = 0; i < regions.length; i++) {
+
+                $('#' + regions[i].region_code)
+                    .css({ 'fill': 'rgba(11, 104, 170,' + regions[i].deaths / (highest_value / 100) + ')' })
+                    .data('region', regions[i]);
+            }
+
+            $('.palestine-map path').mouseover(function (e) {
+                var region_data = $(this).data('region');
+                $('<div class="info_panel">' +
+                    region_data.region_name + '<br>' +
+                    '{{ __("content.Deaths") }}: ' + region_data.deaths.toLocaleString("en-UK") +
+                    '</div>'
+                )
+                    .appendTo('body');
+            })
+                .mouseleave(function () {
+                    $('.info_panel').remove();
+                })
+                .mousemove(function (e) {
+                    var mouseX = e.pageX, //X coordinates of mouse
+                        mouseY = e.pageY; //Y coordinates of mouse
+
+                    $('.info_panel').css({
+                        top: mouseY - 50,
+                        left: mouseX - ($('.info_panel').width() / 2)
+                    });
+                });
+
+        });
+
+        $('.btn-show-all').on('click', function () {
+            var type = $(this).attr('data-display');
+
+            if (type == 'all') {
+                $('.region-disabled').css('display', 'flex');
+                $(this).text('{{ __("content.View less Regions") }}');
+                $(this).attr('data-display', 'less');
+            } else {
+                $(this).text('{{ __("content.View all Regions") }}');
+                $('.region-disabled').css('display', 'none');
+                $(this).attr('data-display', 'all');
+            }
+        })
+
+        $('#select1').on('change', function () {
+            $('.map-dashboard').find('path').css({
+                'stroke': 'rgb(247, 247, 247)',
+                'stroke-width:': '0.400293px',
+            });
+            let value = $(this).val();
+            $('#' + value).css({
+                /* 'fill' : '#00CBAD', */
+                'stroke': 'red',
+                'stroke-width:': '1px',
+            });
+        })
+    </script>
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD" data-position="Right"
+        data-x_margin="18" data-y_margin="18"></script>
+    <!-- endbuild -->
+
+    <script src="/sw.js"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

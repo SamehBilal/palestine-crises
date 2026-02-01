@@ -1,0 +1,48 @@
+
+[
+  {
+    "id": 1,
+    "name": "Bella Hadid",
+    "first_letter": "B",
+    "image": "bella-hadid.jpg",
+    "stance": "Pro-Palestine",
+    "subtitle": "Model and Palestinian-American activist",
+    "bio": "Bella Hadid has been vocal about her Palestinian heritage and has consistently shown support for Palestinian rights. She has used her platform to raise awareness about the Palestinian cause."
+  },
+  {
+    "id": 2,
+    "name": "Gigi Hadid",
+    "first_letter": "G",
+    "image": "gigi-hadid.jpg",
+    "stance": "Pro-Palestine",
+    "subtitle": "Model and activist",
+    "bio": "Gigi Hadid has joined her sister in supporting Palestinian rights and has donated to relief efforts."
+  },
+  {
+    "id": 3,
+    "name": "Mark Ruffalo",
+    "first_letter": "M",
+    "image": "mark-ruffalo.jpg",
+    "stance": "Pro-Palestine",
+    "subtitle": "Actor and humanitarian",
+    "bio": "Mark Ruffalo has been outspoken in calling for Palestinian human rights and has criticized military actions in Gaza."
+  },
+  {
+    "id": 4,
+    "name": "Susan Sarandon",
+    "first_letter": "S",
+    "image": "susan-sarandon.jpg",
+    "stance": "Pro-Palestine",
+    "subtitle": "Actress and activist",
+    "bio": "Susan Sarandon has participated in pro-Palestinian demonstrations and has been a vocal critic of Israeli policies."
+  },
+  {
+    "id": 5,
+    "name": "Roger Waters",
+    "first_letter": "R",
+    "image": "roger-waters.jpg",
+    "stance": "Pro-Palestine",
+    "subtitle": "Pink Floyd co-founder and activist",
+    "bio": "Roger Waters is a prominent supporter of the BDS movement and has been very vocal about Palestinian rights."
+  }
+]

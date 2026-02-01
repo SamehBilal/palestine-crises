@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>الماركات - أزمة فلسطين</title>
+    <meta name="description" content="الماركات المقاطعة والبدائل - قائمة بالماركات التي يجب مقاطعتها والبدائل المتاحة" />
+    <meta content="Sameh Bilal" name="author" />
+    
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css' />
+
+    <!-- PWA  -->
+    <meta name="theme-color" content="#292833" />
+    <link rel="apple-touch-icon" href="logo.PNG">
+    <link rel="manifest" href="/manifest.json">
+
+    <!--== CSS ==-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    
+    <!--== Brands CSS ==-->
+    <link rel="stylesheet" type="text/css" href="assets/brands/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="assets/brands/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="assets/brands/css/demo3.css" />
+    <link rel="stylesheet" type="text/css" href="assets/brands/css/common3.css" />
+    <link rel="stylesheet" type="text/css" href="assets/brands/css/component2.css" />
+
+    <style>
+        body {
+            font-family: 'Cairo', 'Roboto', sans-serif;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .btn-glossary-filter {
+            margin: 1px 1px 15px;
+            padding: 0 5px;
+        }
+
+        .glossary-item {
+            margin: 15px 0;
+        }
+
+        .glossary-item h2 {
+            color: #fff;
+            border-bottom: 1px dotted #fff;
+        }
+
+        #search-group {
+            position: relative;
+        }
+
+        #search-group .glossary-search-icon {
+            position: absolute;
+            z-index: 10;
+            top: 10px;
+            right: 10px;
+            width: 25px;
+            height: 25px;
+            transition: all 0.33s;
+        }
+
+        #search-group .glossary-search-input {
+            padding-right: 40px;
+            transition: all 0.33s;
+        }
+
+        #search-group .glossary-search-input:focus {
+            padding-right: 15px;
+        }
+
+        #search-group .glossary-search-input:focus~.glossary-search-icon {
+            right: calc(100% - 40px);
+        }
+    </style>
+</head>
+
+<body class="body-dark main-container" style="height:100vh!Important;">
+
+    <!--== Start Header Wrapper ==-->
+    <header class="header-wrapper">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-4">
+                    <div class="logo-wrap">
+                        <a href="live-ar.html"><img src="assets/img/logo2.png" alt="logo" /></a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="last-update-wrap text-center">
+                        <p class="mb-0"><span data-i18n="Updated">تم التحديث</span>: <span class="last-update">0</span>
+                            <span data-i18n="minutes ago">دقيقة مضت</span> <img src="assets/img/live.gif" alt="" height="40px"></p>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-4">
+                    <div class="navbar-wrap">
+                        <nav class="menubar">
+                            <ul class="nav">
+                                <li><a href="live-ar.html" data-i18n="Live Tracker">المتابعة المباشرة</a></li>
+                                <li><a href="map-ar.html" data-i18n="Original Map">الخريطة الأصلية</a></li>
+                                <li><a href="brands-ar.html" data-i18n="Support">الدعم</a></li>
+                                <li><a href="brands.html" class="language-link" data-lang="en">EN</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--== End Header Wrapper ==-->
+
+    <!--== Start Main Content Wrapper ==-->
+    <main class="main-content-wrapper">
+
+        <div class="container">
+
+            <div class="component">
+                <h2 data-i18n="Support">الدعم</h2>
+                <!-- Start Nav Structure -->
+                <button class="cn-button" id="cn-button">القائمة</button>
+                <div class="cn-wrapper" id="cn-wrapper">
+                    <ul>
+                        <li><a href="brands-ar.html"><span data-i18n="Brands">الماركات</span></a></li>
+                        <li><a href="barcodes-ar.html"><span data-i18n="Barcodes">الباركود</span></a></li>
+                        <li><a href="celebrities-ar.html"><span data-i18n="Celebrities">المشاهير</span> <br> <small class="badge badge-info">(<span data-i18n="Soon">قريباً</span>)</small></a></li>
+                        <li><a href="#"><span data-i18n="Hashtags">الهاشتاغات</span> <br> <small class="badge badge-info">(<span data-i18n="Soon">قريباً</span>)</small></a></li>
+                        <li><a href="#"><span data-i18n="Encryption">التشفير</span> <br><small class="badge badge-info">(<span data-i18n="Soon">قريباً</span>)</small></a></li>
+                        <li><a href="#"><span data-i18n="Gallery">المعرض</span> <br><small class="badge badge-info">(<span data-i18n="Soon">قريباً</span>)</small></a></li>
+                        <li><a href="#"><span data-i18n="Donations">التبرعات</span> <br><small class="badge badge-info">(<span data-i18n="Soon">قريباً</span>)</small></a></li>
+                    </ul>
+                </div>
+                <!-- End of Nav Structure -->
+            </div>
+
+            <section>
+
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h1 data-i18n="Brands">الماركات</h1>
+                    </div>
+
+                    <div class="col-12 text-center" id="letter-filters">
+                        <button class="btn btn-small btn-secondary btn-glossary-filter" data-filter="A-Z">الكل</button>
+                        <!-- Letters will be generated dynamically -->
+                    </div>
+
+                    <div class="col-12 col-lg-4 offset-lg-4 text-center">
+                        <div class="input-group" id="search-group">
+                            <input type="text" class="form-control glossary-search-input" placeholder="بحث ..."
+                                aria-label="Search" aria-describedby="glossary-search-exp-addon"
+                                id="glossary-search-exp">
+
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="glossary-search-icon">
+                                <path d="M20.71,4.04C21.1,3.65 21.1,3 20.71,2.63L18.37,0.29C18,-0.1 17.35,-0.1 16.96,0.29L15,2.25L18.75,6M17.75,7L14,3.25L4,13.25V17H7.75L17.75,7Z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="glossary-grid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+
+            </section>
+        </div><!-- /container -->
+
+        <div class="last-update-wrap text-center credits">
+            <div class="text-center footer">
+                <p class="text-reset ">©
+                    <script>document.write(new Date().getFullYear())</script>. صنع بـ <svg
+                        xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <style>svg {fill: #00cbad}</style>
+                        <path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z" />
+                    </svg> من غير فلسطينيين
+                </p>
+            </div>
+        </div>
+
+    </main>
+    <!--== End Main Content Wrapper ==-->
+
+    <!--== JavaScript ==-->
+    <script src="assets/brands/js/modernizr-2.6.2.min.js"></script>
+    <script src="assets/js/modernizr.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery-migrate.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--== Isotope for filtering ==-->
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+
+    <!--== Brands Navigation ==-->
+    <script src="assets/brands/js/polyfills.js"></script>
+    <script src="assets/brands/js/demo2.js"></script>
+
+    <!--=== Our App Js ===-->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/brands.js"></script>
+
+    <script>
+        // Set language to Arabic on page load
+        if (typeof i18n !== 'undefined') {
+            i18n.setLanguage('ar');
+        }
+    </script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD"
+        data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+</html>

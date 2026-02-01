@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>أزمة فلسطين</title>
+    <meta name="description" content="أزمة فلسطين هو موقع يقدم لكم آخر الأخبار والمستجدات، مع خرائط ورسوم بيانية ومقاطع فيديو حية توضح الوضع على الأرض. الأزمة الفلسطينية تقف إلى جانب الشعب الفلسطيني ونضاله من أجل الحرية والعدالة. كما تقدم أزمة فلسطين رؤى تاريخية وثقافية، بالإضافة إلى قصص المقاومة والصمود من المجتمع الفلسطيني. الأزمة الفلسطينية هي مصدر معلوماتك وإلهامك للقضية الفلسطينية." />
+    <meta content="Sameh Bilal" name="author" />
+    <meta name="twitter:title" content="أزمة فلسطين" />
+    <meta name="twitter:site" content="{{ url()->current() }}" />
+    <meta name="twitter:creator" content="Sameh Bilal" />
+    <meta name="twitter:description" content="أزمة فلسطين هو موقع يقدم لكم آخر الأخبار والمستجدات، مع خرائط ورسوم بيانية ومقاطع فيديو حية توضح الوضع على الأرض. الأزمة الفلسطينية تقف إلى جانب الشعب الفلسطيني ونضاله من أجل الحرية والعدالة. كما تقدم أزمة فلسطين رؤى تاريخية وثقافية، بالإضافة إلى قصص المقاومة والصمود من المجتمع الفلسطيني. الأزمة الفلسطينية هي مصدر معلوماتك وإلهامك للقضية الفلسطينية." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="assets/img/logo2.png" />
+    <meta property="og:title" content="أزمة فلسطين" />
+    <meta property="og:description" content="أزمة فلسطين هو موقع يقدم لكم آخر الأخبار والمستجدات، مع خرائط ورسوم بيانية ومقاطع فيديو حية توضح الوضع على الأرض. الأزمة الفلسطينية تقف إلى جانب الشعب الفلسطيني ونضاله من أجل الحرية والعدالة. كما تقدم أزمة فلسطين رؤى تاريخية وثقافية، بالإضافة إلى قصص المقاومة والصمود من المجتمع الفلسطيني. الأزمة الفلسطينية هي مصدر معلوماتك وإلهامك للقضية الفلسطينية." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/img/logo2.png" />
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
+    <meta name="keywords" content="palestine, war, gaza" />
+
+    <!-- PWA  -->
+    <meta name="theme-color" content="#292833" />
+    <link rel="apple-touch-icon" href="logo.PNG">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="landing/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="landing/css/style2_rtl.css" />
+
+
+    <!-- Scripts -->
+    <link rel="stylesheet" href="build/assets/app-462c5206.css">
+    <script src="build/assets/app-02317797.js"></script>
+
+    <!--[if lt IE 10]>
+				<link rel="stylesheet" type="text/css" href="landing/css/style2IE.css" />
+		<![endif]-->
+
+    <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "Website",
+            "name": "أزمة فلسطين",
+            "alternateName": "أزمة فلسطين",
+            "url": "{{ url()->current() }}",
+            "logo": "assets/img/logo2.png",
+            }
+        </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <a href="live.html"
+                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <strong>الأحداث حاليا: </strong>كارثة فلسطين
+            </a>
+            <div class="clr"></div>
+        </div>
+        <div class="sp-container">
+            <div class="sp-content">
+                <div class="sp-globe"></div>
+                <h2 class="frame-1">إنه تدمير لللإنسانية</h2>
+					<h2 class="frame-2">إنه قتل جماعي وآلي</h2>
+					<h2 class="frame-3">يمكنك إيقافه</h2>
+					<h2 class="frame-4">!الآن</h2>
+					<h2 class="frame-5"><span>انقذ المستضعفين.</span> <span>اجعل اصواتهم</span> <span>مسموعه.</span></h2>
+                <a class="sp-circle-link" href="live.html">المتابعة</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="sw.js"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
+</body>
+
+</html>

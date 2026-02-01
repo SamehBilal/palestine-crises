@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Palestine Crisis</title>
+    <meta name="description" content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+    <meta content="Sameh Bilal" name="author" />
+    <meta name="twitter:title" content="Palestine Crisis" />
+    <meta name="twitter:site" content="{{ url()->current() }}" />
+    <meta name="twitter:creator" content="Sameh Bilal" />
+    <meta name="twitter:description" content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="assets/img/logo2.png" />
+    <meta property="og:title" content="Palestine Crisis" />
+    <meta property="og:description" content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/img/logo2.png" />
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
+    <meta name="keywords" content="palestine, war, gaza" />
+
+    <!-- PWA  -->
+    <meta name="theme-color" content="#292833" />
+    <link rel="apple-touch-icon" href="logo.PNG">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="landing/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="landing/css/style2.css" />
+
+
+    <!-- Scripts -->
+    <link rel="stylesheet" href="build/assets/app-462c5206.css">
+    <script src="build/assets/app-02317797.js"></script>
+
+    <!--[if lt IE 10]>
+				<link rel="stylesheet" type="text/css" href="landing/css/style2IE.css" />
+		<![endif]-->
+
+    <script type="application/ld+json">
+            {
+            "@context": "https://schema.org",
+            "@type": "Website",
+            "name": "Palestine Crisis",
+            "alternateName": "Palestine Crisis",
+            "url": "{{ url()->current() }}",
+            "logo": "assets/img/logo2.png",
+            }
+        </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <a href="live.html"
+                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                <strong>Live Tracker: </strong>Palestine disaster
+            </a>
+            <div class="clr"></div>
+        </div>
+        <div class="sp-container">
+            <div class="sp-content">
+                <div class="sp-globe"></div>
+                <h2 class="frame-1">It's destroying humanity</h2>
+					<h2 class="frame-2">It's mass, mechanized murder</h2>
+					<h2 class="frame-3">You can stop it</h2>
+					<h2 class="frame-4">Now!</h2>
+					<h2 class="frame-5"><span>Save the vulnerable.</span> <span>Make their voice</span> <span>heard.</span></h2>
+                <a class="sp-circle-link" href="live.html">Continue</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="sw.js"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function (reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
+</body>
+
+</html>
