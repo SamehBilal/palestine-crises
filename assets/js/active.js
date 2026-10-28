@@ -85,24 +85,27 @@ function updateAllLastUpdateElements() {
 function updateLastUpdateElement(elem, updateTime) {
     // Get the parent <p> element
     const parentP = elem.closest('p');
-    
+    // "2 days ago" / "قبل يومين" in the page language (getLocale is from app.js)
+    const locale = typeof getLocale === 'function' ? getLocale() : 'en-US';
+    const relativeTime = new Intl.RelativeTimeFormat(locale, { numeric: 'always' });
+
     if (updateTime >= 1440) {
         // More than 24 hours (1440 minutes) - show full date
         const days = Math.floor(updateTime / 1440);
         const lastUpdateDate = new Date(liveTracker.data.last_update);
-        const formattedDate = lastUpdateDate.toLocaleDateString('en-US', {
+        const formattedDate = lastUpdateDate.toLocaleDateString(locale, {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
         });
-        const formattedTime = lastUpdateDate.toLocaleTimeString('en-US', {
+        const formattedTime = lastUpdateDate.toLocaleTimeString(locale, {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true
         });
         
         // Just update the .last-update span content
-        elem.textContent = formattedDate + ' ' + formattedTime + ' (' + days + ' day' + (days > 1 ? 's' : '') + ' ago)';
+        elem.textContent = formattedDate + ' ' + formattedTime + ' (' + relativeTime.format(-days, 'day') + ')';
         
         // Hide the "minutes ago" span if it exists
         if (parentP) {
@@ -114,7 +117,7 @@ function updateLastUpdateElement(elem, updateTime) {
     } else if (updateTime >= 60) {
         // More than 60 minutes - show hours
         const hours = Math.floor(updateTime / 60);
-        elem.textContent = hours + ' hour' + (hours > 1 ? 's' : '') + ' ago';
+        elem.textContent = relativeTime.format(-hours, 'hour');
         
         // Hide the "minutes ago" span if it exists
         if (parentP) {

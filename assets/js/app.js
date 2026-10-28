@@ -3,8 +3,21 @@
 // ============================================
 // Base path for JSON files
 const DATA_PATH = 'data/';
-// Language state
-let currentLang = localStorage.getItem('language') || 'en';
+// Language state: ?lang=ar|en in the URL wins (shareable links), then the saved choice
+const SUPPORTED_LANGS = ['en', 'ar'];
+let currentLang = (function () {
+    const fromUrl = new URLSearchParams(window.location.search).get('lang');
+    if (SUPPORTED_LANGS.includes(fromUrl)) {
+        localStorage.setItem('language', fromUrl);
+        return fromUrl;
+    }
+    const saved = localStorage.getItem('language');
+    return SUPPORTED_LANGS.includes(saved) ? saved : 'en';
+})();
+// Locale for numbers/dates; Arabic keeps Latin digits to match the rest of the site
+function getLocale() {
+    return currentLang === 'ar' ? 'ar-u-nu-latn' : 'en-US';
+}
 // ============================================
 // TRANSLATION MANAGER
 // ============================================
@@ -50,13 +63,19 @@ class TranslationManager {
     }
     updateDirection() {
         const html = document.documentElement;
-        if (this.currentLang === 'ar') {
-            html.setAttribute('dir', 'rtl');
-            html.setAttribute('lang', 'ar');
-        } else {
-            html.setAttribute('dir', 'ltr');
-            html.setAttribute('lang', 'en');
+        const isArabic = this.currentLang === 'ar';
+        html.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
+        html.setAttribute('lang', isArabic ? 'ar' : 'en');
+        // style_rtl.css is a full mirrored copy of style.css, so swap one for the other
+        const stylesheet = document.querySelector('link[href$="assets/css/style.css"], link[href$="assets/css/style_rtl.css"]');
+        if (stylesheet) {
+            stylesheet.setAttribute('href', 'assets/css/' + (isArabic ? 'style_rtl.css' : 'style.css'));
         }
+        // The language link always offers the other language
+        document.querySelectorAll('.language-link').forEach(link => {
+            link.setAttribute('data-lang', isArabic ? 'en' : 'ar');
+            link.textContent = isArabic ? 'EN' : 'AR';
+        });
     }
     getCurrentLanguage() {
         return this.currentLang;
@@ -329,13 +348,11 @@ const chartReport = async (selectorId) => {
         8382, 8610, 8850, 9159, 9299, 9883, 10678, 11208, 11667, 12918,
         15455, 16060, 18175, 19754, 19968, 29496
     ];
-    const labels = [
-        'Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8',
-        'Day 9', 'Day 10', 'Day 11', 'Day 12', 'Day 14', 'Day 15', 'Day 16', 'Day 17',
-        'Day 19', 'Day 20', 'Day 21', 'Day 22', 'Day 23', 'Day 25', 'Day 26', 'Day 27',
-        'Day 28', 'Day 30', 'Day 33', 'Day 35', 'Day 41', 'Day 45', 'Day 57', 'Day 60',
-        'Day 66', 'Day 73', 'Day 74', 'Day 136'
+    const dayNumbers = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27,
+        28, 30, 33, 35, 41, 45, 57, 60, 66, 73, 74, 136
     ];
+    const labels = dayNumbers.map(day => i18n.t('Day') + ' ' + day);
     const dates = [
         'Oct 7, 2023', 'Oct 8, 2023', 'Oct 9, 2023', 'Oct 10, 2023', 'Oct 11, 2023',
         'Oct 12, 2023', 'Oct 13, 2023', 'Oct 14, 2023', 'Oct 15, 2023', 'Oct 16, 2023',
@@ -381,10 +398,14 @@ const chartReport = async (selectorId) => {
                 yPadding: 10,
                 callbacks: {
                     title: function (tooltipItems) {
-                        return "Day - " + labels[Number(tooltipItems[0].index)] + ", " + dates[Number(tooltipItems[0].index)];
+                        const index = Number(tooltipItems[0].index);
+                        const date = new Date(dates[index]).toLocaleDateString(getLocale(), {
+                            year: 'numeric', month: 'short', day: 'numeric'
+                        });
+                        return labels[index] + ", " + date;
                     },
                     label: function (tooltipItem) {
-                        return "Deaths: " + Number(tooltipItem.yLabel) + "+";
+                        return i18n.t("Deaths") + ": " + Number(tooltipItem.yLabel).toLocaleString(getLocale()) + "+";
                     }
                 }
             },
@@ -426,7 +447,22 @@ const attacksManager = new AttacksManager();
 // ============================================
 // MAIN INITIALIZATION
 // ============================================
+// Apply direction and stylesheet right away so Arabic pages don't flash in LTR while data loads
+i18n.updateDirection();
+// Language switcher. Charts, tables and brand names are rendered from data in the current
+// language, so switching saves the choice and reloads without any ?lang= that would override it.
+document.addEventListener('click', event => {
+    const link = event.target.closest('.language-link');
+    if (!link) return;
+    event.preventDefault();
+    localStorage.setItem('language', link.getAttribute('data-lang'));
+    const url = new URL(window.location.href);
+    url.searchParams.delete('lang');
+    url.hash = '';
+    window.location.href = url.toString();
+});
 document.addEventListener('DOMContentLoaded', async () => {
+    i18n.updateDirection();
     console.log('Palestine Crisis - Loading data...');
     try {
         // Load all data in parallel
@@ -478,16 +514,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        // Language switcher
-        const langButtons = document.querySelectorAll('[data-lang]');
-        langButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const lang = btn.getAttribute('data-lang');
-                i18n.setLanguage(lang);
-                // Reload page to apply language changes
-                window.location.reload();
-            });
-        });
     } catch (error) {
         console.error('Error initializing Palestine Crisis tracker:', error);
     }

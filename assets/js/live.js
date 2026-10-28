@@ -9,7 +9,7 @@ function initializePalestineMap() {
     attacksManager.attacks.forEach(function (attack) {
         const svgCode = regionsManager.getSvgCode(attack.region_id);
         regions.push({
-            region_name: attack.region_name,
+            region_name: i18n.t(attack.region_name),
             region_code: svgCode,
             deaths: attack.total_deaths
         });
@@ -112,10 +112,12 @@ function populateRegionList() {
         const li = document.createElement('li');
         li.className = 'country-search' + (index > 10 ? ' region-disabled' : '');
         li.style.display = index > 10 ? 'none' : 'flex';
-        li.innerHTML = '<h6 class="country-name">' + attack.region_name + '</h6>' +
+        li.innerHTML = '<h6 class="country-name"></h6>' +
             '<span class="cases-no infected">' + attack.total_deaths.toLocaleString() + '</span>';
+        li.querySelector('.country-name').textContent = i18n.t(attack.region_name);
         li.addEventListener('click', function () {
-            filterTableByRegion(attack.region_name);
+            // The table shows translated names, so search by the translated name
+            filterTableByRegion(i18n.t(attack.region_name));
         });
         regionList.appendChild(li);
     });
@@ -133,8 +135,8 @@ function populateRegionsTable() {
         const tr = document.createElement('tr');
         tr.className = 'country-item';
         tr.innerHTML = '<td>' +
-            '<img src="assets/img/palestine.webp" alt="Palestine" style="width: 30px; margin-right: 10px;">' +
-            attack.region_name +
+            '<img src="assets/img/palestine.webp" alt="" style="width: 30px; margin-inline-end: 10px;">' +
+            '<span class="region-name"></span>' +
             '</td>' +
             '<td>' + attack.total_injuries.toLocaleString() + '</td>' +
             '<td>' + attack.total_deaths.toLocaleString() + '</td>' +
@@ -144,6 +146,7 @@ function populateRegionsTable() {
             '<td>' + deathRate + '%</td>' +
             '<td>' + attack.total_destroyed_residential_units.toLocaleString() + '</td>' +
             '<td>' + attack.total_displaced.toLocaleString() + '</td>';
+        tr.querySelector('.region-name').textContent = i18n.t(attack.region_name);
         tableBody.appendChild(tr);
     });
 }
@@ -168,7 +171,7 @@ function populateRegionSelect() {
         option.value = attack.region_id;
         option.className = attack.region_name;
         option.setAttribute('data-image', 'assets/img/palestine.webp');
-        option.textContent = attack.region_name;
+        option.textContent = i18n.t(attack.region_name);
         select.appendChild(option);
     });
     // Initialize Select2 if available
@@ -243,7 +246,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Wait for all managers to load
     await new Promise(function (resolve) {
         const checkLoaded = setInterval(function () {
-            if (liveTracker.data && attacksManager.attacks.length > 0 && regionsManager.regions.length > 0) {
+            if (liveTracker.data && attacksManager.attacks.length > 0 && regionsManager.regions.length > 0 && i18n.translations[currentLang]) {
                 clearInterval(checkLoaded);
                 resolve();
             }
@@ -264,10 +267,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             searching: true,
             language: {
                 search: i18n.t('Search'),
-                lengthMenu: i18n.t('Show MENU entries'),
-                info: i18n.t('Showing START to END of TOTAL entries'),
+                // _MENU_, _START_ etc. are DataTables placeholders and must survive translation
+                lengthMenu: i18n.t('Show _MENU_ entries'),
+                info: i18n.t('Showing _START_ to _END_ of _TOTAL_ entries'),
                 infoEmpty: i18n.t('Showing 0 to 0 of 0 entries'),
-                infoFiltered: i18n.t('(filtered from MAX total entries)'),
+                infoFiltered: i18n.t('(filtered from _MAX_ total entries)'),
+                zeroRecords: i18n.t('No matching records found'),
                 paginate: {
                     first: i18n.t('First'),
                     last: i18n.t('Last'),

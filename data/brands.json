@@ -304,7 +304,7 @@
 {"id": 302, "name": "Carrefour", "ar_name": "كارفور", "logo": "carrefour.png", "first_ar_letter": "ك", "first_letter": "c", "video": "palestine.gif", "alternative_id": 2, "made_by": 231},
 {"id": 303, "name": "Dasani", "ar_name": "داساني", "logo": "dasani.png", "first_ar_letter": "د", "first_letter": "d", "video": "palestine.gif", "alternative_id": 21, "made_by": 231},
 {"id": 304, "name": "Baraka", "ar_name": "بركة", "logo": "baraka.png", "first_ar_letter": "ب", "first_letter": "b", "video": "palestine.gif", "alternative_id": 22, "made_by": 231},
-{"id": 305, "name": "Clorets", "ar_name": "بركة", "logo": "clorets.png", "first_ar_letter": "ك", "first_letter": "c", "video": "palestine.gif", "alternative_id": 124, "made_by": 231},
+{"id": 305, "name": "Clorets", "ar_name": "كلوريتس", "logo": "clorets.png", "first_ar_letter": "ك", "first_letter": "c", "video": "palestine.gif", "alternative_id": 124, "made_by": 231},
 {"id": 306, "name": "Persil", "ar_name": "برسيل", "logo": "persil.png", "first_ar_letter": "ب", "first_letter": "p", "video": "palestine.gif", "alternative_id": 12, "made_by": 231},
 {"id": 307, "name": "Pril", "ar_name": "بريل", "logo": "pril.png", "first_ar_letter": "ب", "first_letter": "p", "video": "palestine.gif", "alternative_id": 12, "made_by": 231},
 {"id": 308, "name": "General", "ar_name": "جينيرال", "logo": "general.png", "first_ar_letter": "ج", "first_letter": "g", "video": "palestine.gif", "alternative_id": 125, "made_by": 231},

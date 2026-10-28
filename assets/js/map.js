@@ -20,7 +20,7 @@ function initializeOriginalMap() {
     // Populate regions array from attacks data
     mapRegions = attacksManager.attacks.map(function (attack) {
         return {
-            region_name: attack.region_name,
+            region_name: i18n.t(attack.region_name),
             region_code: 'PS-' + regionsManager.getSvgCode(attack.region_id),
             deaths: attack.total_deaths,
             injuries: attack.total_injuries,
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Wait for data to load
     await new Promise(function (resolve) {
         const checkLoaded = setInterval(function () {
-            if (attacksManager.attacks.length > 0 && regionsManager.regions.length > 0) {
+            if (attacksManager.attacks.length > 0 && regionsManager.regions.length > 0 && i18n.translations[currentLang]) {
                 clearInterval(checkLoaded);
                 resolve();
             }

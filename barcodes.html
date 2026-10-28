@@ -70,7 +70,7 @@
 
     <link rel="stylesheet" type="text/css" href="assets/brands/css/demo.css" />
             <link rel="stylesheet" type="text/css" href="assets/brands/css/normalize.css" />
-            <script type="text/javascript" src="js/modernizr.custom.79639.js"></script>
+            <script type="text/javascript" src="assets/brands/js/modernizr.custom.79639.js"></script>
             <!--[if lte IE 8]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
             <link rel="stylesheet" type="text/css" href="assets/brands/css/component2.css" />
 
@@ -1245,7 +1245,7 @@
                                 <li><a href="map.html">Original Map</a>
                                 </li>
                                 <li><a href="brands.html">Support</a></li>
-                                <li><a href="live-ar.html" class="language-link">AR</a></li>
+                                <li><a href="#" class="language-link" data-lang="ar">AR</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -1265,22 +1265,16 @@
                 <div class="component">
                     <h2>Support</h2>
                     <!-- Start Nav Structure -->
-                    <button class="cn-button" id="cn-button">Menu</button>
+                    <button class="cn-button" id="cn-button" data-i18n="Menu">Menu</button>
                     <div class="cn-wrapper" id="cn-wrapper">
                         <ul>
-                            <li><a href="brands.html"><span>Brands</span></a></li>
-                            <li><a href="barcodes.html"><span>Barcodes</span></a>
-                            </li>
-                            <li><a href="celebrities.html"><span>Celebrities <br> <small class="badge badge-info">(
-                                            Soon )</small></span></a></li>
-                            <li><a href="#"><span>Hashtags <br> <small class="badge badge-info">( Soon
-                                            )</small></span></a></li>
-                            <li><a href="#"><span>Encryption <br><small class="badge badge-info">(
-                                            Soon )</small></span></a></li>
-                            <li><a href="#"><span>Gallery <br><small class="badge badge-info">( Soon
-                                            )</small></span></a></li>
-                            <li><a href="#"><span>Donations <br><small class="badge badge-info">( Soon
-                                            )</small></span></a></li>
+                            <li><a href="brands.html"><span data-i18n="Brands">Brands</span></a></li>
+                            <li><a href="barcodes.html"><span data-i18n="Barcodes">Barcodes</span></a></li>
+                            <li><a href="celebrities.html"><span data-i18n="Celebrities">Celebrities</span></a></li>
+                            <li><a href="#" aria-disabled="true"><span data-i18n="Hashtags">Hashtags</span> <br><small class="badge badge-info">(<span data-i18n="Soon">Soon</span>)</small></a></li>
+                            <li><a href="#" aria-disabled="true"><span data-i18n="Encryption">Encryption</span> <br><small class="badge badge-info">(<span data-i18n="Soon">Soon</span>)</small></a></li>
+                            <li><a href="#" aria-disabled="true"><span data-i18n="Gallery">Gallery</span> <br><small class="badge badge-info">(<span data-i18n="Soon">Soon</span>)</small></a></li>
+                            <li><a href="#" aria-disabled="true"><span data-i18n="Donations">Donations</span> <br><small class="badge badge-info">(<span data-i18n="Soon">Soon</span>)</small></a></li>
                         </ul>
                     </div>
                     <!-- End of Nav Structure -->
