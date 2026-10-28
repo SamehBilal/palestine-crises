@@ -55,6 +55,11 @@ function populateLetterFilters() {
         container.appendChild(btn);
     });
 }
+// Swap a missing celebrity photo for a generic image (once, so a missing fallback can't loop)
+function useFallbackImage() {
+    this.onerror = null;
+    this.src = 'assets/images/palestine.jpg';
+}
 // Populate celebrities grid
 function populateCelebritiesGrid() {
     const grid = document.getElementById('glossary-grid');
@@ -99,9 +104,7 @@ function populateCelebritiesGrid() {
             img.className = 'grid__item-img';
             img.src = 'assets/celebrities/img/' + celebrity.image;
             img.alt = celebrity.name;
-            img.onerror = function () {
-                this.src = 'assets/celebrities/img/placeholder.jpg'; // Fallback image
-            };
+            img.onerror = useFallbackImage;
 
             wrapDiv.appendChild(img);
 
@@ -139,6 +142,7 @@ function populateCelebritiesGrid() {
             img.className = 'content__item-img';
             img.src = 'assets/celebrities/img/' + celebrity.image;
             img.alt = celebrity.name;
+            img.onerror = useFallbackImage;
 
             const titleH2 = document.createElement('h2');
             titleH2.className = 'content__item-title';
@@ -230,6 +234,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Populate page elements
     populateLetterFilters();
     populateCelebritiesGrid();
+    // Grid hover/expand effects (demo.js) need the grids to exist first
+    if (typeof window.initCelebrityGrids === 'function') {
+        window.initCelebrityGrids();
+    }
     // Initialize Isotope (needs jQuery)
     if (typeof jQuery !== 'undefined') {
         initializeIsotope();

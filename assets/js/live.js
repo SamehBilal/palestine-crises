@@ -5,30 +5,9 @@
 // Initialize map colors and interaction
 function initializePalestineMap() {
     const regions = []; // Will be populated from attacks data
-    // Map region IDs to SVG path IDs
-    const regionIdMap = {
-        1: 'RBH',  // West Bank -> Ramallah (aggregate)
-        4: 'NBS',  // Nablus
-        5: 'RBH',  // Ramallah
-        9: 'JEN',  // Jenin
-        10: 'BTH', // Bethlehem
-        12: 'TKM', // Tulkarm
-        16: 'HBN', // Hebron
-        20: 'GZA', // Gaza (main)
-        22: 'JEM', // Jerusalem
-        23: 'JRH', // Jericho
-        24: 'SLT', // Salfit
-        25: 'TBS', // Tubas
-        26: 'QQA', // Qalqilya
-        // ADD THESE 4 LINES:
-        18: 'KYS', // Khan Yunis
-        27: 'DEB', // Deir El Balah
-        28: 'NGZ', // North Gaza
-        29: 'RFH'  // Rafah
-    };
-    // Populate regions array from attacksManager
+    // Populate regions array from attacksManager; SVG path ids come from regions.json
     attacksManager.attacks.forEach(function (attack) {
-        const svgCode = regionIdMap[attack.region_id] || attack.region_id;
+        const svgCode = regionsManager.getSvgCode(attack.region_id);
         regions.push({
             region_name: attack.region_name,
             region_code: svgCode,
@@ -212,15 +191,7 @@ function populateRegionSelect() {
         jQuery(select).on('change', function () {
             var regionId = parseInt(jQuery(this).val());
 
-            // Map to get SVG code
-            const regionIdMap = {
-                1: 'RBH', 4: 'NBS', 5: 'RBH', 9: 'JEN', 10: 'BTH',
-                12: 'TKM', 16: 'HBN', 20: 'GZA', 22: 'JEM', 23: 'JRH',
-                24: 'SLT', 25: 'TBS', 26: 'QQA', 18: 'KYS', 27: 'DEB',
-                28: 'NGZ', 29: 'RFH'
-            };
-
-            var svgCode = regionIdMap[regionId];
+            var svgCode = regionsManager.getSvgCode(regionId);
 
             // Reset all regions to their original colors
             document.querySelectorAll('.map-dashboard path').forEach(function (path) {
@@ -272,7 +243,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Wait for all managers to load
     await new Promise(function (resolve) {
         const checkLoaded = setInterval(function () {
-            if (liveTracker.data && attacksManager.attacks.length > 0) {
+            if (liveTracker.data && attacksManager.attacks.length > 0 && regionsManager.regions.length > 0) {
                 clearInterval(checkLoaded);
                 resolve();
             }

@@ -282,6 +282,8 @@
 			this.DOM = {el: el};
 			// The grid wrap.
 			this.DOM.gridWrap = this.DOM.el.parentNode;
+			// Scope content lookups to this grid's <main> so several grids can live on one page.
+			const scope = this.DOM.el.closest('main') || document;
 			// The grid items.
             this.items = [];
             Array.from(this.DOM.el.querySelectorAll('.grid__item')).forEach(itemEl => this.items.push(new GridItem(itemEl)));
@@ -289,10 +291,10 @@
 			this.itemsTotal = this.items.length;
 			// The content items.
 			this.contents = [];
-			Array.from(document.querySelectorAll('.content > .content__item')).forEach(contentEl => this.contents.push(new Content(contentEl)));
+			Array.from(scope.querySelectorAll('.content > .content__item')).forEach(contentEl => this.contents.push(new Content(contentEl)));
 			// Back control and scroll indicator (elements shown when the item´s content is open).
-			this.DOM.closeCtrl = document.querySelector('.content__close');
-			this.DOM.scrollIndicator = document.querySelector('.content__indicator');
+			this.DOM.closeCtrl = scope.querySelector('.content__close');
+			this.DOM.scrollIndicator = scope.querySelector('.content__indicator');
 			// The open grid item.
 			this.current = -1;
             // Init/Bind events.
@@ -528,18 +530,21 @@
     calcWinsize();
     window.addEventListener('resize', calcWinsize);
 
-	// Initialize the Grid.
-	const grid = new Grid(document.querySelector('.grid'));
+	// Initialize every grid. Called by celebrities.js once the grids are built from data.
+	window.initCelebrityGrids = () => {
+		document.querySelectorAll('.grid').forEach(gridEl => {
+			const grid = new Grid(gridEl);
 
-	// Preload images.
-	imagesLoaded(document.querySelectorAll('.grid__item-img'), () => {
-		body.classList.remove('loading');
-		var msnry = new Masonry( grid.DOM.el, {
-			// options
-			itemSelector: '.grid__item',
-			columnWidth: 260,
-			gutter: 100,
-			fitWidth: true
+			// Preload images.
+			imagesLoaded(gridEl.querySelectorAll('.grid__item-img'), () => {
+				body.classList.remove('loading');
+				new Masonry(grid.DOM.el, {
+					itemSelector: '.grid__item',
+					columnWidth: 260,
+					gutter: 100,
+					fitWidth: true
+				});
+			});
 		});
-	});
+	};
 }

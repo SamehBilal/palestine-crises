@@ -155,6 +155,11 @@ class RegionsManager {
             region.name.toLowerCase() === name.toLowerCase()
         );
     }
+    // SVG path id suffix for a region, e.g. 5 (Ramallah) -> 'RBH' for <path id="PS-RBH">
+    getSvgCode(id) {
+        const region = this.getRegion(id);
+        return region ? region.code.replace(/^PS-/, '') : null;
+    }
 }
 // ============================================
 // ATTACKS MANAGER
@@ -180,20 +185,29 @@ class AttacksManager {
             attack.region_name.toLowerCase() === regionName.toLowerCase()
         );
     }
+    // Rows to sum for totals. "West Bank" and "Gaza" are aggregates of their governorates
+    // (flagged is_aggregate in attacks.json), so summing every row would count deaths twice.
+    getTotalsRows() {
+        const aggregates = this.attacks.filter(attack => attack.is_aggregate);
+        return aggregates.length > 0 ? aggregates : this.attacks;
+    }
+    sumField(field) {
+        return this.getTotalsRows().reduce((sum, attack) => sum + attack[field], 0);
+    }
     getTotalDeaths() {
-        return this.attacks.reduce((sum, attack) => sum + attack.total_deaths, 0);
+        return this.sumField('total_deaths');
     }
     getTotalChildrenDeaths() {
-        return this.attacks.reduce((sum, attack) => sum + attack.children_deaths, 0);
+        return this.sumField('children_deaths');
     }
     getTotalWomenDeaths() {
-        return this.attacks.reduce((sum, attack) => sum + attack.women_deaths, 0);
+        return this.sumField('women_deaths');
     }
     getTotalInjuries() {
-        return this.attacks.reduce((sum, attack) => sum + attack.total_injuries, 0);
+        return this.sumField('total_injuries');
     }
     getTotalDisplaced() {
-        return this.attacks.reduce((sum, attack) => sum + attack.total_displaced, 0);
+        return this.sumField('total_displaced');
     }
     getRegionsByDeaths() {
         return [...this.attacks].sort((a, b) => b.total_deaths - a.total_deaths);

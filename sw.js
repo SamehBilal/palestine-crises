@@ -1,37 +1,35 @@
 
 // Service Worker for Palestine Crisis
 // Provides offline support and caching
-const CACHE_NAME = 'palestine-crisis-v1';
-const DATA_CACHE_NAME = 'palestine-crisis-data-v1';
-// Files to cache on install
+const CACHE_NAME = 'palestine-crisis-v2';
+const DATA_CACHE_NAME = 'palestine-crisis-data-v2';
+// Files to cache on install. Paths are relative to sw.js so the site also works from a subfolder,
+// and every entry must exist: cache.addAll() fails the whole install on a single 404.
 const filesToCache = [
-'/',
-'/live.html',
-'/live-ar.html',
-'/index.html',
-'/offline.html',
-'/assets/css/style.css',
-'/assets/css/bootstrap.min.css',
-'/assets/js/app.js',
-'/assets/js/live.js',
-'/assets/js/active.js',
-'/assets/js/jquery.min.js',
-'/assets/js/bootstrap.min.js',
-'/assets/js/chart.min.js',
-'/assets/img/logo2.png',
-'/assets/img/palestine.webp',
-'/assets/palestine_favicon.png'
+'live.html',
+'offline.html',
+'assets/css/style.css',
+'assets/css/bootstrap.min.css',
+'assets/js/app.js',
+'assets/js/live.js',
+'assets/js/active.js',
+'assets/js/jquery.min.js',
+'assets/js/bootstrap.min.js',
+'assets/js/chart.min.js',
+'assets/img/logo2.png',
+'assets/img/palestine.webp',
+'assets/palestine_favicon.png'
 ];
 // Data files to cache separately (updated more frequently)
 const dataFiles = [
-'/data/livetracker.json',
-'/data/regions.json',
-'/data/attacks.json',
-'/data/translations.json',
-'/data/brands.json',
-'/data/barcodes.json',
-'/data/celebrities.json',
-'/data/hashtags.json'
+'data/livetracker.json',
+'data/regions.json',
+'data/attacks.json',
+'data/translations.json',
+'data/brands.json',
+'data/barcodes.json',
+'data/celebrities.json',
+'data/hashtags.json'
 ];
 // Install event - cache files
 self.addEventListener('install', function(event) {
@@ -83,7 +81,7 @@ if (requestUrl.origin !== location.origin) {
 }
 
 // Handle data files - network first, cache fallback
-if (requestUrl.pathname.startsWith('/data/')) {
+if (requestUrl.pathname.includes('/data/')) {
     event.respondWith(
         caches.open(DATA_CACHE_NAME).then(function(cache) {
             return fetch(event.request)
@@ -125,7 +123,7 @@ event.respondWith(
             return response;
         }).catch(function() {
             // Show offline page if available
-            return caches.match('/offline.html');
+            return caches.match('offline.html');
         });
     })
 );

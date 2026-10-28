@@ -10,7 +10,6 @@
         content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
     <meta content="Sameh Bilal" name="author" />
     <meta name="twitter:title" content="Palestine Crisis" />
-    <meta name="twitter:site" content="{{ url()->current() }}" />
     <meta name="twitter:creator" content="Sameh Bilal" />
     <meta name="twitter:description"
         content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
@@ -31,8 +30,8 @@
 
     <!-- PWA  -->
     <meta name="theme-color" content="#292833" />
-    <link rel="apple-touch-icon" href="logo.PNG">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
 
     <!-- build:css assets/css/app.min.css -->
     <!--== jqvmap Min CSS ==-->
@@ -65,8 +64,7 @@
         "@type": "Website",
         "name": "Palestine Crisis",
         "alternateName": "Palestine Crisis",
-        "url": "{{ url()->current() }}",
-        "logo": "assets/img/logo2.png",
+        "logo": "assets/img/logo2.png"
         }
     </script>
 
@@ -1454,174 +1452,15 @@
     <script src="assets/brands/js/polyfills.js"></script>
     <script src="assets/brands/js/demo2.js"></script>
 
-    <script>
-        var regions = [
-            @foreach($attacks as $attack)
-                {
-                "region_name": "{{ __('content.'.$attack->regions->name) }}",
-                "region_code": "{{ $attack->regions->code }}",
-                "deaths": {{ $attack-> total_deaths }}
-                },
-        @endforeach
-        {
-            "region_name": "{{ __('content.Jaffa') }}",
-                "region_code": "PS-JFA",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Nazaeth') }}",
-                "region_code": "PS-NAZ",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Dead Sea') }}",
-                "region_code": "PS-DS",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Allyd') }}",
-                "region_code": "PS-ALD",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Safad') }}",
-                "region_code": "PS-SAF",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Acre') }}",
-                "region_code": "PS-ACE",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Baysan') }}",
-                "region_code": "PS-BSN",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Tiberias') }}",
-                "region_code": "PS-TBA",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Lake Tiberias') }}",
-                "region_code": "PS-LTB",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Beersheba') }}",
-                "region_code": "PS-BSB",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Khan Yunis') }}",
-                "region_code": "PS-KYS",
-                    "deaths": 19667
-        },
-        {
-            "region_name": "{{ __('content.Alramlah') }}",
-                "region_code": "PS-ALR",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Haifa') }}",
-                "region_code": "PS-HFA",
-                    "deaths": 0
-        },
-        {
-            "region_name": "{{ __('content.Deir El Balah') }}",
-                "region_code": "PS-DEB",
-                    "deaths": 19667
-        },
-        {
-            "region_name": "{{ __('content.North Gaza') }}",
-                "region_code": "PS-NGZ",
-                    "deaths": 19667
-        },
-        {
-            "region_name": "{{ __('content.Rafah') }}",
-                "region_code": "PS-RFH",
-                    "deaths": 19667
-        },
-        ];
-
-
-        var temp_array = regions.map(function (item) {
-            return item.deaths;
-        });
-        var highest_value = Math.max.apply(Math, temp_array);
-
-        $(function () {
-
-            for (i = 0; i < regions.length; i++) {
-
-                $('#' + regions[i].region_code)
-                    .css({ 'fill': 'rgba(11, 104, 170,' + regions[i].deaths / (highest_value / 100) + ')' })
-                    .data('region', regions[i]);
-            }
-
-            $('.palestine-map path').mouseover(function (e) {
-                var region_data = $(this).data('region');
-                $('<div class="info_panel">' +
-                    region_data.region_name + '<br>' +
-                    '{{ __("content.Deaths") }}: ' + region_data.deaths.toLocaleString("en-UK") +
-                    '</div>'
-                )
-                    .appendTo('body');
-            })
-                .mouseleave(function () {
-                    $('.info_panel').remove();
-                })
-                .mousemove(function (e) {
-                    var mouseX = e.pageX, //X coordinates of mouse
-                        mouseY = e.pageY; //Y coordinates of mouse
-
-                    $('.info_panel').css({
-                        top: mouseY - 50,
-                        left: mouseX - ($('.info_panel').width() / 2)
-                    });
-                });
-
-        });
-
-        $('.btn-show-all').on('click', function () {
-            var type = $(this).attr('data-display');
-
-            if (type == 'all') {
-                $('.region-disabled').css('display', 'flex');
-                $(this).text('{{ __("content.View less Regions") }}');
-                $(this).attr('data-display', 'less');
-            } else {
-                $(this).text('{{ __("content.View all Regions") }}');
-                $('.region-disabled').css('display', 'none');
-                $(this).attr('data-display', 'all');
-            }
-        })
-
-        $('#select1').on('change', function () {
-            $('.map-dashboard').find('path').css({
-                'stroke': 'rgb(247, 247, 247)',
-                'stroke-width:': '0.400293px',
-            });
-            let value = $(this).val();
-            $('#' + value).css({
-                /* 'fill' : '#00CBAD', */
-                'stroke': 'red',
-                'stroke-width:': '1px',
-            });
-        })
-    </script>
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
         data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD"
         data-position="Right" data-x_margin="18" data-y_margin="18"></script>
     <!-- endbuild -->
 
-    <script src="/sw.js"></script>
     <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function (reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
+        // register() is idempotent, so calling it on every load also picks up sw.js updates
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 

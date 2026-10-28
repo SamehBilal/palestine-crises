@@ -14,7 +14,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 1,
-    "region_name": "West Bank"
+    "region_name": "West Bank",
+    "is_aggregate": true
   },
   {
     "id": 2,
@@ -31,7 +32,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 20,
-    "region_name": "Gaza"
+    "region_name": "Gaza",
+    "is_aggregate": true
   },
   {
     "id": 3,
@@ -48,7 +50,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 9,
-    "region_name": "Jenin"
+    "region_name": "Jenin",
+    "is_aggregate": false
   },
   {
     "id": 4,
@@ -65,7 +68,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 10,
-    "region_name": "Bethlehem"
+    "region_name": "Bethlehem",
+    "is_aggregate": false
   },
   {
     "id": 5,
@@ -82,7 +86,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 16,
-    "region_name": "Hebron"
+    "region_name": "Hebron",
+    "is_aggregate": false
   },
   {
     "id": 6,
@@ -99,7 +104,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 12,
-    "region_name": "Tulkarm"
+    "region_name": "Tulkarm",
+    "is_aggregate": false
   },
   {
     "id": 7,
@@ -116,7 +122,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 22,
-    "region_name": "Jerusalem"
+    "region_name": "Jerusalem",
+    "is_aggregate": false
   },
   {
     "id": 8,
@@ -133,7 +140,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 5,
-    "region_name": "Ramallah"
+    "region_name": "Ramallah",
+    "is_aggregate": false
   },
   {
     "id": 9,
@@ -150,7 +158,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 4,
-    "region_name": "Nablus"
+    "region_name": "Nablus",
+    "is_aggregate": false
   },
   {
     "id": 10,
@@ -167,7 +176,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 26,
-    "region_name": "Qalqilya"
+    "region_name": "Qalqilya",
+    "is_aggregate": false
   },
   {
     "id": 11,
@@ -184,7 +194,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 25,
-    "region_name": "Tubas"
+    "region_name": "Tubas",
+    "is_aggregate": false
   },
   {
     "id": 12,
@@ -201,7 +212,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 23,
-    "region_name": "Jericho"
+    "region_name": "Jericho",
+    "is_aggregate": false
   },
   {
     "id": 13,
@@ -218,7 +230,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 24,
-    "region_name": "Salfit"
+    "region_name": "Salfit",
+    "is_aggregate": false
   },
   {
     "id": 14,
@@ -235,7 +248,8 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 18,
-    "region_name": "Khan Yunis"
+    "region_name": "Khan Yunis",
+    "is_aggregate": false
   },
   {
     "id": 15,
@@ -252,10 +266,11 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 27,
-    "region_name": "Deir El Balah"
+    "region_name": "Deir El Balah",
+    "is_aggregate": false
   },
   {
-    "id": 2,
+    "id": 16,
     "total_deaths": 29195,
     "women_deaths": 8570,
     "children_deaths": 12660,
@@ -269,10 +284,11 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 28,
-    "region_name": "North Gaza"
+    "region_name": "North Gaza",
+    "is_aggregate": false
   },
   {
-    "id": 2,
+    "id": 17,
     "total_deaths": 29195,
     "women_deaths": 8570,
     "children_deaths": 12660,
@@ -286,6 +302,7 @@
     "duration": 0,
     "date_of_occurance": "2023-11-10 22:50:00",
     "region_id": 29,
-    "region_name": "Rafah"
+    "region_name": "Rafah",
+    "is_aggregate": false
   }
 ]

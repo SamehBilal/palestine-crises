@@ -9,7 +9,6 @@
     <meta name="description" content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
     <meta content="Sameh Bilal" name="author" />
     <meta name="twitter:title" content="Palestine Crisis" />
-    <meta name="twitter:site" content="{{ url()->current() }}" />
     <meta name="twitter:creator" content="Sameh Bilal" />
     <meta name="twitter:description" content="Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause." />
     <meta name="twitter:card" content="summary_large_image" />
@@ -24,7 +23,7 @@
 
     <!-- PWA  -->
     <meta name="theme-color" content="#292833" />
-    <link rel="apple-touch-icon" href="logo.PNG">
+    <link rel="apple-touch-icon" href="logo.png">
     <link rel="manifest" href="manifest.json">
 
     <!-- Fonts -->
@@ -36,8 +35,6 @@
 
 
     <!-- Scripts -->
-    <link rel="stylesheet" href="build/assets/app-462c5206.css">
-    <script src="build/assets/app-02317797.js"></script>
 
     <!--[if lt IE 10]>
 				<link rel="stylesheet" type="text/css" href="landing/css/style2IE.css" />
@@ -49,8 +46,7 @@
             "@type": "Website",
             "name": "Palestine Crisis",
             "alternateName": "Palestine Crisis",
-            "url": "{{ url()->current() }}",
-            "logo": "assets/img/logo2.png",
+            "logo": "assets/img/logo2.png"
             }
         </script>
 </head>
@@ -78,12 +74,10 @@
         </div>
     </div>
 
-    <script src="sw.js"></script>
     <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function (reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
+        // register() is idempotent, so calling it on every load also picks up sw.js updates
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>

@@ -30,8 +30,8 @@
 
     <!-- PWA  -->
     <meta name="theme-color" content="#292833" />
-    <link rel="apple-touch-icon" href="logo.PNG">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
 
     <!--== CSS ==-->
     <link href="assets/css/jqvmap.min.css" rel="stylesheet" />
@@ -413,7 +413,7 @@
 
                             <div class="tracker-block tracker-block--3 text-center">
                                 <div class="tracker-block__top">
-                                    <h4 data-i18n="1:34 AM From OCT the 7th">From OCT the 7th</h4>
+                                    <h4 data-i18n="From OCT the 7th">From OCT the 7th</h4>
                                     <p><span data-i18n="Updated">Updated</span> <span class="last-update">0</span> <span
                                             data-i18n="minutes ago">minutes ago</span></p>
                                     <h5 class="tracker-block__bottom__item-title track-item__title-recovered"
@@ -498,12 +498,10 @@
         data-id="samehbilal" data-description="Support me on Buy me a coffee!" data-color="#00CBAD"
         data-position="Right" data-x_margin="18" data-y_margin="18"></script>
 
-    <script src="sw.js"></script>
     <script>
-        if (!navigator.serviceWorker.controller) {
-            navigator.serviceWorker.register("/sw.js").then(function (reg) {
-                console.log("Service worker has been registered for scope: " + reg.scope);
-            });
+        // register() is idempotent, so calling it on every load also picks up sw.js updates
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
