@@ -106,8 +106,8 @@ function generateBrandStyles() {
             styles += '}';
 
             // Hover effect to show alternative name
-            styles += '.card-title-' + brand.id + ':hover span { display: none; }';
-            styles += '.card-title-' + brand.id + ':hover p:before {';
+            styles += '.card-title-' + brand.id + ':hover span, .card-title-' + brand.id + ':focus span { display: none; }';
+            styles += '.card-title-' + brand.id + ':hover p:before, .card-title-' + brand.id + ':focus p:before {';
             styles += '  content: "' + brandName(alternative).replace(/["\\]/g, '\\$&') + '";';
             styles += '}';
         } else {
@@ -123,9 +123,8 @@ function generateBrandStyles() {
     // Inject styles
     const styleElement = document.createElement('style');
     styleElement.id = 'brand-styles';
-    styleElement.innerHTML = styles;
+    styleElement.textContent = styles;
     document.head.appendChild(styleElement);
-    console.log('Generated styles for', brandsManager.brands.filter(b => b.alternative_id !== 0).length, 'brands');
 }
 // Populate letter filter buttons
 function populateLetterFilters() {
@@ -185,6 +184,12 @@ function populateBrandsGrid() {
                 '</div>' +
                 '<p class="card-title card-front"><span></span></p>';
             li.querySelector('.card-title span').textContent = brandName(brand);
+            // Focusable so keyboard and touch users can flip the card to see the alternative
+            // (style7.css flips on :focus as well as :hover); screen readers get it as a label
+            li.tabIndex = 0;
+            li.setAttribute('aria-label', alternative
+                ? brandName(brand) + ' → ' + brandName(alternative)
+                : brandName(brand));
 
             ul.appendChild(li);
         });
@@ -192,7 +197,6 @@ function populateBrandsGrid() {
         brandsDiv.appendChild(ul);
         grid.appendChild(brandsDiv);
     });
-    console.log('Populated brands grid with', brandsManager.letters.length, 'letter groups');
 }
 // Initialize Isotope for filtering
 function initializeIsotope() {
@@ -231,15 +235,8 @@ function initializeIsotope() {
 }
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', async function () {
-    console.log('Initializing brands page...');
     // Wait for brands manager to load
     await brandsManager.loadBrands();
-    const mainBrands = brandsManager.brands.filter(b => b.alternative_id !== 0);
-    const alternativeBrands = brandsManager.brands.filter(b => b.alternative_id === 0);
-    console.log('Total brands:', brandsManager.brands.length);
-    console.log('Main brands (to boycott):', mainBrands.length);
-    console.log('Alternative brands (replacements):', alternativeBrands.length);
-    console.log('Letters:', brandsManager.letters.join(', '));
     // Generate dynamic styles
     generateBrandStyles();
     // Populate page elements
@@ -253,5 +250,4 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (typeof i18n !== 'undefined') {
         i18n.applyTranslations();
     }
-    console.log('Brands page initialized successfully!');
 });

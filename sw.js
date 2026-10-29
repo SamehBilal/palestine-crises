@@ -1,8 +1,8 @@
 
 // Service Worker for Palestine Crisis
 // Provides offline support and caching
-const CACHE_NAME = 'palestine-crisis-v5';
-const DATA_CACHE_NAME = 'palestine-crisis-data-v5';
+const CACHE_NAME = 'palestine-crisis-v6';
+const DATA_CACHE_NAME = 'palestine-crisis-data-v6';
 // Files to cache on install. Paths are relative to sw.js so the site also works from a subfolder,
 // and every entry must exist: cache.addAll() fails the whole install on a single 404.
 const filesToCache = [
@@ -28,20 +28,16 @@ const dataFiles = [
 'data/translations.json',
 'data/brands.json',
 'data/barcodes.json',
-'data/celebrities.json',
-'data/hashtags.json'
+'data/celebrities.json'
 ];
 // Install event - cache files
 self.addEventListener('install', function(event) {
-console.log('[ServiceWorker] Install');
 event.waitUntil(
     Promise.all([
         caches.open(CACHE_NAME).then(function(cache) {
-            console.log('[ServiceWorker] Caching app shell');
             return cache.addAll(filesToCache);
         }),
         caches.open(DATA_CACHE_NAME).then(function(cache) {
-            console.log('[ServiceWorker] Caching data files');
             return cache.addAll(dataFiles);
         })
     ])
@@ -51,13 +47,11 @@ self.skipWaiting();
 });
 // Activate event - cleanup old caches
 self.addEventListener('activate', function(event) {
-console.log('[ServiceWorker] Activate');
 event.waitUntil(
     caches.keys().then(function(cacheNames) {
         return Promise.all(
             cacheNames.map(function(cacheName) {
                 if (cacheName !== CACHE_NAME && cacheName !== DATA_CACHE_NAME) {
-                    console.log('[ServiceWorker] Removing old cache', cacheName);
                     return caches.delete(cacheName);
                 }
             })

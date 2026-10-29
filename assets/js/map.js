@@ -19,9 +19,6 @@ function initializeOriginalMap() {
             displaced: attack.total_displaced
         };
     });
-    // Calculate highest value for opacity scaling
-    const temp_array = mapRegions.map(item => item.deaths);
-    const highest_value = Math.max(...temp_array);
     // Color each region
     mapRegions.forEach(function (region) {
         const element = document.querySelector('#' + region.region_code);
@@ -29,7 +26,6 @@ function initializeOriginalMap() {
             const color = getColorForDeaths(region.deaths);
             element.style.fill = color;
             element.setAttribute('data-region', JSON.stringify(region));
-            console.log('Colored:', region.region_name, 'Deaths:', region.deaths);
         }
     });
     // Add hover tooltips
@@ -40,8 +36,7 @@ function initializeOriginalMap() {
                 const region = JSON.parse(regionData);
                 const panel = document.createElement('div');
                 panel.className = 'info_panel';
-                panel.innerHTML = '<strong>' + region.region_name + '</strong><br>' +
-                    i18n.t('Deaths') + ': ' + region.deaths.toLocaleString();
+                fillRegionTooltip(panel, region.region_name, region.deaths);
                 document.body.appendChild(panel);
             }
         });
@@ -93,7 +88,9 @@ function populateRegionSelect() {
             if (!opt.id) return opt.text;
             const optimage = jQuery(opt.element).attr('data-image');
             if (!optimage) return opt.text;
-            return jQuery('<span><img src="' + optimage + '" class="img-flag" style="width:30px;margin-right:10px;" />' + opt.text + '</span>');
+            const option = flagOption(optimage, opt.text);
+            option.find('img').css({ width: '30px', marginInlineEnd: '10px' });
+            return option;
         }
         jQuery(select).select2({
             templateSelection: formatState,
@@ -115,15 +112,12 @@ function populateRegionSelect() {
 }
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', async function () {
-    console.log('Initializing map page...');
     // Shared data (translations, tracker, regions, attacks) from app.js
     await appReady;
-    console.log('Data loaded, initializing map...');
     initializeOriginalMap();
     populateRegionSelect();
     // Apply translations
     if (typeof i18n !== 'undefined') {
         i18n.applyTranslations();
     }
-    console.log('Map page initialized successfully!');
 });

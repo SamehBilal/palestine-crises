@@ -18,6 +18,23 @@ let currentLang = (function () {
 function getLocale() {
     return currentLang === 'ar' ? 'ar-u-nu-latn' : 'en-US';
 }
+// Fill a map tooltip with a region's name and death count. Built as text nodes because
+// names come from the data files.
+function fillRegionTooltip(panel, regionName, deaths) {
+    const name = document.createElement('strong');
+    name.textContent = regionName;
+    const count = document.createElement('span');
+    count.className = 'info_panel-deaths';
+    count.textContent = Number(deaths).toLocaleString();
+    panel.append(name, document.createElement('br'), i18n.t('Deaths') + ': ', count);
+    return panel;
+}
+// Select2 option with a flag image, built as elements rather than an HTML string
+function flagOption(imageSrc, text) {
+    return jQuery('<span>')
+        .append(jQuery('<img class="img-flag">').attr('src', imageSrc))
+        .append(document.createTextNode(text));
+}
 // Map fill for a region's death count; keep in step with the legend in live.html (<10, 10-99, 100+)
 function getColorForDeaths(deaths) {
     if (deaths < 10) {
@@ -122,11 +139,6 @@ class LiveTrackerManager {
                 elem.textContent = value.toLocaleString();
             });
         };
-
-        // Calculate rates
-        const deathRate = ((this.data.total_deaths * 100) / this.data.total_deaths).toFixed(2);
-        const childrenRate = ((this.data.children_deaths * 100) / this.data.total_deaths).toFixed(2);
-        const womenRate = ((this.data.women_deaths * 100) / this.data.total_deaths).toFixed(2);
 
         // Insert data
         dataToDOM('.total-deaths', this.data.total_deaths);
@@ -239,75 +251,6 @@ class AttacksManager {
     }
     getRegionsByDeaths() {
         return [...this.attacks].sort((a, b) => b.total_deaths - a.total_deaths);
-    }
-    renderAttacksTable(containerId, lang = 'en') {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        const translations = {
-            en: {
-                region: 'Region',
-                deaths: 'Deaths',
-                children: 'Children',
-                women: 'Women',
-                injured: 'Injured',
-                displaced: 'Displaced'
-            },
-            ar: {
-                region: 'المنطقة',
-                deaths: 'الوفيات',
-                children: 'أطفال',
-                women: 'نساء',
-                injured: 'مصابين',
-                displaced: 'نازحين'
-            }
-        };
-
-        const t = translations[lang];
-
-        let html = `
-  <table class="attacks-table">
-    <thead>
-      <tr>
-        <th>${t.region}</th>
-        <th>${t.deaths}</th>
-        <th>${t.children}</th>
-        <th>${t.women}</th>
-        <th>${t.injured}</th>
-        <th>${t.displaced}</th>
-      </tr>
-    </thead>
-    <tbody>
-`;
-
-        this.attacks.forEach(attack => {
-            html += `
-    <tr class="country-search" data-region="${attack.region_name}">
-      <td>${attack.region_name}</td>
-      <td class="number">${attack.total_deaths.toLocaleString()}</td>
-      <td class="number">${attack.children_deaths.toLocaleString()}</td>
-      <td class="number">${attack.women_deaths.toLocaleString()}</td>
-      <td class="number">${attack.total_injuries.toLocaleString()}</td>
-      <td class="number">${attack.total_displaced.toLocaleString()}</td>
-    </tr>
-  `;
-        });
-
-        html += `
-    </tbody>
-    <tfoot>
-      <tr class="totals">
-        <td><strong>Total</strong></td>
-        <td class="number"><strong>${this.getTotalDeaths().toLocaleString()}</strong></td>
-        <td class="number"><strong>${this.getTotalChildrenDeaths().toLocaleString()}</strong></td>
-        <td class="number"><strong>${this.getTotalWomenDeaths().toLocaleString()}</strong></td>
-        <td class="number"><strong>${this.getTotalInjuries().toLocaleString()}</strong></td>
-        <td class="number"><strong>${this.getTotalDisplaced().toLocaleString()}</strong></td>
-      </tr>
-    </tfoot>
-  </table>
-`;
-
-        container.innerHTML = html;
     }
 }
 // ============================================
@@ -502,31 +445,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const chartContainer = document.querySelector('#chart-report');
         if (chartContainer) {
             await chartReport(chartContainer);
-        }
-
-        // Render attacks table if element exists
-        const tableContainer = document.querySelector('#attacks-table-container');
-        if (tableContainer) {
-            attacksManager.renderAttacksTable('attacks-table-container', currentLang);
-
-            // Initialize DataTables if jQuery is available
-            if (typeof jQuery !== 'undefined' && jQuery.fn.DataTable) {
-                const table = jQuery('#attacks-table-container table');
-                const dataTable = table.DataTable({
-                    order: false,
-                    searching: true
-                });
-
-                // Handle region clicks
-                jQuery(document).on('click', '.country-search', function () {
-                    const region = jQuery(this).data('region');
-                    if (region && region !== 'All Regions' && region !== 'كل المناطق') {
-                        dataTable.search(region).draw();
-                    } else {
-                        dataTable.search('').draw();
-                    }
-                });
-            }
         }
 
     } catch (error) {

@@ -19,7 +19,6 @@ function updateAllLastUpdateElements() {
     const allLastUpdateElements = document.querySelectorAll('.last-update');
     const updateTime = liveTracker.getLastUpdateTime();
     
-    console.log('Updating', allLastUpdateElements.length, 'last-update elements. Minutes:', updateTime);
     
     allLastUpdateElements.forEach(function (elem) {
         updateLastUpdateElement(elem, updateTime);

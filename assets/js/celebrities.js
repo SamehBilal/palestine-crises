@@ -72,7 +72,9 @@ function populateCelebritiesGrid() {
         // Letter header
         const headerDiv = document.createElement('div');
         headerDiv.className = 'col-12 glossary-item glossary-filter_A-Z glossary-filter_' + letter.toUpperCase();
-        headerDiv.innerHTML = '<h2>' + letter.toUpperCase() + '</h2>';
+        const heading = document.createElement('h2');
+        heading.textContent = letter.toUpperCase();
+        headerDiv.appendChild(heading);
         grid.appendChild(headerDiv);
 
         // Celebrities grid container
@@ -157,7 +159,9 @@ function populateCelebritiesGrid() {
 
             const textDiv = document.createElement('div');
             textDiv.className = 'content__item-text';
-            textDiv.innerHTML = '<p>' + (celebrity.bio || 'Information about this celebrity will be added soon.') + '</p>';
+            const bio = document.createElement('p');
+            bio.textContent = celebrity.bio || 'Information about this celebrity will be added soon.';
+            textDiv.appendChild(bio);
 
             contentItem.appendChild(intro);
             contentItem.appendChild(subtitle);
@@ -184,7 +188,6 @@ function populateCelebritiesGrid() {
         celebsDiv.appendChild(mainWrapper);
         grid.appendChild(celebsDiv);
     });
-    console.log('Populated celebrities grid with', celebritiesManager.letters.length, 'letter groups');
 }
 // Initialize Isotope for filtering
 function initializeIsotope() {
@@ -226,11 +229,8 @@ function initializeIsotope() {
 }
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', async function () {
-    console.log('Initializing celebrities page...');
     // Wait for celebrities manager to load
     await celebritiesManager.loadCelebrities();
-    console.log('Total celebrities:', celebritiesManager.celebrities.length);
-    console.log('Letters:', celebritiesManager.letters.join(', '));
     // Populate page elements
     populateLetterFilters();
     populateCelebritiesGrid();
@@ -246,5 +246,4 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (typeof i18n !== 'undefined') {
         i18n.applyTranslations();
     }
-    console.log('Celebrities page initialized successfully!');
 });

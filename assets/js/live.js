@@ -24,7 +24,6 @@ function initializePalestineMap() {
             regionElement.style.strokeWidth = '0.5px';
             regionElement.setAttribute('data-region-name', region.region_name);
             regionElement.setAttribute('data-deaths', region.deaths);
-            console.log('Colored region:', region.region_name, 'Deaths:', region.deaths, 'Color:', color);
         } else {
             console.warn('SVG element not found for region:', region.region_code, '(', region.region_name, ')');
         }
@@ -41,9 +40,8 @@ function initializePalestineMap() {
 
                 const infoPanel = document.createElement('div');
                 infoPanel.className = 'info_panel';
-                infoPanel.innerHTML = '<strong>' + regionName + '</strong><br>' +
-                    i18n.t('Deaths') + ': <span style="color: #ff6b6b; font-weight: bold;">' +
-                    parseInt(deaths).toLocaleString() + '</span>';
+                fillRegionTooltip(infoPanel, regionName, parseInt(deaths));
+                infoPanel.querySelector('.info_panel-deaths').style.cssText = 'color: #ff6b6b; font-weight: bold;';
 
                 infoPanel.style.position = 'absolute';
                 infoPanel.style.background = 'rgba(0, 0, 0, 0.9)';
@@ -79,7 +77,6 @@ function initializePalestineMap() {
             }
         });
     });
-    console.log('Palestine map initialized with', regions.length, 'regions');
 }
 // Populate region list sidebar
 function populateRegionList() {
@@ -170,8 +167,7 @@ function populateRegionSelect() {
             var optimage = jQuery(opt.element).attr('data-image');
             if (!optimage) return opt.text;
 
-            var span = jQuery('<span><img src="' + optimage + '" class="img-flag" />' + opt.text + '</span>');
-            return span;
+            return flagOption(optimage, opt.text);
         }
 
         jQuery(select).select2({
@@ -193,10 +189,9 @@ function populateRegionSelect() {
 
             // Highlight selected region with red fill
             var selectedPath = document.querySelector('#PS-' + svgCode);
+            // Aggregates like "West Bank" have no single path on the map
             if (selectedPath) {
                 selectedPath.style.fill = 'red';
-            } else {
-                console.log('Path not found for:', svgCode, '(region ID:', regionId, ')');
             }
         });
     }
@@ -227,7 +222,6 @@ function initializeShowAllButton() {
 document.addEventListener('DOMContentLoaded', async function () {
     // Shared data (translations, tracker, regions, attacks) from app.js
     await appReady;
-    console.log('Initializing live page...');
     // Populate all elements
     populateRegionList();
     populateRegionsTable();
@@ -264,5 +258,4 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         });
     }
-    console.log('Live page initialized successfully!');
 });

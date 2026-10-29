@@ -100,7 +100,8 @@
 	color: rgba(255,242,34, 0.8);
 }
 
-.ch-item:hover .ch-info-front {
+.ch-item:hover .ch-info-front,
+.ch-grid li:focus .ch-info-front {
 	-webkit-transform: translate3d(0,140px,0) rotate3d(1,0,0,-90deg);
 	-moz-transform: translate3d(0,140px,0) rotate3d(1,0,0,-90deg);
 	-o-transform: translate3d(0,140px,0) rotate3d(1,0,0,-90deg);
@@ -109,7 +110,8 @@
 	opacity: 0;
 }
 
-.ch-item:hover .ch-info-back {
+.ch-item:hover .ch-info-back,
+.ch-grid li:focus .ch-info-back {
 	-webkit-transform: rotate3d(1,0,0,0deg);
 	-moz-transform: rotate3d(1,0,0,0deg);
 	-o-transform: rotate3d(1,0,0,0deg);
