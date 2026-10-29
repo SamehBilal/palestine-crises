@@ -18,6 +18,15 @@ let currentLang = (function () {
 function getLocale() {
     return currentLang === 'ar' ? 'ar-u-nu-latn' : 'en-US';
 }
+// Map fill for a region's death count; keep in step with the legend in live.html (<10, 10-99, 100+)
+function getColorForDeaths(deaths) {
+    if (deaths < 10) {
+        return '#1C202B';
+    } else if (deaths < 100) {
+        return '#163957';
+    }
+    return '#0B68AA';
+}
 // ============================================
 // TRANSLATION MANAGER
 // ============================================
@@ -461,22 +470,28 @@ document.addEventListener('click', event => {
     url.hash = '';
     window.location.href = url.toString();
 });
+// Resolves once all shared data has loaded. Page scripts (live.js, map.js, active.js) await this
+// instead of polling. Each loader catches its own errors, so this resolves even if a file fails.
+const appReady = Promise.all([
+    i18n.loadTranslations(),
+    liveTracker.loadData(),
+    regionsManager.loadRegions(),
+    attacksManager.loadAttacks()
+]);
 document.addEventListener('DOMContentLoaded', async () => {
     i18n.updateDirection();
-    console.log('Palestine Crisis - Loading data...');
     try {
-        // Load all data in parallel
-        await Promise.all([
-            i18n.loadTranslations(),
-            liveTracker.loadData(),
-            regionsManager.loadRegions(),
-            attacksManager.loadAttacks()
-        ]);
-        console.log('All data loaded successfully!');
+        await appReady;
+        // Translate anything parsed after the translations arrived
+        i18n.applyTranslations();
+        if (!liveTracker.data) return;
 
-        // Insert live tracker data
-        const mainContainer = document.querySelector('.main-container') || document.body;
-        liveTracker.insertData(mainContainer);
+        // Insert live tracker data, unless the page shows its own numbers in the same
+        // elements (map.html: per-region details, new.html: per-year timeline)
+        if (document.body.dataset.trackerStats !== 'off') {
+            const mainContainer = document.querySelector('.main-container') || document.body;
+            liveTracker.insertData(mainContainer);
+        }
 
         // Render pie charts if element exists
         if (document.querySelector('.chart')) {

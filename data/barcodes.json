@@ -1,13 +1,20 @@
 [
   {
     "id": 1,
-    "name": "Israel Barcodes",
-    "photo": "israel.webp"
+    "name": "Israel",
+    "ar_name": "إسرائيل",
+    "prefix": "729"
   },
   {
     "id": 2,
-    "name": "USA Barcodes",
-    "photo": "usa.webp"
+    "name": "USA & Canada",
+    "ar_name": "الولايات المتحدة وكندا",
+    "prefix": "1"
+  },
+  {
+    "id": 3,
+    "name": "USA & Canada",
+    "ar_name": "الولايات المتحدة وكندا",
+    "prefix": "0"
   }
 ]
-

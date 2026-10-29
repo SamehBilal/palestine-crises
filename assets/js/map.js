@@ -5,17 +5,7 @@
 // Map region data with deaths
 let mapRegions = [];
 let selectedRegion = null;
-// Color function based on death count
-function getColorForDeaths(deaths) {
-    if (deaths < 10) {
-        return '#1C202B';
-    } else if (deaths >= 10 && deaths < 100) {
-        return '#163957';
-    } else {
-        return '#0B68AA';
-    }
-}
-// Initialize map colors and tooltips
+// Initialize map colors and tooltips (getColorForDeaths is in app.js)
 function initializeOriginalMap() {
     // Populate regions array from attacks data
     mapRegions = attacksManager.attacks.map(function (attack) {
@@ -126,15 +116,8 @@ function populateRegionSelect() {
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', async function () {
     console.log('Initializing map page...');
-    // Wait for data to load
-    await new Promise(function (resolve) {
-        const checkLoaded = setInterval(function () {
-            if (attacksManager.attacks.length > 0 && regionsManager.regions.length > 0 && i18n.translations[currentLang]) {
-                clearInterval(checkLoaded);
-                resolve();
-            }
-        }, 100);
-    });
+    // Shared data (translations, tracker, regions, attacks) from app.js
+    await appReady;
     console.log('Data loaded, initializing map...');
     initializeOriginalMap();
     populateRegionSelect();

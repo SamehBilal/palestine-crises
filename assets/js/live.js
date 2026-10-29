@@ -14,19 +14,7 @@ function initializePalestineMap() {
             deaths: attack.total_deaths
         });
     });
-    // Color function based on death count
-    function getColorForDeaths(deaths) {
-        if (deaths < 10) {
-            return '#1C202B'; // Less than 10
-        } else if (deaths >= 10 && deaths < 100) {
-            return '#163957'; // Between 10 and 100
-        } else if (deaths >= 100 && deaths < 1000) {
-            return '#0B68AA'; // Between 100 and 1000
-        } else {
-            return '#0B68AA'; // 1000 and above (same as 100-1000)
-        }
-    }
-    // Color the map regions based on deaths
+    // Color the map regions based on deaths (getColorForDeaths is in app.js)
     regions.forEach(function (region) {
         const regionElement = document.querySelector('#PS-' + region.region_code);
         if (regionElement) {
@@ -129,9 +117,10 @@ function populateRegionsTable() {
     const tableBody = document.getElementById('regions-table-body');
     if (!tableBody) return;
     tableBody.innerHTML = '';
+    const totalDeaths = attacksManager.getTotalDeaths();
     attacksManager.attacks.forEach(function (attack) {
-        const deathRate = attack.total_injuries ?
-            ((attack.total_deaths / attack.total_injuries) * 100).toFixed(2) : 100;
+        // This region's share of all recorded deaths
+        const deathRate = totalDeaths ? ((attack.total_deaths / totalDeaths) * 100).toFixed(2) : '0.00';
         const tr = document.createElement('tr');
         tr.className = 'country-item';
         tr.innerHTML = '<td>' +
@@ -199,14 +188,7 @@ function populateRegionSelect() {
             // Reset all regions to their original colors
             document.querySelectorAll('.map-dashboard path').forEach(function (path) {
                 var deaths = parseInt(path.getAttribute('data-deaths')) || 0;
-
-                if (deaths < 10) {
-                    path.style.fill = '#1C202B';
-                } else if (deaths >= 10 && deaths < 100) {
-                    path.style.fill = '#163957';
-                } else {
-                    path.style.fill = '#0B68AA';
-                }
+                path.style.fill = getColorForDeaths(deaths);
             });
 
             // Highlight selected region with red fill
@@ -243,15 +225,8 @@ function initializeShowAllButton() {
 }
 // Initialize everything when page loads
 document.addEventListener('DOMContentLoaded', async function () {
-    // Wait for all managers to load
-    await new Promise(function (resolve) {
-        const checkLoaded = setInterval(function () {
-            if (liveTracker.data && attacksManager.attacks.length > 0 && regionsManager.regions.length > 0 && i18n.translations[currentLang]) {
-                clearInterval(checkLoaded);
-                resolve();
-            }
-        }, 100);
-    });
+    // Shared data (translations, tracker, regions, attacks) from app.js
+    await appReady;
     console.log('Initializing live page...');
     // Populate all elements
     populateRegionList();
@@ -263,7 +238,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (typeof jQuery !== 'undefined' && jQuery.fn.DataTable) {
         const table = jQuery('.list-view__table');
         dataTable = table.DataTable({
-            order: false,
+            order: [],
             searching: true,
             language: {
                 search: i18n.t('Search'),

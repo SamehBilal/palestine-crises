@@ -1,8 +1,8 @@
 
 // Service Worker for Palestine Crisis
 // Provides offline support and caching
-const CACHE_NAME = 'palestine-crisis-v3';
-const DATA_CACHE_NAME = 'palestine-crisis-data-v3';
+const CACHE_NAME = 'palestine-crisis-v5';
+const DATA_CACHE_NAME = 'palestine-crisis-data-v5';
 // Files to cache on install. Paths are relative to sw.js so the site also works from a subfolder,
 // and every entry must exist: cache.addAll() fails the whole install on a single 404.
 const filesToCache = [
@@ -67,7 +67,7 @@ event.waitUntil(
 
 return self.clients.claim();
 });
-// Fetch event - serve from cache, fallback to network
+// Fetch event - network first for app files, cache first for images
 self.addEventListener('fetch', function(event) {
 const requestUrl = new URL(event.request.url);
 // Skip non-http requests
@@ -80,28 +80,41 @@ if (requestUrl.origin !== location.origin) {
     return;
 }
 
-// Handle data files - network first, cache fallback
-if (requestUrl.pathname.includes('/data/')) {
+// Only GET requests can be cached
+if (event.request.method !== 'GET') {
+    return;
+}
+
+// Pages, scripts, styles and data: network first so updates show up straight away,
+// cached copy when offline
+const isData = requestUrl.pathname.includes('/data/');
+if (isData || event.request.mode === 'navigate' || /\.(html|js|css)$/.test(requestUrl.pathname)) {
+    const cacheName = isData ? DATA_CACHE_NAME : CACHE_NAME;
     event.respondWith(
-        caches.open(DATA_CACHE_NAME).then(function(cache) {
-            return fetch(event.request)
-                .then(function(response) {
-                    // Update cache with fresh data
-                    if (response.status === 200) {
-                        cache.put(event.request, response.clone());
+        fetch(event.request)
+            .then(function(response) {
+                if (response.status === 200) {
+                    const responseToCache = response.clone();
+                    caches.open(cacheName).then(function(cache) {
+                        cache.put(event.request, responseToCache);
+                    });
+                }
+                return response;
+            })
+            .catch(function() {
+                return caches.match(event.request).then(function(cached) {
+                    // Offline page only stands in for pages, not for scripts or data
+                    if (cached || event.request.mode !== 'navigate') {
+                        return cached;
                     }
-                    return response;
-                })
-                .catch(function() {
-                    // Network failed, return cached version
-                    return cache.match(event.request);
+                    return caches.match('offline.html');
                 });
-        })
+            })
     );
     return;
 }
 
-// Handle other requests - cache first, network fallback
+// Images and fonts rarely change: cache first, network fallback
 event.respondWith(
     caches.match(event.request).then(function(response) {
         if (response) {
@@ -121,9 +134,6 @@ event.respondWith(
             });
 
             return response;
-        }).catch(function() {
-            // Show offline page if available
-            return caches.match('offline.html');
         });
     })
 );
