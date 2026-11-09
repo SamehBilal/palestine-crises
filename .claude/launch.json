@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:/Users/sameh/AppData/Local/Temp/claude/C--Users-sameh-OneDrive-Documents-GitHub-palestine-crises/46a165b0-1b2e-44a8-88a7-c7bfbce314e8/scratchpad/serve.js", ".", "8080"],
+      "port": 8080
+    }
+  ]
+}
