@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/live.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/live.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/live.html?lang=ar"/>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/map.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/map.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/map.html?lang=ar"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/brands.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/brands.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/brands.html?lang=ar"/>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/celebrities.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/celebrities.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/celebrities.html?lang=ar"/>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/barcodes.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/barcodes.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/barcodes.html?lang=ar"/>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/landing.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/landing.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/landing-ar.html"/>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://samehbilal.github.io/palestine-crises/landing-ar.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/landing.html"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/landing-ar.html"/>
+    <priority>0.5</priority>
+  </url>
+</urlset>

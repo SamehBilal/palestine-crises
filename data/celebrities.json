@@ -1,48 +1,72 @@
-
 [
   {
     "id": 1,
     "name": "Bella Hadid",
+    "ar_name": "بيلا حديد",
     "first_letter": "B",
-    "image": "bella-hadid.jpg",
+    "first_ar_letter": "ب",
+    "image": null,
     "stance": "Pro-Palestine",
+    "ar_stance": "مؤيد لفلسطين",
     "subtitle": "Model and Palestinian-American activist",
-    "bio": "Bella Hadid has been vocal about her Palestinian heritage and has consistently shown support for Palestinian rights. She has used her platform to raise awareness about the Palestinian cause."
+    "ar_subtitle": "عارضة أزياء وناشطة فلسطينية أمريكية",
+    "bio": "Bella Hadid has been vocal about her Palestinian heritage and has consistently shown support for Palestinian rights. She has used her platform to raise awareness about the Palestinian cause.",
+    "ar_bio": "تحدثت بيلا حديد مرارًا عن أصولها الفلسطينية وأظهرت دعمًا ثابتًا لحقوق الفلسطينيين، واستخدمت منصتها للتوعية بالقضية الفلسطينية."
   },
   {
     "id": 2,
     "name": "Gigi Hadid",
+    "ar_name": "جيجي حديد",
     "first_letter": "G",
-    "image": "gigi-hadid.jpg",
+    "first_ar_letter": "ج",
+    "image": null,
     "stance": "Pro-Palestine",
+    "ar_stance": "مؤيد لفلسطين",
     "subtitle": "Model and activist",
-    "bio": "Gigi Hadid has joined her sister in supporting Palestinian rights and has donated to relief efforts."
+    "ar_subtitle": "عارضة أزياء وناشطة",
+    "bio": "Gigi Hadid has joined her sister in supporting Palestinian rights and has donated to relief efforts.",
+    "ar_bio": "انضمت جيجي حديد إلى أختها في دعم حقوق الفلسطينيين، وتبرعت لجهود الإغاثة."
   },
   {
     "id": 3,
     "name": "Mark Ruffalo",
+    "ar_name": "مارك رافالو",
     "first_letter": "M",
-    "image": "mark-ruffalo.jpg",
+    "first_ar_letter": "م",
+    "image": null,
     "stance": "Pro-Palestine",
+    "ar_stance": "مؤيد لفلسطين",
     "subtitle": "Actor and humanitarian",
-    "bio": "Mark Ruffalo has been outspoken in calling for Palestinian human rights and has criticized military actions in Gaza."
+    "ar_subtitle": "ممثل وناشط إنساني",
+    "bio": "Mark Ruffalo has been outspoken in calling for Palestinian human rights and has criticized military actions in Gaza.",
+    "ar_bio": "طالب مارك رافالو علنًا بحقوق الإنسان للفلسطينيين وانتقد العمليات العسكرية في غزة."
   },
   {
     "id": 4,
     "name": "Susan Sarandon",
+    "ar_name": "سوزان ساراندون",
     "first_letter": "S",
-    "image": "susan-sarandon.jpg",
+    "first_ar_letter": "س",
+    "image": null,
     "stance": "Pro-Palestine",
+    "ar_stance": "مؤيد لفلسطين",
     "subtitle": "Actress and activist",
-    "bio": "Susan Sarandon has participated in pro-Palestinian demonstrations and has been a vocal critic of Israeli policies."
+    "ar_subtitle": "ممثلة وناشطة",
+    "bio": "Susan Sarandon has participated in pro-Palestinian demonstrations and has been a vocal critic of Israeli policies.",
+    "ar_bio": "شاركت سوزان ساراندون في مظاهرات مؤيدة لفلسطين، وانتقدت السياسات الإسرائيلية بصراحة."
   },
   {
     "id": 5,
     "name": "Roger Waters",
+    "ar_name": "روجر ووترز",
     "first_letter": "R",
-    "image": "roger-waters.jpg",
+    "first_ar_letter": "ر",
+    "image": null,
     "stance": "Pro-Palestine",
+    "ar_stance": "مؤيد لفلسطين",
     "subtitle": "Pink Floyd co-founder and activist",
-    "bio": "Roger Waters is a prominent supporter of the BDS movement and has been very vocal about Palestinian rights."
+    "ar_subtitle": "أحد مؤسسي فرقة بينك فلويد وناشط",
+    "bio": "Roger Waters is a prominent supporter of the BDS movement and has been very vocal about Palestinian rights.",
+    "ar_bio": "روجر ووترز من أبرز داعمي حركة المقاطعة (BDS)، ويدافع بقوة عن حقوق الفلسطينيين."
   }
 ]

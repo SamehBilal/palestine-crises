@@ -8,10 +8,13 @@ let selectedRegion = null;
 // Initialize map colors and tooltips (getColorForDeaths is in app.js)
 function initializeOriginalMap() {
     // Populate regions array from attacks data
-    mapRegions = attacksManager.attacks.map(function (attack) {
+    // One entry per map shape (see getMapRows in app.js); inherited ones are left out of the select
+    mapRegions = attacksManager.getMapRows().map(function (row) {
+        const attack = row.attack;
         return {
+            inherited: row.inherited,
             region_name: i18n.t(attack.region_name),
-            region_code: 'PS-' + regionsManager.getSvgCode(attack.region_id),
+            region_code: 'PS-' + row.svgCode,
             deaths: attack.total_deaths,
             injuries: attack.total_injuries,
             women: attack.women_deaths,
@@ -64,22 +67,22 @@ function initializeOriginalMap() {
 // Display region details in the info box
 function displayRegionDetails(region) {
     selectedRegion = region;
-    document.querySelector('.total-deaths').textContent = region.deaths.toLocaleString();
-    document.querySelector('.total-injuries').textContent = region.injuries.toLocaleString();
-    document.querySelector('.women-deaths').textContent = region.women.toLocaleString();
-    document.querySelector('.children-deaths').textContent = region.children.toLocaleString();
-    document.querySelector('.total-displaced').textContent = region.displaced.toLocaleString();
+    document.querySelector('.total-deaths').textContent = formatNumber(region.deaths);
+    document.querySelector('.total-injuries').textContent = formatNumber(region.injuries);
+    document.querySelector('.women-deaths').textContent = formatNumber(region.women);
+    document.querySelector('.children-deaths').textContent = formatNumber(region.children);
+    document.querySelector('.total-displaced').textContent = formatNumber(region.displaced);
 }
 // Populate region select dropdown
 function populateRegionSelect() {
     const select = document.getElementById('region-select');
     if (!select) return;
     select.innerHTML = '';
-    mapRegions.forEach(function (region) {
+    mapRegions.filter(function (region) { return !region.inherited; }).forEach(function (region) {
         const option = document.createElement('option');
         option.value = region.region_code;
         option.textContent = region.region_name;
-        option.setAttribute('data-image', 'assets/img/palestine.webp');
+        option.setAttribute('data-image', 'assets/img/palestine-flag.webp');
         select.appendChild(option);
     });
     // Initialize Select2 if available

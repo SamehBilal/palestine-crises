@@ -1,0 +1,19 @@
+[
+  {"year": 1948, "icon": "fa-home", "type": {"en": "Nakba", "ar": "النكبة"}, "title": {"en": "The Nakba — mass expulsion and the destruction of villages", "ar": "النكبة — تهجير جماعي وتدمير القرى"}},
+  {"year": 1956, "icon": "fa-exclamation-triangle", "type": {"en": "Massacre", "ar": "مجزرة"}, "title": {"en": "Khan Younis and Rafah massacres", "ar": "مجزرتا خان يونس ورفح"}},
+  {"year": 1967, "icon": "fa-flag", "type": {"en": "Occupation", "ar": "احتلال"}, "title": {"en": "The Naksa — occupation of Gaza, the West Bank and East Jerusalem", "ar": "النكسة — احتلال غزة والضفة الغربية والقدس الشرقية"}},
+  {"year": 1970, "icon": "fa-users", "type": {"en": "Displacement", "ar": "تهجير"}, "title": {"en": "Refugees displaced again across the region", "ar": "تهجير اللاجئين مرة أخرى في أنحاء المنطقة"}},
+  {"year": 1982, "icon": "fa-bomb", "type": {"en": "Siege", "ar": "حصار"}, "title": {"en": "Invasion of Lebanon and the Sabra and Shatila massacre", "ar": "اجتياح لبنان ومجزرة صبرا وشاتيلا"}},
+  {"year": 1987, "icon": "fa-hand-rock-o", "type": {"en": "Uprising", "ar": "انتفاضة"}, "title": {"en": "First Intifada — mass repression and killings", "ar": "الانتفاضة الأولى — قمع وقتل واسع"}},
+  {"year": 1993, "icon": "fa-handshake-o", "type": {"en": "Accords", "ar": "اتفاقيات"}, "title": {"en": "Oslo Accords and the fragmentation of Palestinian land", "ar": "اتفاقيات أوسلو وتمزيق الأرض الفلسطينية"}},
+  {"year": 2000, "icon": "fa-fire", "type": {"en": "Intifada", "ar": "انتفاضة"}, "title": {"en": "Second Intifada — heavy civilian casualties", "ar": "الانتفاضة الثانية — خسائر كبيرة بين المدنيين"}},
+  {"year": 2007, "icon": "fa-lock", "type": {"en": "Blockade", "ar": "حصار"}, "title": {"en": "The blockade of Gaza begins", "ar": "بدء حصار غزة"}},
+  {"year": 2008, "icon": "fa-plane", "type": {"en": "War", "ar": "حرب"}, "title": {"en": "War on Gaza — Operation Cast Lead", "ar": "الحرب على غزة — عملية الرصاص المصبوب"}},
+  {"year": 2012, "icon": "fa-crosshairs", "type": {"en": "Airstrikes", "ar": "غارات"}, "title": {"en": "Gaza bombarded again", "ar": "قصف غزة من جديد"}},
+  {"year": 2014, "icon": "fa-building-o", "type": {"en": "Destruction", "ar": "دمار"}, "title": {"en": "War on Gaza — widespread destruction of homes", "ar": "الحرب على غزة — تدمير واسع للمنازل"}},
+  {"year": 2018, "icon": "fa-bullhorn", "type": {"en": "Protests", "ar": "احتجاجات"}, "title": {"en": "Great March of Return protesters killed", "ar": "قتل متظاهري مسيرات العودة الكبرى"}},
+  {"year": 2021, "icon": "fa-university", "type": {"en": "Expulsions", "ar": "تهجير"}, "title": {"en": "Sheikh Jarrah expulsions and war on Gaza", "ar": "تهجير أهالي الشيخ جراح والحرب على غزة"}},
+  {"year": 2022, "icon": "fa-shield", "type": {"en": "Raids", "ar": "اقتحامات"}, "title": {"en": "Deadliest year in the West Bank in decades", "ar": "العام الأكثر دموية في الضفة الغربية منذ عقود"}},
+  {"year": 2023, "icon": "fa-medkit", "type": {"en": "War", "ar": "حرب"}, "title": {"en": "Mass killing of civilians in Gaza", "ar": "قتل جماعي للمدنيين في غزة"}},
+  {"year": 2024, "icon": "fa-heart", "type": {"en": "Humanitarian", "ar": "إنساني"}, "title": {"en": "Famine, displacement and the collapse of daily life", "ar": "مجاعة وتهجير وانهيار الحياة اليومية"}}
+]

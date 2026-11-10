@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#292833">
+    <meta name="robots" content="noindex">
+    <title>Page not found - Palestine Crisis</title>
+    <script>
+        // GitHub Pages serves this page for any missing address, at any depth, so links are built
+        // from the site's folder rather than relative to wherever this page appears
+        var base = location.pathname.indexOf('/palestine-crises/') === 0 ? '/palestine-crises/' : '/';
+        try { if (localStorage.getItem('language') === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch (e) {}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: #292833;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            padding: 24px 16px;
+        }
+        main { max-width: 480px; }
+        .code { font-size: 96px; font-weight: 700; color: #00cbad; line-height: 1; margin-bottom: 16px; }
+        h1 { font-size: 28px; margin-bottom: 12px; }
+        p { font-size: 17px; line-height: 1.6; margin-bottom: 28px; color: #d6d5de; }
+        nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        nav a {
+            color: #fff;
+            background: #2a9446;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        nav a.ghost { background: transparent; border: 1px solid #555; }
+        nav a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        [lang="ar"] .en, [lang="en"] .ar { display: none; }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="code" aria-hidden="true">404</div>
+        <h1><span class="en">This page doesn't exist</span><span class="ar">هذه الصفحة غير موجودة</span></h1>
+        <p>
+            <span class="en">The link may be old or mistyped. The live figures, the map and the boycott lists are still here.</span>
+            <span class="ar">ربما كان الرابط قديمًا أو به خطأ. الأرقام المباشرة والخريطة وقوائم المقاطعة ما زالت هنا.</span>
+        </p>
+        <nav>
+            <a href="live.html" data-page="live.html"><span class="en">Live tracker</span><span class="ar">المتتبّع المباشر</span></a>
+            <a href="map.html" data-page="map.html" class="ghost"><span class="en">Map</span><span class="ar">الخريطة</span></a>
+            <a href="brands.html" data-page="brands.html" class="ghost"><span class="en">Boycott list</span><span class="ar">قائمة المقاطعة</span></a>
+        </nav>
+    </main>
+    <script>
+        document.querySelectorAll('[data-page]').forEach(function (a) { a.href = base + a.getAttribute('data-page'); });
+    </script>
+</body>
+</html>

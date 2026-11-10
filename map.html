@@ -3,18 +3,34 @@
 
 <head>
     <meta charset="UTF-8">
+    <script>try{var l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('language');if(l==='ar'){document.documentElement.lang='ar';document.documentElement.dir='rtl';}}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Map &amp; Timeline - Palestine Crisis</title>
-    <meta name="description"
-        content="Palestine Crisis - Interactive map showing all Palestinian regions with detailed statistics." />
+    <meta name="description" content="Map of deaths in each Palestinian region, and a timeline of key events from the 1948 Nakba to today. In English and Arabic." />
+    <link rel="canonical" href="https://samehbilal.github.io/palestine-crises/map.html" />
+    <link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/map.html?lang=en" />
+    <link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/map.html?lang=ar" />
+    <link rel="alternate" hreflang="x-default" href="https://samehbilal.github.io/palestine-crises/map.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Palestine Crisis" />
+    <meta property="og:title" content="Map &amp; Timeline - Palestine Crisis" />
+    <meta property="og:description" content="Map of deaths in each Palestinian region, and a timeline of key events from the 1948 Nakba to today. In English and Arabic." />
+    <meta property="og:url" content="https://samehbilal.github.io/palestine-crises/map.html" />
+    <meta property="og:image" content="https://samehbilal.github.io/palestine-crises/images/screens/wide-live.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Map &amp; Timeline - Palestine Crisis" />
+    <meta name="twitter:description" content="Map of deaths in each Palestinian region, and a timeline of key events from the 1948 Nakba to today. In English and Arabic." />
+    <meta name="twitter:image" content="https://samehbilal.github.io/palestine-crises/images/screens/wide-live.jpg" />
     <meta content="Sameh Bilal" name="author" />
     <!--== Favicon ==-->
     <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
 
     <!--== Google Fonts ==-->
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&family=Cairo:wght@400;600;700&display=swap"
         rel="stylesheet">
 
     <!-- PWA  -->
@@ -34,7 +50,6 @@
 
     <link href="assets/css/select2.min.css" rel="stylesheet" />
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/materialdesignicons.min.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
 
     <style>
@@ -82,9 +97,24 @@
         }
 
         /* Full-screen map on desktop; on phones the stats panel sits below it and must scroll */
-        @media (min-width: 769px) {
+        @media (min-width: 992px) {
             body {
                 overflow: hidden;
+            }
+
+            /* the event's title sits between the figures panel (375px) and the map */
+            #changeBackground > .col-md-3 {
+                /* replaces Bootstrap's offset-lg-3, whose margin-left would add to this in Arabic */
+                margin-left: 0;
+                margin-right: 0;
+                margin-inline-start: 390px;
+                flex: 0 0 calc(50% - 390px);
+                max-width: calc(50% - 390px);
+                text-align: start !important;
+            }
+
+            #changeBackground h1 {
+                font-size: clamp(26px, 2.6vw, 40px);
             }
         }
         /*body {
@@ -95,8 +125,8 @@
         }
 
         body {
-            background: url('https://upload.wikimedia.org/wikipedia/commons/b/b5/Palestinian_refugees.jpg') no-repeat fixed center;
-            background-size: cover;
+            /* a plain backdrop: the old per-event photos didn't match their events */
+            background: radial-gradient(ellipse at 70% 40%, #3a3947 0%, #292833 55%, #1c1b24 100%);
         }
 
         body::before {
@@ -132,8 +162,22 @@
             text-decoration: none;
         }
 
+        /* The strip is wider than the screen and slides; the wrapper clips it sideways only,
+           so the page never scrolls horizontally and the icons above the strip still show */
+        .timeline-wrap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 50px;
+            overflow-x: clip;
+            direction: ltr;
+            z-index: 1;
+        }
+
         .timeline {
             position: absolute;
+            left: 0;
             bottom: 0;
             width: 3000px;
             height: 50px;
@@ -205,6 +249,20 @@
             margin-left: -24px;
             font-size: 24px;
             transition: all 0.5s ease;
+            /* a button, so it can be reached and pressed from the keyboard */
+            background: rgba(0, 0, 0, 0.35);
+            color: #fff;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .goal_wrap:focus-visible {
+            outline: 3px solid #00cbad;
+            outline-offset: 3px;
+        }
+
+        p.focus {
+            color: #fff;
         }
 
         .goal_wrap:hover {
@@ -334,6 +392,57 @@
                 bottom: 70px;
             }
         }
+
+        /* Phones and tablets: the page scrolls, so stack it — the strip of years under the header, then
+           the event, the whole map, and the figures — instead of overlaying a full-screen map */
+        @media (max-width: 991.98px) {
+            .map-content-wrap {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+
+            #changeBackground > div {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                text-align: center !important;
+            }
+
+            .structure {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .timeline-wrap {
+                position: relative;
+                order: -1;
+                flex: none;
+                height: 200px;
+                background: #1c1b24;
+            }
+
+            .date::before,
+            .instructions {
+                display: none;
+            }
+
+            #changeBackground.corona-map-tracker {
+                height: auto;
+                padding-bottom: 24px;
+            }
+
+            .corona-map-tracker .palestine-map {
+                position: static;
+                display: block;
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 65vh;
+                margin: 0 auto;
+            }
+        }
     </style>
 </head>
 
@@ -344,15 +453,14 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-lg-4">
                     <div class="logo-wrap">
-                        <a href="live.html"><img src="assets/img/logo2.png" alt="Palestine Crisis" /></a>
+                        <a href="live.html"><img src="assets/img/logo2.webp" alt="Palestine Crisis" /></a>
                     </div>
                 </div>
 
                 <div class="col-sm-6 col-lg-4">
                     <div class="last-update-wrap text-center">
                         <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span>
-                            <span data-i18n="minutes ago">minutes ago</span> <img src="assets/img/live.gif" alt=""
-                                height="40px">
+                            <span data-i18n="minutes ago">minutes ago</span> <span class="live-dot" aria-hidden="true"></span>
                         </p>
                     </div>
                 </div>
@@ -376,20 +484,12 @@
 
     <div class="structure">
 
-        <div class="timeline" id="timeline">
-            <!-- Will be populated by JavaScript -->
-        </div>
+        <nav class="timeline-wrap" aria-label="Timeline" data-i18n-aria-label="Timeline">
+            <div class="timeline" id="timeline">
+                <!-- Built from data/timeline.json -->
+            </div>
+        </nav>
 
-        <div class="container-div">
-            <!-- <div class="row">
-                <div class="col-md-12 text-center">
-                    <span class="event-type" id="event-type">Timeline</span>
-                    <h1 id="goal-title">Investing in real estate</h1>
-                    <p style="color: #ccc; font-size: 18px; margin: 0;">Click on the icons below to explore historical
-                        events</p>
-                </div>
-            </div> -->
-        </div>
 
         <!--== Start Main Content Wrapper ==-->
         <main class="main-content-wrapper">
@@ -397,11 +497,9 @@
             <div class="map-widget map-report position-relative">
                 <div class="corona-map-tracker row" id="changeBackground">
                     <div class="col-md-3 offset-lg-3 text-center text-right">
-                        <span class="event-type" id="event-type">Timeline</span>
-                        <h1 id="goal-title">Investing in real estate</h1>
-                        <p style="color: #ccc; font-size: 18px; margin: 0;">Click on the icons below to explore
-                            historical
-                            events</p>
+                        <span class="event-type" id="event-type" data-i18n="Timeline">Timeline</span>
+                        <h1 id="goal-title">The Nakba — mass expulsion and the destruction of villages</h1>
+                        <p style="color: #ccc; font-size: 18px; margin: 0;" data-i18n="Click on the icons below to explore historical events">Choose an event on the timeline to explore it</p>
                     </div>
                     <div class="col-md-6 text-center">
                         <svg id="Layer_1" class="palestine-map" xmlns="http://www.w3.org/2000/svg"
@@ -444,9 +542,9 @@
                                 d="m736.92,273.45c-10.04,4.01-18.67,6.58-26.44,10.75-11.74,6.29-13.07,5.82-16.01-6.91-1.26-5.45-3.26-12.18-7.28-15.16-4.81-3.57-12.15-4.85-18.37-4.78-2.04.02-4.01,7.35-5.98,11.36-.89,1.8-1.69,3.65-1.6,3.46-10.88-3.13-20.74-6.95-30.95-8.65-13.5-2.24-20.83-9.55-22.46-22.64-1.41-11.33-4.78-20.78-16.33-25.85-2.1-.92-3.59-5.85-3.42-8.82.48-8.62,2.25-17.16,2.94-25.78.59-7.38,2.83-9.89,11.36-10.58,15.09-1.23,29.99-5.41,44.82-8.96,13.13-3.15,25.96-9.2,39.12-9.82,6.05-.28,17.01,8.64,18,14.67,2.52,15.29,11.96,13.29,21.81,12.85,2.86-.13,5.91-.65,8.49-1.82,7.89-3.56,10.39-.59,10.71,7.31.33,8.16,2.64,16.32,2.28,24.4-.3,6.68-2.75,12.59-10.99,15.64-7.4,2.74-9.08,22.74-4.55,35.79,1.74,5.01,3.56,9.98,4.83,13.53Z" />
                             <path title="Safad" id="PS-SAF" class="cls-2"
                                 d="m720.04,171.79c8.08-2.42,16.31-4.46,24.18-7.43,4.12-1.55,8.07-4.27,11.3-7.31,4.52-4.26,7.9-10.3,15.5-5.29.85.56,2.46.37,3.6.06,5.71-1.55,22.13-23.4,22.61-30.14,1.04-14.81.67-29.88,3.44-44.36,1.49-7.8,8.28-14.59,13.52-23.23,11.84,17.47,26.82,21.91,48.13,6.93-1.64,21.07-3.2,37.56-4.1,54.08-.53,9.88,2.65,20.88-.74,29.43-3.24,8.15-14.55,12.83-19.04,20.86-3.01,5.38-.42,13.95-.13,21.09.44,10.72,1.75,21.46,1.4,32.15-.35,10.84-9.22,14.87-17.76,8.2-7.44-5.81-11.82-6.41-19.8,1.04-5.56,5.2-14.28,8.15-26.22,4.9-19.55-5.33-30.49-8.93-21.62-32.13,2.5-6.53-2.45-16.64-5.82-24.3-1.3-2.94-7.73-4.99-11.82-4.99-5.1,0-10.21,2.54-15.31,3.98-.44-1.18-.87-2.37-1.31-3.55Z" />
-                            <path title="Alramlah" id="PS-ALR" class="cls-2"
+                            <path title="Ramla" id="PS-ALR" class="cls-2"
                                 d="m472.93,735.32c3.98,6.81,6.83,11.71,9.56,16.39,8.47-10.08,15.62-18.59,23.92-28.47,16.13,35.78,31.48,69.81,47.55,105.46-3.33.8-8.29,3.42-12.86,2.86-24.25-2.97-38.66,6.02-46.98,30.94-5.43-.31-11.05-.62-16.71-.94,2.26-21.94-4.66-30.95-26.93-31.74-12.1-.43-17.69-6.04-22.54-15.72-4.05-8.06-8.69-16.38-15.02-22.59-7.41-7.27-6.94-13.15-2.68-21.55,6.16-12.14,10.96-24.96,16.34-37.49,4.01-9.33,12.15-12.05,18.82-4.44,8.06,9.21,15.89,14.2,27.54,7.27Z" />
-                            <path title="Nazaeth" id="PS-NAZ" class="cls-2"
+                            <path title="Nazareth" id="PS-NAZ" class="cls-2"
                                 d="m754.55,357.73q-18,8.91-12.35,34.04c-15.77,3.81-31.34,9.2-47.28,10.72-7.44.71-16.5-4.85-23.23-9.75-11.68-8.5-21.58-18.84-37.92-18.81-8.88.02-10.33-6.83-5.76-14.22,9.81-15.86,19.73-31.65,29.46-47.56,5.24-8.57,8.45-17,6.31-28.06-1.4-7.22,3.14-15.59,4.99-23.37,14.93.6,19.82,4.8,21.63,18.3,1.93,14.45,7.99,17.22,20.93,9.7,5-2.9,9.92-6.83,15.33-7.83,4.06-.75,10.19,1.26,12.86,4.29,1.94,2.2.41,8.27-.83,12.21-.93,2.97-3.8,5.35-5.92,7.91-7.7,9.33-6.39,17.7,1.53,26.5,7.18,7.97,13.29,16.92,20.25,25.92Z" />
                             <path title="Tiberias" id="PS-TBA" class="cls-2"
                                 d="m846.82,314.07c4.41,2.4,7.96,4.34,9.94,5.42-4.27,6.77-7.82,13.75-12.71,19.62-2.88,3.46-7.68,5.61-11.98,7.53-6.96,3.1-10.16,6.2-4.71,13.97,3.08,4.4,3.63,10.59,5.63,17-15.74,3.23-23.33-11.69-35.39-13.47-12.62-1.86-25.55-1.6-35.06-2.1-9.26-12.45-16.93-23.36-25.28-33.72-4.68-5.8-8.1-12.22-2.13-17.62,16.21-14.67,8.47-30.2,3.88-46.34-2.55-8.95-3.72-18.56-3.79-27.89-.08-10.23,7.58-13.1,16.24-7.75,4.59,2.84,10.15,4.19,15.38,5.88,2.31.75,5.86-.27,7.2,1.11,12.94,13.27,22.23-.75,32.89-4.09,3.23-1.01,6.39-2.26,9.59-3.4.88,1.57,1.76,3.14,2.63,4.72-6.92,6.17-13.59,12.65-20.82,18.42-8.11,6.47-9.98,13.68-4.98,22.86,6.74,12.38,13.29,24.87,19.85,37.35,1.35,2.56,2.23,5.36,3.6,7.91,2.66,4.94,5.52,9.77,8.3,14.64,6.12-4.37,12.35-8.6,18.27-13.22,1.45-1.14,1.87-3.59,3.43-6.81Z" />
@@ -454,7 +552,7 @@
                                 d="m837.47,389.29c-13.62.04-13.65,11.48-15.53,19.11-.88,3.57,7.14,9.33,13.21,16.58-3.22,11.64-7.99,26.19-11.07,41.08-1.61,7.79-.28,16.18-.28,22.87-9.72,3.64-19.8,7.41-31.18,11.67-8.27-8.09-19.54-16.14-18.93-32.73.45-12.36-7.07-19.68-18.84-24.79-9.6-4.17-18.18-11.56-25.87-18.92-3.57-3.42-6.71-11.39-5.07-15.08,1.98-4.44,8.99-8.49,14.28-9.2,10-1.34,10.86-5.66,7.55-13.45-1.13-2.66-2.4-5.32-3.09-8.11-2.26-9.11,1.53-13.32,10.94-12.74,9.5.59,19.15.17,28.49,1.69,8.7,1.42,17.12,4.68,25.59,7.38,7.69,2.46,15.29,5.2,22.87,7.96,2.3.83,4.42,2.15,6.62,3.24.1,1.14.2,2.28.3,3.42Z" />
                             <path title="Jaffa" id="PS-JFA" class="cls-2"
                                 d="m520.69,729.48c-14.89-11.86-27.39-6.44-37.92,16.07-2.25-14.92-10.33-15.85-21.29-11.5-1.78.71-5.15-1.59-7.34-3.12-6.5-4.55-12.79-9.41-20.22-14.94,11.4-34.36,23.51-70.9,35.9-108.26,1.74,1.46,3.88,2.41,4.64,4.01,5.31,11.19,14.55,13.85,25.83,12.5.82-.1,1.66-.03,2.49-.05,24.94-.49,27.83,4.11,16.1,25.59-.35.64-.17,1.57-.28,2.83,4.04,1.24,8.14,2.49,12.24,3.75-.16.87-.33,1.74-.49,2.61-4.13.63-8.26,1.26-13.53,2.06,1.39,5,2.53,9.12,3.86,13.94-4.1,1.69-8.06,3.33-16.81,6.94,9.04,7.32,19.84,11.84,22.18,19.1,2.49,7.7-3.06,18-5.38,28.46Z" />
-                            <path title="Allyd" id="PS-ALD" class="cls-2"
+                            <path title="Lydd" id="PS-ALD" class="cls-2"
                                 d="m552.24,816.64c-3.13-9.01-6.13-20.11-10.79-30.47-5.46-12.14-12.64-23.5-18.52-35.47-3.09-6.29-8.51-11.34.55-19.9,6.34-5.99,8.67-19.38,7.68-28.93-.71-6.85-9.89-12.82-15.49-19.4,9.69-.91,11.31-7.56,6.48-17.79,9.72.76,18.11,1.41,28.18,2.19-2.67,6.57-5.17,12.71-7.51,18.45,9.18,3.33,18.01,5.71,25.92,9.84,2.93,1.53,5.7,7.6,5.05,10.92-2.08,10.77-1.19,19.56,8.79,26.1,7.4,4.85,8.52,11.59,4.56,19.45-2.79,5.54-5.23,11.26-7.77,16.92-5.91,13.12-6.27,25.52,4.09,36.99,1.85,2.05,2.07,5.58,3.04,8.43-2.98.89-5.92,2.38-8.94,2.53-7.23.37-14.5.12-25.34.12Z" />
                             <path title="Lake Tiberias" id="PS-LTB" class="cls-2"
                                 d="m826.87,329.8c-8.04-16.2-14.02-29.22-20.84-41.79-13.03-24.04-13.23-23.94,6.88-42.45,2.75-2.53,5.19-6.17,8.44-7.2,7.06-2.25,16.18-6.45,21.51-3.84,8.5,4.16,17.94,10.75,16.11,23.88-1.19,8.57.41,17.63-1.46,25.97-1.57,6.99-6.22,13.34-9.78,19.83-2.34,4.26-4.77,8.6-7.88,12.3-4.14,4.93-8.99,9.27-12.97,13.3Z" />
@@ -492,265 +590,100 @@
                     </div>
                 </div>
             </div>
-            <div class="last-update-wrap text-center credits" dir="ltr">
+            <div class="last-update-wrap text-center credits">
                 <div class="text-center footer">
                     <p class="text-reset ">©
-                        <script>document.write(new Date().getFullYear())</script>. made with <svg
+                        <span class="current-year">2025</span>. <span data-i18n="made with">made with</span> <svg
                             xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" fill="#00cbad" aria-hidden="true">
                             <path
                                 d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z" />
-                        </svg> by Non-Palestinians.
+                        </svg> <span data-i18n="by Non-Palestinians.">by Non-Palestinians.</span>
                     </p>
                 </div>
             </div>
         </main>
         <!--== End Main Content Wrapper ==-->
 
-        <div class="instructions">
-            <i class="fa fa-hand-pointer-o" aria-hidden="true"></i> Click timeline icons to explore events
-        </div>
     </div>
 
-    <script>
-        // Data
-        const dates = [
-            1948, 1956, 1967, 1970, 1982,
-            1987, 1993, 2000, 2005, 2008,
-            2012, 2014, 2018, 2021, 2022,
-            2023, 2024
-        ];
-
-        const goals = {
-            1948: {
-                type: 'Nakba',
-                icon: 'fa-home',
-                title: 'The Nakba — Mass expulsion and destruction of villages',
-                bg: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/Palestinian_refugees.jpg'
-            },
-            1956: {
-                type: 'Massacre',
-                icon: 'fa-exclamation-triangle',
-                title: 'Khan Younis & Rafah massacres',
-                bg: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/A_mother_cries_in_front_of_destroyed_buildings_in_El_Buss_camp%2C_Tyre%2C_Lebanon%2C_after_the_Israeli_invasion_in_June_1982.jpg'
-            },
-            1967: {
-                type: 'Occupation',
-                icon: 'fa-flag',
-                title: 'Naksa — Occupation of Gaza, West Bank, East Jerusalem',
-                bg: 'https://upload.wikimedia.org/wikipedia/commons/9/94/A_main_street_in_Shatila_camp_during_the_July_ceasefire%2C_Beirut%2C_Lebanon.jpg'
-            },
-            1970: {
-                type: 'Displacement',
-                icon: 'fa-users',
-                title: 'Continued refugee displacement across the region',
-                bg: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600'
-            },
-            1982: {
-                type: 'Siege',
-                icon: 'fa-bomb',
-                title: 'Lebanon invasion & Sabra–Shatila massacre',
-                bg: 'https://images.unsplash.com/photo-1569429593454-09c36c84ff36?w=1600'
-            },
-            1987: {
-                type: 'Uprising',
-                icon: 'fa-hand-rock-o',
-                title: 'First Intifada — Mass repression and killings',
-                bg: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1600'
-            },
-            1993: {
-                type: 'Accords',
-                icon: 'fa-handshake-o',
-                title: 'Oslo Accords & fragmentation of Palestinian land',
-                bg: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1600'
-            },
-            2000: {
-                type: 'Intifada',
-                icon: 'fa-fire',
-                title: 'Second Intifada — Heavy civilian casualties',
-                bg: 'https://images.unsplash.com/photo-1561699868-a28490e2c5e8?w=1600'
-            },
-            2005: {
-                type: 'Blockade',
-                icon: 'fa-lock',
-                title: 'Gaza blockade begins',
-                bg: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=1600'
-            },
-            2008: {
-                type: 'War',
-                icon: 'fa-plane',
-                title: 'Gaza war — Operation Cast Lead',
-                bg: 'https://images.unsplash.com/photo-1569429393-ba1866cff5e9?w=1600'
-            },
-            2012: {
-                type: 'Airstrikes',
-                icon: 'fa-crosshairs',
-                title: 'Renewed Gaza bombardment',
-                bg: 'https://images.unsplash.com/photo-1568091543989-8fae8e7a6896?w=1600'
-            },
-            2014: {
-                type: 'Destruction',
-                icon: 'fa-building-o',
-                title: 'Gaza war — Widespread civilian destruction',
-                bg: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1600'
-            },
-            2018: {
-                type: 'Protests',
-                icon: 'fa-bullhorn',
-                title: 'Great March of Return killings',
-                bg: 'https://images.unsplash.com/photo-1540829917886-91ab031b1764?w=1600'
-            },
-            2021: {
-                type: 'Expulsions',
-                icon: 'fa-university',
-                title: 'Sheikh Jarrah expulsions & Gaza war',
-                bg: 'https://images.unsplash.com/photo-1547683905-f686c993aae5?w=1600'
-            },
-            2022: {
-                type: 'Raids',
-                icon: 'fa-shield',
-                title: 'Deadliest year in West Bank in decades',
-                bg: 'https://images.unsplash.com/photo-1552581234-26160f608093?w=1600'
-            },
-            2023: {
-                type: 'Crisis',
-                icon: 'fa-medkit',
-                title: 'Mass civilian killings in Gaza',
-                bg: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600'
-            },
-            2024: {
-                type: 'Humanitarian',
-                icon: 'fa-heart',
-                title: 'Famine, displacement, and societal collapse',
-                bg: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1600'
-            }
-        };
-
-        // Generate timeline
-        function generateTimeline() {
-            const timeline = document.getElementById('timeline');
-
-            dates.forEach(function (date, index) {
-                const dateDiv = document.createElement('div');
-                dateDiv.className = 'date date-' + index;
-
-                // Check if this date has a goal
-                if (goals[date]) {
-                    const goalWrap = document.createElement('div');
-                    goalWrap.className = 'goal_wrap goal_' + goals[date].type;
-                    goalWrap.setAttribute('data-date', date);
-                    goalWrap.setAttribute('data-title', goals[date].title);
-                    goalWrap.setAttribute('data-bg', goals[date].bg);
-                    goalWrap.setAttribute('data-type', goals[date].type);
-
-                    const icon = document.createElement('i');
-                    icon.className = 'fa ' + goals[date].icon;
-                    icon.setAttribute('aria-hidden', 'true');
-
-                    goalWrap.appendChild(icon);
-                    dateDiv.appendChild(goalWrap);
-                }
-
-                const focusP = document.createElement('p');
-                focusP.className = 'focus';
-
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = date;
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                });
-
-                focusP.appendChild(link);
-                dateDiv.appendChild(focusP);
-
-                timeline.appendChild(dateDiv);
-            });
-        }
-
-        // Animate timeline position
-        function animateTimeline(targetX, callback) {
-            const timeline = document.getElementById('timeline');
-            timeline.style.transform = 'translateX(' + targetX + 'px)';
-
-            if (callback) {
-                setTimeout(callback, 1000); // Wait for animation to complete
-            }
-        }
-
-        // Change background with fade effect
-        function changeBackground(imageUrl) {
-            //const body = document.body;
-            const body = document.getElementById('changeBackground');;
-
-            // Fade out
-            body.style.opacity = '0.3';
-
-            setTimeout(function () {
-                body.style.backgroundImage = 'url(' + imageUrl + ')';
-                // Fade in
-                body.style.opacity = '1';
-            }, 300);
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
-            const viewport = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-
-            // Generate timeline
-            generateTimeline();
-
-            // Add click handlers to goal icons
-            const goalWraps = document.querySelectorAll('.goal_wrap');
-
-            goalWraps.forEach(function (goalWrap) {
-                goalWrap.addEventListener('click', function () {
-                    const parentDate = this.parentElement;
-                    const diff = parentDate.offsetLeft;
-
-                    // Remove active and bounce classes from all goals
-                    document.querySelectorAll('.goal_wrap').forEach(function (g) {
-                        g.classList.remove('active', 'bounce');
-                    });
-
-                    // Add active and bounce to clicked goal
-                    this.classList.add('active', 'bounce');
-
-                    // Update title
-                    const title = this.getAttribute('data-title');
-                    const type = this.getAttribute('data-type');
-                    document.getElementById('goal-title').textContent = title;
-                    //document.getElementById('event-type').textContent = type;
-
-                    // Calculate target position to center the clicked goal
-                    const targetX = (viewport * 0.5) - diff;
-
-                    // Animate timeline
-                    animateTimeline(targetX);
-
-                    // Change background
-                    const bgUrl = this.getAttribute('data-bg');
-                    changeBackground(bgUrl);
-                });
-            });
-
-            if (goalWraps.length > 0) {
-                goalWraps[0].click();
-            }
-        });
-    </script>
 
     <!--== JavaScript ==-->
-    <script src="assets/js/modernizr.min.js"></script>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery-migrate.min.js"></script>
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/select2.full.min.js"></script>
 
     <!--=== Our App Js ===-->
     <script src="assets/js/app.js"></script>
     <script src="assets/js/map.js"></script>
-    <script src="assets/js/active.js"></script>
+    <script>
+        // Timeline of events from data/timeline.json, in the page language (currentLang from app.js)
+        function buildTimeline(events) {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+            events.forEach(function (event, index) {
+                const lang = currentLang === 'ar' ? 'ar' : 'en';
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'date date-' + index;
+
+                const goalWrap = document.createElement('button');
+                goalWrap.type = 'button';
+                goalWrap.className = 'goal_wrap';
+                goalWrap.setAttribute('aria-label', event.year + ': ' + event.title[lang]);
+                goalWrap.dataset.title = event.title[lang];
+                goalWrap.dataset.type = event.type[lang];
+                const icon = document.createElement('i');
+                icon.className = 'fa ' + event.icon;
+                icon.setAttribute('aria-hidden', 'true');
+                goalWrap.appendChild(icon);
+                dateDiv.appendChild(goalWrap);
+
+                const focusP = document.createElement('p');
+                focusP.className = 'focus';
+                focusP.textContent = event.year;
+                dateDiv.appendChild(focusP);
+                timeline.appendChild(dateDiv);
+            });
+        }
+
+        // Slide the strip so the chosen event sits in the middle of the screen
+        function centerOn(goalWrap) {
+            const wrap = document.querySelector('.timeline-wrap');
+            const targetX = wrap.clientWidth / 2 - goalWrap.parentElement.offsetLeft;
+            document.getElementById('timeline').style.transform = 'translateX(' + targetX + 'px)';
+        }
+
+        function select(goalWrap) {
+            document.querySelectorAll('.goal_wrap').forEach(function (g) {
+                g.classList.remove('active', 'bounce');
+                g.removeAttribute('aria-current');
+            });
+            goalWrap.classList.add('active', 'bounce');
+            goalWrap.setAttribute('aria-current', 'true');
+            document.getElementById('goal-title').textContent = goalWrap.dataset.title;
+            document.getElementById('event-type').textContent = goalWrap.dataset.type;
+            centerOn(goalWrap);
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            let events = [];
+            try {
+                events = await (await fetch(DATA_PATH + 'timeline.json')).json();
+            } catch (error) {
+                console.error('Error loading timeline:', error);
+                return;
+            }
+            buildTimeline(events);
+            document.getElementById('timeline').addEventListener('click', function (e) {
+                const goalWrap = e.target.closest('.goal_wrap');
+                if (goalWrap) select(goalWrap);
+            });
+            window.addEventListener('resize', function () {
+                const active = document.querySelector('.goal_wrap.active');
+                if (active) centerOn(active);
+            });
+            const first = document.querySelector('.goal_wrap');
+            if (first) select(first);
+        });
+    </script>
 
 
     <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"

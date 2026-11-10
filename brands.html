@@ -1,19 +1,35 @@
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="csstransforms csstransforms3d csstransitions cssanimations">
 <head>
     <meta charset="UTF-8">
+    <script>try{var l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('language');if(l==='ar'){document.documentElement.lang='ar';document.documentElement.dir='rtl';}}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Support - Palestine Crisis</title>
-    <meta name="description"
-        content="Palestine Crisis - Support page showing brands to boycott and alternatives to support Palestine." />
+    <meta name="description" content="Brands that support the occupation, and the alternatives to buy instead. In English and Arabic." />
+    <link rel="canonical" href="https://samehbilal.github.io/palestine-crises/brands.html" />
+    <link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/brands.html?lang=en" />
+    <link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/brands.html?lang=ar" />
+    <link rel="alternate" hreflang="x-default" href="https://samehbilal.github.io/palestine-crises/brands.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Palestine Crisis" />
+    <meta property="og:title" content="Support - Palestine Crisis" />
+    <meta property="og:description" content="Brands that support the occupation, and the alternatives to buy instead. In English and Arabic." />
+    <meta property="og:url" content="https://samehbilal.github.io/palestine-crises/brands.html" />
+    <meta property="og:image" content="https://samehbilal.github.io/palestine-crises/images/screens/wide-live.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Support - Palestine Crisis" />
+    <meta name="twitter:description" content="Brands that support the occupation, and the alternatives to buy instead. In English and Arabic." />
+    <meta name="twitter:image" content="https://samehbilal.github.io/palestine-crises/images/screens/wide-live.jpg" />
     <meta content="Sameh Bilal" name="author" />
 <!--== Favicon ==-->
 <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
 
 <!--== Google Fonts ==-->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css' />
 
 <!-- PWA  -->
@@ -102,13 +118,13 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-lg-4">
                 <div class="logo-wrap">
-                    <a href="live.html"><img src="assets/img/logo2.png" alt="Palestine Crisis" /></a>
+                    <a href="live.html"><img src="assets/img/logo2.webp" alt="Palestine Crisis" /></a>
                 </div>
             </div>
 
             <div class="col-sm-6 col-lg-4">
                 <div class="last-update-wrap text-center">
-                    <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span> <span data-i18n="minutes ago">minutes ago</span> <img src="assets/img/live.gif" alt="" height="40px"></p>
+                    <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span> <span data-i18n="minutes ago">minutes ago</span> <span class="live-dot" aria-hidden="true"></span></p>
                 </div>
             </div>
 
@@ -190,13 +206,13 @@
         </div><!-- /container -->
     </div>
 
-    <div class="last-update-wrap text-center credits" dir="ltr">
+    <div class="last-update-wrap text-center credits">
         <div class="text-center footer">
             <p class="text-reset ">©
-                <script>document.write(new Date().getFullYear())</script>. made with <svg
+                <span class="current-year">2025</span>. <span data-i18n="made with">made with</span> <svg
                     xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" fill="#00cbad" aria-hidden="true">
                     <path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z" />
-                </svg> by Non-Palestinians.
+                </svg> <span data-i18n="by Non-Palestinians.">by Non-Palestinians.</span>
             </p>
         </div>
     </div>
@@ -205,7 +221,6 @@
 <!--== End Main Content Wrapper ==-->
 
 <!--== JavaScript ==-->
-<script src="assets/brands/js/modernizr-2.6.2.min.js"></script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
 
@@ -215,7 +230,6 @@
 <!--=== Our App Js ===-->
 <script src="assets/js/app.js"></script>
 <script src="assets/js/brands.js"></script>
-<script src="assets/js/active.js"></script>
 
 
 <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"

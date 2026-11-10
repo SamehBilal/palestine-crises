@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /tools/
+
+Sitemap: https://samehbilal.github.io/palestine-crises/sitemap.xml

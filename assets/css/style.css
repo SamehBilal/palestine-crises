@@ -255,19 +255,19 @@ Header Style
 }
 
 .menubar .nav li:not(:last-child) {
-    margin-right: 40px;
+    margin-inline-end: 40px;
 }
 
 
 @media only screen and (min-width: 767.99px) and (max-width: 1440px) {
     .menubar .nav li:not(:last-child) {
-        margin-right: 20px;
+        margin-inline-end: 20px;
     }
 }
 
 @media only screen and (max-width: 767.98px) {
     .menubar .nav li:not(:last-child) {
-        margin-right: 20px;
+        margin-inline-end: 20px;
     }
 }
 
@@ -305,7 +305,8 @@ Tracker Block Style
     -ms-flex-align: center;
     align-items: center;
     margin-top: 25px;
-    padding: 25px 0 25px 30px;
+    padding-block: 25px;
+    padding-inline: 30px 0;
 }
 
 .tracker-block__icon {
@@ -313,7 +314,7 @@ Tracker Block Style
     -ms-flex-preferred-size: 57px;
     flex-basis: 57px;
     width: 57px;
-    margin-right: 20px;
+    margin-inline-end: 20px;
 }
 
 .tracker-block__content h4 {
@@ -1035,13 +1036,13 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .list-view__body tr td:first-child {
-    text-align: left;
-    padding-left: 15px !important;
+    text-align: start;
+    padding-inline-start: 15px !important;
 }
 
 .list-view__body tr td img {
     width: 30px;
-    margin-right: 15px;
+    margin-inline-end: 15px;
 }
 
 .list-view__table {
@@ -1164,7 +1165,8 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 .activities-wrap {
     background-color: #FFFFFF;
-    padding: 20px 0 20px 70px;
+    padding-block: 20px;
+    padding-inline: 70px 0;
     border: 2px solid #DBDFEA;
     border-radius: 5px;
 }
@@ -1218,12 +1220,12 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 .chart--2 {
     top: 28px;
-    left: 28px;
+    inset-inline-start: 28px;
 }
 
 .chart--3 {
     top: 28px;
-    left: 28px;
+    inset-inline-start: 28px;
 }
 
 .chart-wrap canvas {
@@ -1250,7 +1252,8 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 @media only screen and (max-width: 767.98px) {
     .activities-wrap {
-        padding: 20px 0 20px 70px !important;
+        padding-block: 20px !important;
+        padding-inline: 70px 0 !important;
     }
 }
 
@@ -1325,14 +1328,14 @@ only screen and (min-width: 992px) and (max-width: 1199.98px) {
 }
 
 .map-status-colors .colors li:not(:last-child) {
-    margin-right: 20px;
+    margin-inline-end: 20px;
 }
 
 .map-status-colors .colors li span {
     display: inline-block;
     height: 15px;
     width: 15px;
-    margin-right: 5px;
+    margin-inline-end: 5px;
 }
 
 .map-status-colors .colors li span.min {
@@ -1349,7 +1352,7 @@ only screen and (min-width: 992px) and (max-width: 1199.98px) {
 
 .map-content-wrap {
     position: absolute;
-    left: 0;
+    inset-inline-start: 0;
     top: 0;
 }
 
@@ -1911,7 +1914,7 @@ font-weight: bold;
 
 .map-dashboard{
     position: relative;
-    left: 34%;
+    inset-inline-start: 34%;
     top: 20%;
     display: block;
     max-width: 500px;
@@ -1932,7 +1935,7 @@ font-weight: bold;
 @media only screen and (max-width: 767.98px) {
     .map-dashboard{
         position: relative;
-        left: 34%;
+        inset-inline-start: 34%;
         top: 20%;
         display: block;
         max-width: 500px;
@@ -1955,4 +1958,44 @@ font-weight: bold;
     background-color: #1D1C22;
     border-color: #fff;
     color: #fff;
+}
+
+/* "Live" marker next to the update time (was a 134 KB GIF) */
+.live-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-inline-start: 8px;
+    border-radius: 50%;
+    background: #e5252f;
+    vertical-align: middle;
+    box-shadow: 0 0 0 0 rgba(229, 37, 47, 0.6);
+    animation: live-pulse 1.6s ease-out infinite;
+}
+
+@keyframes live-pulse {
+    to {
+        box-shadow: 0 0 0 10px rgba(229, 37, 47, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .live-dot {
+        animation: none;
+    }
+}
+
+/* ============================================
+   ARABIC (right to left)
+   One stylesheet for both languages: the rules above use logical properties
+   (margin-inline-end, inset-inline-start, …) that flip on their own with dir="rtl".
+   This is only what differs beyond mirroring.
+   ============================================ */
+[lang="ar"] body,
+[lang="ar"] .info_panel {
+    font-family: "Cairo", "Segoe UI", Tahoma, sans-serif;
+}
+
+[dir="rtl"] .dataTables_wrapper .dataTables_filter input {
+    margin-right: 0.5em !important;
 }

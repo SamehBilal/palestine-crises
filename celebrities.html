@@ -1,18 +1,35 @@
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" class="csstransforms csstransforms3d csstransitions cssanimations">
 <head>
     <meta charset="UTF-8">
+    <script>try{var l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('language');if(l==='ar'){document.documentElement.lang='ar';document.documentElement.dir='rtl';}}catch(e){}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Celebrities - Palestine Crisis</title>
-    <meta name="description" content="Palestine Crisis - See which celebrities support Palestine and which don't." />
+    <meta name="description" content="Where celebrities stand on Palestine, and what they have said and done. In English and Arabic." />
+    <link rel="canonical" href="https://samehbilal.github.io/palestine-crises/celebrities.html" />
+    <link rel="alternate" hreflang="en" href="https://samehbilal.github.io/palestine-crises/celebrities.html?lang=en" />
+    <link rel="alternate" hreflang="ar" href="https://samehbilal.github.io/palestine-crises/celebrities.html?lang=ar" />
+    <link rel="alternate" hreflang="x-default" href="https://samehbilal.github.io/palestine-crises/celebrities.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Palestine Crisis" />
+    <meta property="og:title" content="Celebrities - Palestine Crisis" />
+    <meta property="og:description" content="Where celebrities stand on Palestine, and what they have said and done. In English and Arabic." />
+    <meta property="og:url" content="https://samehbilal.github.io/palestine-crises/celebrities.html" />
+    <meta property="og:image" content="https://samehbilal.github.io/palestine-crises/images/screens/wide-live.jpg" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Celebrities - Palestine Crisis" />
+    <meta name="twitter:description" content="Where celebrities stand on Palestine, and what they have said and done. In English and Arabic." />
+    <meta name="twitter:image" content="https://samehbilal.github.io/palestine-crises/images/screens/wide-live.jpg" />
     <meta content="Sameh Bilal" name="author" />
 <!--== Favicon ==-->
 <link rel="shortcut icon" href="assets/palestine_favicon.png" type="image/x-icon" />
 
 <!--== Google Fonts ==-->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,300;1,400&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,700' rel='stylesheet' type='text/css' />
 
 <!-- PWA  -->
@@ -30,7 +47,6 @@
 
 <!--== CSS ==-->
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-<link href="assets/css/materialdesignicons.min.css" rel="stylesheet" />
 <link href="assets/css/style.css" rel="stylesheet" />
 
 <!--== Brands/Celebrities CSS ==-->
@@ -39,7 +55,7 @@
 <link rel="stylesheet" type="text/css" href="assets/brands/css/demo3.css" />
 <link rel="stylesheet" type="text/css" href="assets/brands/css/common3.css" />
 <link rel="stylesheet" type="text/css" href="assets/brands/css/component2.css" />
-<link rel="stylesheet" type="text/css" href="assets/celebrities/css/base.css" />
+
 
 <style>
     h1 {
@@ -53,13 +69,113 @@
         padding: 0 5px;
     }
 
-    .glossary-item {
-        margin: 15px 0;
+    .btn-glossary-filter[aria-pressed="true"] {
+        background: #00cbad;
+        border-color: #00cbad;
+        color: #1c1b24;
     }
 
-    .glossary-item h2 {
+    .celeb-group {
+        margin: 24px 0;
+    }
+
+    .celeb-group h2 {
         color: #fff;
-        border-bottom: 1px dotted #fff;
+        border-bottom: 1px dotted rgba(255, 255, 255, 0.6);
+        padding-bottom: 6px;
+        margin-bottom: 16px;
+    }
+
+    .celeb-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+    }
+
+    .celeb-card {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        background: #1f1e27;
+        border: 1px solid #3b3a48;
+        border-radius: 12px;
+        padding: 16px;
+        color: #ddd;
+    }
+
+    .celeb-card[hidden],
+    .celeb-group[hidden] {
+        display: none;
+    }
+
+    .celeb-photo {
+        position: relative;
+        flex: none;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2a9446, #00cbad);
+        color: #fff;
+        font-size: 24px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .celeb-photo img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .celeb-body {
+        min-width: 0;
+    }
+
+    .celeb-body h3 {
+        color: #fff;
+        font-size: 18px;
+        margin: 0 0 6px;
+    }
+
+    .celeb-stance {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 2px 10px;
+        border-radius: 20px;
+        background: #555;
+        color: #fff;
+    }
+
+    .celeb-stance.is-pro {
+        background: #2a9446;
+    }
+
+    .celeb-subtitle {
+        margin: 8px 0 4px;
+        font-size: 14px;
+        color: #bbb;
+    }
+
+    .celeb-card summary {
+        cursor: pointer;
+        color: #00cbad;
+        font-size: 14px;
+    }
+
+    .celeb-card details p {
+        margin: 8px 0 0;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    #celeb-empty {
+        color: #bbb;
     }
 
     #search-group {
@@ -70,23 +186,23 @@
         position: absolute;
         z-index: 10;
         top: 10px;
-        left: 10px;
+        inset-inline-start: 10px;
         width: 25px;
         height: 25px;
         transition: all 0.33s;
     }
 
     #search-group .glossary-search-input {
-        padding-left: 40px;
+        padding-inline-start: 46px;
         transition: all 0.33s;
     }
 
     #search-group .glossary-search-input:focus {
-        padding-left: 15px;
+        padding-inline-start: 15px;
     }
 
     #search-group .glossary-search-input:focus~.glossary-search-icon {
-        left: calc(100% - 40px);
+        inset-inline-start: calc(100% - 40px);
     }
 </style>
 </head>
@@ -97,13 +213,13 @@
         <div class="row justify-content-between align-items-center">
             <div class="col-lg-4">
                 <div class="logo-wrap">
-                    <a href="live.html"><img src="assets/img/logo2.png" alt="Palestine Crisis" /></a>
+                    <a href="live.html"><img src="assets/img/logo2.webp" alt="Palestine Crisis" /></a>
                 </div>
             </div>
 
             <div class="col-sm-6 col-lg-4">
                 <div class="last-update-wrap text-center">
-                    <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span> <span data-i18n="minutes ago">minutes ago</span> <img src="assets/img/live.gif" alt="" height="40px"></p>
+                    <p class="mb-0"><span data-i18n="Updated">Updated</span>: <span class="last-update">0</span> <span data-i18n="minutes ago">minutes ago</span> <span class="live-dot" aria-hidden="true"></span></p>
                 </div>
             </div>
 
@@ -147,45 +263,44 @@
             <!-- End of Nav Structure -->
         </div>
 
-        <section dir="ltr">
-
+        <section class="celebs">
             <div class="row">
                 <div class="col-12 text-center">
                     <h1 data-i18n="Celebrities">Celebrities</h1>
                 </div>
 
-                <div class="col-12 text-center" id="letter-filters">
-                    <button class="btn btn-small btn-secondary btn-glossary-filter" data-filter="A-Z" data-i18n="A-Z">A-Z</button>
-                    <!-- Letters will be generated dynamically -->
+                <div class="col-12 text-center" id="letter-filters" role="group" aria-label="Filter by letter" data-i18n-aria-label="Filter by letter">
+                    <button type="button" class="btn btn-small btn-secondary btn-glossary-filter" data-filter="all" aria-pressed="true" data-i18n="A-Z">A-Z</button>
+                    <!-- Letters are added from the data -->
                 </div>
 
                 <div class="col-12 col-lg-4 offset-lg-4 text-center">
                     <div class="input-group" id="search-group">
-                        <input type="text" class="form-control glossary-search-input" placeholder="Search ..."
-                            aria-label="Search"
+                        <input type="search" class="form-control glossary-search-input" placeholder="Search ..."
+                            data-i18n-placeholder="Search ..." aria-label="Search" data-i18n-aria-label="Search"
                             id="glossary-search-exp">
 
-                        <svg width="24" height="24" viewBox="0 0 24 24" class="glossary-search-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" class="glossary-search-icon" aria-hidden="true">
                             <path d="M20.71,4.04C21.1,3.65 21.1,3 20.71,2.63L18.37,0.29C18,-0.1 17.35,-0.1 16.96,0.29L15,2.25L18.75,6M17.75,7L14,3.25L4,13.25V17H7.75L17.75,7Z"></path>
                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="row" id="glossary-grid">
-                <!-- Will be populated by JavaScript -->
+            <div id="celeb-grid">
+                <!-- Built from data/celebrities.json by assets/js/celebrities.js -->
             </div>
-
+            <p id="celeb-empty" class="text-center" hidden data-i18n="No matching records found">No matching records found</p>
         </section>
     </div><!-- /container -->
 
-    <div class="last-update-wrap text-center credits" dir="ltr">
+    <div class="last-update-wrap text-center credits">
         <div class="text-center footer">
             <p class="text-reset ">©
-                <script>document.write(new Date().getFullYear())</script>. made with <svg
+                <span class="current-year">2025</span>. <span data-i18n="made with">made with</span> <svg
                     xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" fill="#00cbad" aria-hidden="true">
                     <path d="M119.4 44.1c23.3-3.9 46.8-1.9 68.6 5.3l49.8 77.5-75.4 75.4c-1.5 1.5-2.4 3.6-2.3 5.8s1 4.2 2.6 5.7l112 104c2.9 2.7 7.4 2.9 10.5 .3s3.8-7 1.7-10.4l-60.4-98.1 90.7-75.6c2.6-2.1 3.5-5.7 2.4-8.8L296.8 61.8c28.5-16.7 62.4-23.2 95.7-17.6C461.5 55.6 512 115.2 512 185.1v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.6 300.4C17.2 272.1 0 232.4 0 190.9v-5.8c0-69.9 50.5-129.5 119.4-141z" />
-                </svg> by Non-Palestinians.
+                </svg> <span data-i18n="by Non-Palestinians.">by Non-Palestinians.</span>
             </p>
         </div>
     </div>
@@ -194,22 +309,11 @@
 <!--== End Main Content Wrapper ==-->
 
 <!--== JavaScript ==-->
-<script src="assets/brands/js/modernizr-2.6.2.min.js"></script>
-<script src="assets/js/modernizr.min.js"></script>
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery-migrate.min.js"></script>
-<script src="assets/js/popper.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
 
-<!--== Isotope for filtering ==-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"></script>
 
-<!--== Celebrities Grid ==-->
-<script src="assets/celebrities/js/imagesloaded.pkgd.min.js"></script>
-<script src="assets/celebrities/js/masonry.pkgd.min.js"></script>
-<script src="assets/celebrities/js/charming.min.js"></script>
-<script src="assets/celebrities/js/TweenMax.min.js"></script>
-<script src="assets/celebrities/js/demo.js"></script>
+
+
 
 <!--== Brands Navigation ==-->
 <script src="assets/brands/js/polyfills.js"></script>

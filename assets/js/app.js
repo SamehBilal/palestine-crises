@@ -18,6 +18,10 @@ let currentLang = (function () {
 function getLocale() {
     return currentLang === 'ar' ? 'ar-u-nu-latn' : 'en-US';
 }
+// Numbers in the page's locale; a figure we don't have (null/undefined) shows as a dash
+function formatNumber(value) {
+    return typeof value === 'number' ? value.toLocaleString(getLocale()) : '—';
+}
 // Fill a map tooltip with a region's name and death count. Built as text nodes because
 // names come from the data files.
 function fillRegionTooltip(panel, regionName, deaths) {
@@ -25,7 +29,7 @@ function fillRegionTooltip(panel, regionName, deaths) {
     name.textContent = regionName;
     const count = document.createElement('span');
     count.className = 'info_panel-deaths';
-    count.textContent = Number(deaths).toLocaleString();
+    count.textContent = formatNumber(Number(deaths));
     panel.append(name, document.createElement('br'), i18n.t('Deaths') + ': ', count);
     return panel;
 }
@@ -82,6 +86,12 @@ class TranslationManager {
             const key = element.getAttribute('data-i18n');
             element.textContent = this.translate(key);
         });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+            element.setAttribute('aria-label', this.translate(element.getAttribute('data-i18n-aria-label')));
+        });
+        document.querySelectorAll('[data-i18n-title]').forEach(element => {
+            element.title = this.translate(element.getAttribute('data-i18n-title'));
+        });
         document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
             const key = element.getAttribute('data-i18n-placeholder');
             element.placeholder = this.translate(key);
@@ -92,11 +102,6 @@ class TranslationManager {
         const isArabic = this.currentLang === 'ar';
         html.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
         html.setAttribute('lang', isArabic ? 'ar' : 'en');
-        // style_rtl.css is a full mirrored copy of style.css, so swap one for the other
-        const stylesheet = document.querySelector('link[href$="assets/css/style.css"], link[href$="assets/css/style_rtl.css"]');
-        if (stylesheet) {
-            stylesheet.setAttribute('href', 'assets/css/' + (isArabic ? 'style_rtl.css' : 'style.css'));
-        }
         // The language link always offers the other language
         document.querySelectorAll('.language-link').forEach(link => {
             link.setAttribute('data-lang', isArabic ? 'en' : 'ar');
@@ -133,28 +138,33 @@ class LiveTrackerManager {
     }
     insertData(selectorID) {
         if (!this.data) return;
+        // A figure we don't have (null) shows as a dash; an unknown increase hides its "(+…)" wrapper
         const dataToDOM = (selector, value) => {
-            const elements = selectorID.querySelectorAll(selector);
-            elements.forEach(elem => {
-                elem.textContent = value.toLocaleString();
+            selectorID.querySelectorAll(selector).forEach(elem => {
+                const known = typeof value === 'number';
+                elem.textContent = formatNumber(value);
+                if (elem.classList.contains('increase')) {
+                    const wrap = elem.closest('.new-no, .new-no-new');
+                    if (wrap) wrap.hidden = !known;
+                }
             });
         };
 
         // Insert data
         dataToDOM('.total-deaths', this.data.total_deaths);
-        dataToDOM('.previous_total_deaths', this.data.previous_total_deaths);
+        dataToDOM('.increase-total-deaths', this.data.increase_total_deaths);
         dataToDOM('.women-deaths', this.data.women_deaths);
-        dataToDOM('.previous_women_deaths', this.data.previous_women_deaths);
+        dataToDOM('.increase-women-deaths', this.data.increase_women_deaths);
         dataToDOM('.children-deaths', this.data.children_deaths);
-        dataToDOM('.previous_children_deaths', this.data.previous_children_deaths);
+        dataToDOM('.increase-children-deaths', this.data.increase_children_deaths);
         dataToDOM('.elders-deaths', this.data.elders_deaths);
-        dataToDOM('.previous_elders_deaths', this.data.previous_elders_deaths);
+        dataToDOM('.increase-elders-deaths', this.data.increase_elders_deaths);
         dataToDOM('.total-injuries', this.data.total_injuries);
-        dataToDOM('.previous_total_injuries', this.data.previous_total_injuries);
+        dataToDOM('.increase-total-injuries', this.data.increase_total_injuries);
         dataToDOM('.total-displaced', this.data.total_displaced);
-        dataToDOM('.previous_total_displaced', this.data.previous_total_displaced);
+        dataToDOM('.increase-total-displaced', this.data.increase_total_displaced);
         dataToDOM('.destroyed-units', this.data.total_destroyed_residential_units);
-        dataToDOM('.previous_destroyed_units', this.data.previous_total_destroyed_residential_units);
+        dataToDOM('.increase-destroyed-units', this.data.increase_total_destroyed_residential_units);
         dataToDOM('.medical-deaths', this.data.total_medical_deaths);
         dataToDOM('.medical-injured', this.data.total_medical_injured);
         dataToDOM('.hospitals-broken', this.data.total_hospitals_broken);
@@ -249,6 +259,18 @@ class AttacksManager {
     getTotalDisplaced() {
         return this.sumField('total_displaced');
     }
+    // One row per map shape. Governorates with no figures of their own (part_of in regions.json, e.g. the
+    // Gaza Strip's) take their parent's row, so the map shows the whole-Gaza figure under the name "Gaza"
+    // rather than a made-up per-governorate number.
+    getMapRows() {
+        const own = new Set(this.attacks.map(attack => attack.region_id));
+        const rows = this.attacks.map(attack => ({ attack, svgCode: regionsManager.getSvgCode(attack.region_id), inherited: false }));
+        regionsManager.regions.forEach(region => {
+            const parent = region.part_of && !own.has(region.id) && this.getAttackByRegion(region.part_of);
+            if (parent) rows.push({ attack: parent, svgCode: region.code.replace(/^PS-/, ''), inherited: true });
+        });
+        return rows;
+    }
     getRegionsByDeaths() {
         return [...this.attacks].sort((a, b) => b.total_deaths - a.total_deaths);
     }
@@ -258,7 +280,7 @@ class AttacksManager {
 // ============================================
 const worldwideWithPieChart = async (liveData) => {
     const totalDeaths = liveData.total_deaths;
-    const elderRate = (liveData.elders_deaths * 100) / totalDeaths;
+    const elderRate = typeof liveData.elders_deaths === 'number' ? (liveData.elders_deaths * 100) / totalDeaths : null;
     const childrenRate = (liveData.children_deaths * 100) / totalDeaths;
     const womenRate = (liveData.women_deaths * 100) / totalDeaths;
     const percents = [
@@ -270,7 +292,7 @@ const worldwideWithPieChart = async (liveData) => {
             title: i18n.t("Children") + " " + Math.floor(childrenRate) + '%',
             value: childrenRate
         },
-        {
+        elderRate === null ? null : {
             title: i18n.t("Elders") + " " + Math.floor(elderRate) + '%',
             value: elderRate
         }
@@ -294,27 +316,18 @@ const worldwideWithPieChart = async (liveData) => {
 // LINE CHART FOR TOTAL GRAPH VIEW
 // ============================================
 const chartReport = async (selectorId) => {
-    const reports = [
-        238, 428, 577, 923, 1128, 1571, 1951, 2270, 2385, 2809,
-        3061, 3543, 4221, 4741, 5182, 6504, 6954, 7415, 7761, 8069,
-        8382, 8610, 8850, 9159, 9299, 9883, 10678, 11208, 11667, 12918,
-        15455, 16060, 18175, 19754, 19968, 29496
-    ];
-    const dayNumbers = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27,
-        28, 30, 33, 35, 41, 45, 57, 60, 66, 73, 74, 136
-    ];
-    const labels = dayNumbers.map(day => i18n.t('Day') + ' ' + day);
-    const dates = [
-        'Oct 7, 2023', 'Oct 8, 2023', 'Oct 9, 2023', 'Oct 10, 2023', 'Oct 11, 2023',
-        'Oct 12, 2023', 'Oct 13, 2023', 'Oct 14, 2023', 'Oct 15, 2023', 'Oct 16, 2023',
-        'Oct 17, 2023', 'Oct 18, 2023', 'Oct 20, 2023', 'Oct 21, 2023', 'Oct 22, 2023',
-        'Oct 23, 2023', 'Oct 25, 2023', 'Oct 26, 2023', 'Oct 27, 2023', 'Oct 28, 2023',
-        'Oct 29, 2023', 'Oct 31, 2023', 'Nov 1, 2023', 'Nov 2, 2023', 'Nov 3, 2023',
-        'Nov 5, 2023', 'Nov 8, 2023', 'Nov 10, 2023', 'Nov 16, 2023', 'Nov 20, 2023',
-        'Dec 2, 2023', 'Dec 5, 2023', 'Dec 11, 2023', 'Dec 18, 2023', 'Dec 19, 2023',
-        'Feb 19, 2024'
-    ];
+    // data/history.json: the total death toll at each update since 7 October 2023
+    let history = [];
+    try {
+        history = await (await fetch(DATA_PATH + 'history.json')).json();
+    } catch (error) {
+        console.error('Error loading history:', error);
+        return;
+    }
+    const start = Date.UTC(2023, 9, 7);
+    const reports = history.map(point => point.total_deaths);
+    const dates = history.map(point => point.date);
+    const labels = dates.map(date => i18n.t('Day') + ' ' + (Math.round((Date.parse(date) - start) / 864e5) + 1));
     const config = {
         type: 'line',
         data: {
@@ -351,8 +364,8 @@ const chartReport = async (selectorId) => {
                 callbacks: {
                     title: function (tooltipItems) {
                         const index = Number(tooltipItems[0].index);
-                        const date = new Date(dates[index]).toLocaleDateString(getLocale(), {
-                            year: 'numeric', month: 'short', day: 'numeric'
+                        const date = new Date(dates[index] + 'T00:00:00Z').toLocaleDateString(getLocale(), {
+                            year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC'
                         });
                         return labels[index] + ", " + date;
                     },
@@ -413,6 +426,35 @@ document.addEventListener('click', event => {
     url.hash = '';
     window.location.href = url.toString();
 });
+// Header "Updated …" line on every page: how long ago the figures were updated, in the page
+// language ("5 minutes ago", or the date and "994 days ago" once it's over a day)
+function updateLastUpdateLines() {
+    if (!liveTracker.data) return;
+    const minutes = liveTracker.getLastUpdateTime();
+    const locale = getLocale();
+    const relative = new Intl.RelativeTimeFormat(locale, { numeric: 'always' });
+    let text;
+    if (minutes >= 1440) {
+        const date = new Date(liveTracker.data.last_update);
+        text = date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) + ' (' +
+            relative.format(-Math.floor(minutes / 1440), 'day') + ')';
+    } else if (minutes >= 60) {
+        text = relative.format(-Math.floor(minutes / 60), 'hour');
+    } else {
+        text = relative.format(-Math.max(minutes, 0), 'minute');
+    }
+    document.querySelectorAll('.last-update').forEach(elem => {
+        elem.textContent = text;
+        // the relative time above already says "ago"
+        const p = elem.closest('p');
+        const ago = p && p.querySelector('[data-i18n="minutes ago"]');
+        if (ago) ago.hidden = true;
+    });
+}
+// Footer year
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.current-year').forEach(elem => { elem.textContent = new Date().getFullYear(); });
+});
 // Resolves once all shared data has loaded. Page scripts (live.js, map.js, active.js) await this
 // instead of polling. Each loader catches its own errors, so this resolves even if a file fails.
 const appReady = Promise.all([
@@ -427,10 +469,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         await appReady;
         // Translate anything parsed after the translations arrived
         i18n.applyTranslations();
+        updateLastUpdateLines();
+        setInterval(updateLastUpdateLines, 60000);
         if (!liveTracker.data) return;
 
         // Insert live tracker data, unless the page shows its own numbers in the same
-        // elements (map.html: per-region details, new.html: per-year timeline)
+        // elements (map.html shows per-region details there)
         if (document.body.dataset.trackerStats !== 'off') {
             const mainContainer = document.querySelector('.main-container') || document.body;
             liveTracker.insertData(mainContainer);

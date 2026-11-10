@@ -1,20 +1,21 @@
 
 // Service Worker for Palestine Crisis
 // Provides offline support and caching
-const CACHE_NAME = 'palestine-crisis-v7';
-const DATA_CACHE_NAME = 'palestine-crisis-data-v7';
+const CACHE_NAME = 'palestine-crisis-v8';
+const DATA_CACHE_NAME = 'palestine-crisis-data-v8';
 // Files to cache on install. Paths are relative to sw.js so the site also works from a subfolder,
 // and every entry must exist: cache.addAll() fails the whole install on a single 404.
 const filesToCache = [
 'index.html',
 'live.html',
 'map.html',
-'new.html',
 'brands.html',
 'celebrities.html',
 'barcodes.html',
 'landing.html',
+'landing-ar.html',
 'offline.html',
+'404.html',
 'manifest.json',
 'logo.png',
 'images/icons/icon-192.png',
@@ -24,22 +25,35 @@ const filesToCache = [
 'images/icons/apple-touch-icon.png',
 'assets/css/style.css',
 'assets/css/bootstrap.min.css',
+'assets/css/select2.min.css',
+'assets/css/datatables.min.css',
+'assets/css/chart.min.css',
 'assets/js/app.js',
 'assets/js/pwa.js',
 'assets/js/live.js',
-'assets/js/active.js',
+'assets/js/map.js',
+'assets/js/brands.js',
+'assets/js/celebrities.js',
+'assets/js/barcodes.js',
 'assets/js/jquery.min.js',
-'assets/js/bootstrap.min.js',
+'assets/js/select2.full.min.js',
+'assets/js/datatables.min.js',
 'assets/js/chart.min.js',
-'assets/img/logo2.png',
-'assets/img/palestine.webp',
+'assets/img/logo2.webp',
+'assets/img/palestine-flag.webp',
+'assets/img/people.webp',
+'assets/img/patient.webp',
+'assets/img/man-2.webp',
+'assets/img/woman-3.webp',
 'assets/palestine_favicon.png'
 ];
 // Data files to cache separately (updated more frequently)
 const dataFiles = [
 'data/livetracker.json',
+'data/history.json',
 'data/regions.json',
 'data/attacks.json',
+'data/timeline.json',
 'data/translations.json',
 'data/brands.json',
 'data/barcodes.json',

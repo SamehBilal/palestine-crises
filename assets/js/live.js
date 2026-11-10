@@ -4,15 +4,13 @@
 // ============================================
 // Initialize map colors and interaction
 function initializePalestineMap() {
-    const regions = []; // Will be populated from attacks data
-    // Populate regions array from attacksManager; SVG path ids come from regions.json
-    attacksManager.attacks.forEach(function (attack) {
-        const svgCode = regionsManager.getSvgCode(attack.region_id);
-        regions.push({
-            region_name: i18n.t(attack.region_name),
-            region_code: svgCode,
-            deaths: attack.total_deaths
-        });
+    // One entry per map shape; SVG path ids come from regions.json (see getMapRows in app.js)
+    const regions = attacksManager.getMapRows().map(function (row) {
+        return {
+            region_name: i18n.t(row.attack.region_name),
+            region_code: row.svgCode,
+            deaths: row.attack.total_deaths
+        };
     });
     // Color the map regions based on deaths (getColorForDeaths is in app.js)
     regions.forEach(function (region) {
@@ -87,7 +85,7 @@ function populateRegionList() {
     const allRegionsLi = document.createElement('li');
     allRegionsLi.className = 'country-search';
     allRegionsLi.innerHTML = '<h6 class="country-name" data-i18n="All Regions">All Regions</h6>' +
-        '<span class="cases-no infected">' + attacksManager.getTotalDeaths().toLocaleString() + '</span>';
+        '<span class="cases-no infected">' + formatNumber(attacksManager.getTotalDeaths()) + '</span>';
     allRegionsLi.addEventListener('click', function () {
         filterTableByRegion('All Regions');
     });
@@ -98,7 +96,7 @@ function populateRegionList() {
         li.className = 'country-search' + (index > 10 ? ' region-disabled' : '');
         li.style.display = index > 10 ? 'none' : 'flex';
         li.innerHTML = '<h6 class="country-name"></h6>' +
-            '<span class="cases-no infected">' + attack.total_deaths.toLocaleString() + '</span>';
+            '<span class="cases-no infected">' + formatNumber(attack.total_deaths) + '</span>';
         li.querySelector('.country-name').textContent = i18n.t(attack.region_name);
         li.addEventListener('click', function () {
             // The table shows translated names, so search by the translated name
@@ -121,17 +119,17 @@ function populateRegionsTable() {
         const tr = document.createElement('tr');
         tr.className = 'country-item';
         tr.innerHTML = '<td>' +
-            '<img src="assets/img/palestine.webp" alt="" style="width: 30px; margin-inline-end: 10px;">' +
+            '<img src="assets/img/palestine-flag.webp" alt="" style="width: 30px; margin-inline-end: 10px;">' +
             '<span class="region-name"></span>' +
             '</td>' +
-            '<td>' + attack.total_injuries.toLocaleString() + '</td>' +
-            '<td>' + attack.total_deaths.toLocaleString() + '</td>' +
-            '<td>' + attack.women_deaths.toLocaleString() + '</td>' +
-            '<td>' + attack.children_deaths.toLocaleString() + '</td>' +
-            '<td>' + attack.elders_deaths.toLocaleString() + '</td>' +
+            '<td>' + formatNumber(attack.total_injuries) + '</td>' +
+            '<td>' + formatNumber(attack.total_deaths) + '</td>' +
+            '<td>' + formatNumber(attack.women_deaths) + '</td>' +
+            '<td>' + formatNumber(attack.children_deaths) + '</td>' +
+            '<td>' + formatNumber(attack.elders_deaths) + '</td>' +
             '<td>' + deathRate + '%</td>' +
-            '<td>' + attack.total_destroyed_residential_units.toLocaleString() + '</td>' +
-            '<td>' + attack.total_displaced.toLocaleString() + '</td>';
+            '<td>' + formatNumber(attack.total_destroyed_residential_units) + '</td>' +
+            '<td>' + formatNumber(attack.total_displaced) + '</td>';
         tr.querySelector('.region-name').textContent = i18n.t(attack.region_name);
         tableBody.appendChild(tr);
     });
@@ -156,7 +154,7 @@ function populateRegionSelect() {
         const option = document.createElement('option');
         option.value = attack.region_id;
         option.className = attack.region_name;
-        option.setAttribute('data-image', 'assets/img/palestine.webp');
+        option.setAttribute('data-image', 'assets/img/palestine-flag.webp');
         option.textContent = i18n.t(attack.region_name);
         select.appendChild(option);
     });

@@ -1,249 +1,132 @@
-
 // ============================================
 // CELEBRITIES.HTML PAGE SPECIFIC FUNCTIONALITY
 // ============================================
-// Celebrities Manager
-class CelebritiesManager {
-    constructor() {
-        this.celebrities = [];
-        this.letters = [];
-    }
-    async loadCelebrities() {
-        try {
-            const response = await fetch('data/celebrities.json');
-            this.celebrities = await response.json();
-            this.extractLetters();
-            return this.celebrities;
-        } catch (error) {
-            console.error('Error loading celebrities:', error);
-            // Return empty array if file doesn't exist yet
-            return [];
-        }
-    }
-    extractLetters() {
-        const lettersSet = new Set();
-        this.celebrities.forEach(function (celebrity) {
-            const firstLetter = celebrity.first_letter.toUpperCase();
-            lettersSet.add(firstLetter);
-        });
-        this.letters = Array.from(lettersSet).sort();
-    }
-    getCelebritiesByLetter(letter) {
-        return this.celebrities.filter(function (celebrity) {
-            return celebrity.first_letter.toUpperCase() === letter.toUpperCase();
-        });
-    }
-    searchCelebrities(query) {
-        query = query.toLowerCase();
-        return this.celebrities.filter(function (celebrity) {
-            return celebrity.name.toLowerCase().includes(query);
-        });
-    }
+// A card per person from data/celebrities.json, grouped by first letter, in the page language.
+// The letter buttons and the search box filter the cards; the bio opens in place (<details>).
+const celebrityPhotoPath = 'assets/celebrities/img/';
+
+function celebField(celebrity, field) {
+    return currentLang === 'ar' && celebrity['ar_' + field] ? celebrity['ar_' + field] : celebrity[field];
 }
-// Initialize Celebrities Manager
-const celebritiesManager = new CelebritiesManager();
-// Populate letter filter buttons
-function populateLetterFilters() {
-    const container = document.getElementById('letter-filters');
-    if (!container) return;
-    // A-Z button already exists in HTML
-    celebritiesManager.letters.forEach(function (letter) {
-        const btn = document.createElement('button');
-        btn.className = 'btn btn-small btn-secondary btn-glossary-filter';
-        btn.setAttribute('data-filter', letter.toUpperCase());
-        btn.textContent = letter.toUpperCase();
-        container.appendChild(btn);
-    });
+
+function celebLetter(celebrity) {
+    return (currentLang === 'ar' && celebrity.first_ar_letter ? celebrity.first_ar_letter : celebrity.first_letter).toUpperCase();
 }
-// Swap a missing celebrity photo for a generic image (once, so a missing fallback can't loop)
-function useFallbackImage() {
-    this.onerror = null;
-    this.src = 'assets/images/palestine.jpg';
+
+// Initials stand in for a photo we don't have, or one that fails to load
+function initials(name) {
+    return name.split(/\s+/).map(word => word[0]).slice(0, 2).join('');
 }
-// Populate celebrities grid
-function populateCelebritiesGrid() {
-    const grid = document.getElementById('glossary-grid');
-    if (!grid) return;
+
+function createCard(celebrity) {
+    const card = document.createElement('article');
+    card.className = 'celeb-card';
+    card.dataset.search = [celebrity.name, celebrity.ar_name || ''].join(' ').toLowerCase();
+
+    const photo = document.createElement('div');
+    photo.className = 'celeb-photo';
+    photo.setAttribute('aria-hidden', 'true');
+    photo.textContent = initials(celebField(celebrity, 'name'));
+    if (celebrity.image) {
+        const img = document.createElement('img');
+        img.src = celebrityPhotoPath + celebrity.image;
+        img.alt = '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.onerror = function () { this.remove(); };
+        photo.appendChild(img);
+    }
+
+    const body = document.createElement('div');
+    body.className = 'celeb-body';
+    const name = document.createElement('h3');
+    name.textContent = celebField(celebrity, 'name');
+    const stance = document.createElement('span');
+    stance.className = 'celeb-stance' + (celebrity.stance === 'Pro-Palestine' ? ' is-pro' : '');
+    stance.textContent = celebField(celebrity, 'stance') || i18n.t('Unknown');
+    const subtitle = document.createElement('p');
+    subtitle.className = 'celeb-subtitle';
+    subtitle.textContent = celebField(celebrity, 'subtitle') || '';
+
+    const more = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = i18n.t('Read more');
+    const bio = document.createElement('p');
+    bio.textContent = celebField(celebrity, 'bio') || '';
+    more.append(summary, bio);
+
+    body.append(name, stance, subtitle, more);
+    card.append(photo, body);
+    return card;
+}
+
+function renderCelebrities(celebrities) {
+    const grid = document.getElementById('celeb-grid');
+    const filters = document.getElementById('letter-filters');
     grid.innerHTML = '';
-    celebritiesManager.letters.forEach(function (letter) {
-        const celebritiesForLetter = celebritiesManager.getCelebritiesByLetter(letter);
-        if (celebritiesForLetter.length === 0) return; // Skip empty letters
+    filters.querySelectorAll('[data-filter]:not([data-filter="all"])').forEach(b => b.remove());
 
-        // Letter header
-        const headerDiv = document.createElement('div');
-        headerDiv.className = 'col-12 glossary-item glossary-filter_A-Z glossary-filter_' + letter.toUpperCase();
+    const letters = [...new Set(celebrities.map(celebLetter))].sort((a, b) => a.localeCompare(b, currentLang));
+    letters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-small btn-secondary btn-glossary-filter';
+        btn.dataset.filter = letter;
+        btn.textContent = letter;
+        btn.setAttribute('aria-pressed', 'false');
+        filters.appendChild(btn);
+
+        const section = document.createElement('section');
+        section.className = 'celeb-group';
+        section.dataset.letter = letter;
         const heading = document.createElement('h2');
-        heading.textContent = letter.toUpperCase();
-        headerDiv.appendChild(heading);
-        grid.appendChild(headerDiv);
-
-        // Celebrities grid container
-        const celebsDiv = document.createElement('div');
-        celebsDiv.className = 'col-12 glossary-item glossary-filter_A-Z glossary-filter_' + letter.toUpperCase();
-
-        // Create grid wrapper
-        const mainWrapper = document.createElement('main');
-        const gridWrap = document.createElement('div');
-        gridWrap.className = 'grid-wrap';
-
-        const gridContainer = document.createElement('div');
-        gridContainer.className = 'grid';
-
-        // Add celebrities to grid
-        celebritiesForLetter.forEach(function (celebrity, index) {
-            const gridItem = document.createElement('a');
-            gridItem.href = '#';
-            gridItem.className = 'grid__item';
-            gridItem.setAttribute('data-celeb-index', index);
-
-            const bgDiv = document.createElement('div');
-            bgDiv.className = 'grid__item-bg';
-
-            const wrapDiv = document.createElement('div');
-            wrapDiv.className = 'grid__item-wrap';
-
-            const img = document.createElement('img');
-            img.className = 'grid__item-img';
-            img.src = 'assets/celebrities/img/' + celebrity.image;
-            img.alt = celebrity.name;
-            img.onerror = useFallbackImage;
-
-            wrapDiv.appendChild(img);
-
-            const title = document.createElement('h3');
-            title.className = 'grid__item-title';
-            title.textContent = celebrity.name;
-
-            const number = document.createElement('h4');
-            number.className = 'grid__item-number';
-            number.textContent = celebrity.stance || 'N/A'; // Pro-Palestine / Neutral / Pro-Israel
-
-            gridItem.appendChild(bgDiv);
-            gridItem.appendChild(wrapDiv);
-            gridItem.appendChild(title);
-            gridItem.appendChild(number);
-
-            gridContainer.appendChild(gridItem);
-        });
-
-        gridWrap.appendChild(gridContainer);
-        mainWrapper.appendChild(gridWrap);
-
-        // Create content sections for expanded view
-        const content = document.createElement('div');
-        content.className = 'content';
-
-        celebritiesForLetter.forEach(function (celebrity) {
-            const contentItem = document.createElement('div');
-            contentItem.className = 'content__item';
-
-            const intro = document.createElement('div');
-            intro.className = 'content__item-intro';
-
-            const img = document.createElement('img');
-            img.className = 'content__item-img';
-            img.src = 'assets/celebrities/img/' + celebrity.image;
-            img.alt = celebrity.name;
-            img.onerror = useFallbackImage;
-
-            const titleH2 = document.createElement('h2');
-            titleH2.className = 'content__item-title';
-            titleH2.textContent = celebrity.name;
-
-            intro.appendChild(img);
-            intro.appendChild(titleH2);
-
-            const subtitle = document.createElement('h3');
-            subtitle.className = 'content__item-subtitle';
-            subtitle.textContent = celebrity.subtitle || 'Their stance on Palestine';
-
-            const textDiv = document.createElement('div');
-            textDiv.className = 'content__item-text';
-            const bio = document.createElement('p');
-            bio.textContent = celebrity.bio || 'Information about this celebrity will be added soon.';
-            textDiv.appendChild(bio);
-
-            contentItem.appendChild(intro);
-            contentItem.appendChild(subtitle);
-            contentItem.appendChild(textDiv);
-
-            content.appendChild(contentItem);
-        });
-
-        // Close button
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'content__close';
-        closeBtn.textContent = i18n ? i18n.t('Close') : 'Close';
-        content.appendChild(closeBtn);
-
-        // Indicator SVG
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('class', 'content__indicator icon icon--caret');
-        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#icon-caret');
-        svg.appendChild(use);
-        content.appendChild(svg);
-
-        mainWrapper.appendChild(content);
-        celebsDiv.appendChild(mainWrapper);
-        grid.appendChild(celebsDiv);
+        heading.textContent = letter;
+        const list = document.createElement('div');
+        list.className = 'celeb-list';
+        celebrities.filter(c => celebLetter(c) === letter)
+            .sort((a, b) => celebField(a, 'name').localeCompare(celebField(b, 'name'), currentLang))
+            .forEach(c => list.appendChild(createCard(c)));
+        section.append(heading, list);
+        grid.appendChild(section);
     });
 }
-// Initialize Isotope for filtering
-function initializeIsotope() {
-    const grid = jQuery("#glossary-grid");
-    grid.isotope({
-        itemSelector: ".glossary-item",
-        layoutMode: "fitRows",
-        filter: ".glossary-item:not(.hide-this-item)"
-    });
-    // Letter filter buttons
-    jQuery(".btn-glossary-filter").on("click", function (evt) {
-        const filter = jQuery(this).attr('data-filter');
-        grid.isotope({
-            filter: ".glossary-filter_" + filter + ":not(.hide-this-item)",
-            layoutMode: "fitRows"
-        });
-    });
-    // Search functionality
-    jQuery("#glossary-search-exp").on("keyup", function (evt) {
-        const searchExp = jQuery(this).val();
-        jQuery(".glossary-item").each(function (index) {
-            jQuery(this).removeClass("hide-this-item");
 
-            const cardTitle = jQuery(this).find(".grid__item-title").text();
-
-            if (cardTitle.toLowerCase().indexOf(searchExp.toLowerCase()) >= 0) {
-                // Match found
-            } else {
-                jQuery(this).addClass("hide-this-item");
-            }
+// Show the cards that match both the chosen letter and the search text
+function applyFilters() {
+    const active = document.querySelector('#letter-filters [aria-pressed="true"]');
+    const letter = active ? active.dataset.filter : 'all';
+    const query = document.getElementById('glossary-search-exp').value.trim().toLowerCase();
+    let shown = 0;
+    document.querySelectorAll('.celeb-group').forEach(group => {
+        let visible = 0;
+        group.querySelectorAll('.celeb-card').forEach(card => {
+            const match = (letter === 'all' || group.dataset.letter === letter) && (!query || card.dataset.search.includes(query));
+            card.hidden = !match;
+            if (match) visible++;
         });
-
-        grid.isotope({
-            itemSelector: ".glossary-item",
-            layoutMode: "fitRows",
-            filter: ".glossary-item:not(.hide-this-item)"
-        });
+        group.hidden = visible === 0;
+        shown += visible;
     });
+    document.getElementById('celeb-empty').hidden = shown > 0;
 }
-// Initialize everything when page loads
+
 document.addEventListener('DOMContentLoaded', async function () {
-    // Wait for celebrities manager to load
-    await celebritiesManager.loadCelebrities();
-    // Populate page elements
-    populateLetterFilters();
-    populateCelebritiesGrid();
-    // Grid hover/expand effects (demo.js) need the grids to exist first
-    if (typeof window.initCelebrityGrids === 'function') {
-        window.initCelebrityGrids();
+    await appReady;
+    let celebrities = [];
+    try {
+        celebrities = await (await fetch(DATA_PATH + 'celebrities.json')).json();
+    } catch (error) {
+        console.error('Error loading celebrities:', error);
     }
-    // Initialize Isotope (needs jQuery)
-    if (typeof jQuery !== 'undefined') {
-        initializeIsotope();
-    }
-    // Apply translations
-    if (typeof i18n !== 'undefined') {
-        i18n.applyTranslations();
-    }
+    renderCelebrities(celebrities);
+
+    document.getElementById('letter-filters').addEventListener('click', function (e) {
+        const btn = e.target.closest('[data-filter]');
+        if (!btn) return;
+        this.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+        applyFilters();
+    });
+    document.getElementById('glossary-search-exp').addEventListener('input', applyFilters);
+    applyFilters();
+    i18n.applyTranslations();
 });

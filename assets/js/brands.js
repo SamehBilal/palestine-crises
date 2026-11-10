@@ -80,7 +80,14 @@ class BrandsManager {
 }
 // Initialize Brands Manager
 const brandsManager = new BrandsManager();
-// Generate dynamic CSS for brand images
+// The small WebP copy of a logo (tools/build-images.js makes them); SVGs are used as they are
+function logoUrl(logo) {
+    return /\.svg$/i.test(logo)
+        ? 'assets/img/brands/' + logo
+        : 'assets/img/brands/thumbs/' + logo.replace(/\.[a-z]+$/i, '') + '.webp';
+}
+// Generate dynamic CSS for brand images. The logos only apply to cards marked .is-near (close to
+// the screen, see lazyLoadLogos), so the page doesn't download all of them up front.
 function generateBrandStyles() {
     let styles = '';
     brandsManager.brands.forEach(function (brand) {
@@ -89,8 +96,8 @@ function generateBrandStyles() {
         const alternative = brandsManager.getAlternative(brand);
 
         // Front image (the brand to boycott - e.g., 7UP)
-        styles += '.ch-img-' + brand.id + ' {';
-        styles += '  background-image: url("assets/img/brands/' + brand.logo + '");';
+        styles += '.is-near .ch-img-' + brand.id + ' {';
+        styles += '  background-image: url("' + logoUrl(brand.logo) + '");';
         styles += '  background-position: center;';
         styles += '  background-repeat: no-repeat;';
         styles += '  background-size: cover;';
@@ -98,8 +105,8 @@ function generateBrandStyles() {
 
         // Back image (the alternative - e.g., Spiro Spathis)
         if (alternative) {
-            styles += '.ch-img-back-' + brand.id + ' {';
-            styles += '  background-image: url("assets/img/brands/' + alternative.logo + '");';
+            styles += '.is-near .ch-img-back-' + brand.id + ' {';
+            styles += '  background-image: url("' + logoUrl(alternative.logo) + '");';
             styles += '  background-position: center;';
             styles += '  background-repeat: no-repeat;';
             styles += '  background-size: cover;';
@@ -112,8 +119,8 @@ function generateBrandStyles() {
             styles += '}';
         } else {
             // No alternative, just use same image for back
-            styles += '.ch-img-back-' + brand.id + ' {';
-            styles += '  background-image: url("assets/img/brands/' + brand.logo + '");';
+            styles += '.is-near .ch-img-back-' + brand.id + ' {';
+            styles += '  background-image: url("' + logoUrl(brand.logo) + '");';
             styles += '  background-position: center;';
             styles += '  background-repeat: no-repeat;';
             styles += '  background-size: cover;';
@@ -234,6 +241,22 @@ function initializeIsotope() {
     jQuery("#glossary-search-exp").on("input", applyFilters);
 }
 // Initialize everything when page loads
+// Mark cards as .is-near once they come within a screen of the viewport, which applies their logos
+function lazyLoadLogos() {
+    const cards = document.querySelectorAll('.ch-grid > li');
+    if (!('IntersectionObserver' in window)) {
+        cards.forEach(card => card.classList.add('is-near'));
+        return;
+    }
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-near');
+            observer.unobserve(entry.target);
+        });
+    }, { rootMargin: '100% 0px' });
+    cards.forEach(card => observer.observe(card));
+}
 document.addEventListener('DOMContentLoaded', async function () {
     // Wait for brands manager to load
     await brandsManager.loadBrands();
@@ -242,6 +265,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Populate page elements
     populateLetterFilters();
     populateBrandsGrid();
+    lazyLoadLogos();
     // Initialize Isotope (needs jQuery)
     if (typeof jQuery !== 'undefined') {
         initializeIsotope();
