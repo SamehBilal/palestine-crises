@@ -1,16 +1,31 @@
 
 // Service Worker for Palestine Crisis
 // Provides offline support and caching
-const CACHE_NAME = 'palestine-crisis-v6';
-const DATA_CACHE_NAME = 'palestine-crisis-data-v6';
+const CACHE_NAME = 'palestine-crisis-v7';
+const DATA_CACHE_NAME = 'palestine-crisis-data-v7';
 // Files to cache on install. Paths are relative to sw.js so the site also works from a subfolder,
 // and every entry must exist: cache.addAll() fails the whole install on a single 404.
 const filesToCache = [
+'index.html',
 'live.html',
+'map.html',
+'new.html',
+'brands.html',
+'celebrities.html',
+'barcodes.html',
+'landing.html',
 'offline.html',
+'manifest.json',
+'logo.png',
+'images/icons/icon-192.png',
+'images/icons/icon-512.png',
+'images/icons/maskable-192.png',
+'images/icons/maskable-512.png',
+'images/icons/apple-touch-icon.png',
 'assets/css/style.css',
 'assets/css/bootstrap.min.css',
 'assets/js/app.js',
+'assets/js/pwa.js',
 'assets/js/live.js',
 'assets/js/active.js',
 'assets/js/jquery.min.js',
@@ -43,7 +58,11 @@ event.waitUntil(
     ])
 );
 
-self.skipWaiting();
+// First install takes over at once; an update waits until the page's "Update now" (pwa.js)
+// sends skipWaiting, so a page never runs half old, half new code
+if (!self.registration.active) {
+    self.skipWaiting();
+}
 });
 // Activate event - cleanup old caches
 self.addEventListener('activate', function(event) {
@@ -96,7 +115,8 @@ if (isData || event.request.mode === 'navigate' || /\.(html|js|css)$/.test(reque
                 return response;
             })
             .catch(function() {
-                return caches.match(event.request).then(function(cached) {
+                // ignoreSearch: live.html?source=pwa or ?lang=ar is still live.html
+                return caches.match(event.request, { ignoreSearch: event.request.mode === 'navigate' }).then(function(cached) {
                     // Offline page only stands in for pages, not for scripts or data
                     if (cached || event.request.mode !== 'navigate') {
                         return cached;
@@ -134,7 +154,10 @@ event.respondWith(
 });
 // Handle messages from the client
 self.addEventListener('message', function(event) {
-if (event.data.action === 'skipWaiting') {
+if (!event.data) {
+    return;
+}
+if (event.data === 'skipWaiting' || event.data.action === 'skipWaiting') {
 self.skipWaiting();
 }
 if (event.data.action === 'clearCache') {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- Renders an app icon from logo.png for tools/build-pwa.js, in a square at the top-left
+     (headless Chrome won't make a window narrower than about 500px, so the size comes in the URL).
+     ?s=N    icon size in px
+     ?bg=1   paint the theme colour behind the flag (maskable and Apple icons can't be transparent)
+     ?pad=N  how much of the square the flag fills, 0–1 (maskable icons keep it inside the 80% safe zone) -->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    html, body { margin: 0; background: transparent; overflow: hidden; }
+    #box { display: flex; align-items: center; justify-content: center; }
+    #box.bg { background: #292833; }
+    img { display: block; }
+</style>
+</head>
+<body>
+<div id="box"><img src="../logo.png" alt=""></div>
+<script>
+    var q = new URLSearchParams(location.search), s = +q.get('s') || 512, fill = parseFloat(q.get('pad') || '1');
+    var box = document.getElementById('box'), img = box.firstChild;
+    if (q.get('bg')) box.className = 'bg';
+    box.style.width = box.style.height = s + 'px';
+    img.style.width = img.style.height = Math.round(s * fill) + 'px';
+</script>
+</body>
+</html>

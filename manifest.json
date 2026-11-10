@@ -1,66 +1,148 @@
 {
-    "name": "Palestine Crisis",
+    "id": "live.html",
+    "name": "Palestine Crisis — Live Tracker",
     "short_name": "Palestine Crisis",
-    "start_url": "live.html",
-    "background_color": "#292833",
-    "description": "Palestine Crisis is a website that brings you the latest news and updates, with live maps, charts, and videos that show the situation on the ground. Palestine Crisis stands with the Palestinian people and their struggle for freedom and justice. Palestine Crisis also provides historical and cultural insights, as well as stories of resistance and resilience from the Palestinian community. Palestine Crisis is your source of information and inspiration for the Palestinian cause.",
+    "description": "A live tracker of the war on Palestine since 7 October: deaths and injuries kept up to date, broken down by children, women, elders and medics, with the displaced, destroyed homes and hospitals out of service; a map of every region, a day-by-day timeline, and charts of how the toll has grown. It also lists the brands that support the occupation, where celebrities stand, and the barcode prefixes that tell where a product comes from. In English and Arabic, and pages you have opened keep working offline. — متتبّع مباشر للحرب على فلسطين منذ 7 أكتوبر: أعداد الشهداء والجرحى أولًا بأول، مفصّلة للأطفال والنساء وكبار السن والطواقم الطبية، مع النازحين والوحدات السكنية المدمّرة والمستشفيات الخارجة عن الخدمة؛ وخريطة لكل المناطق، وخط زمني يومًا بيوم، ورسوم بيانية لتطوّر الحصيلة. ويضم العلامات التجارية الداعمة للاحتلال، ومواقف المشاهير، وبادئات الباركود التي تكشف بلد المنتج. بالعربية والإنجليزية، وتبقى الصفحات التي فتحتها متاحة دون إنترنت.",
+    "lang": "en",
+    "dir": "ltr",
+    "start_url": "live.html?source=pwa",
+    "scope": "./",
     "display": "standalone",
+    "display_override": [
+        "standalone",
+        "minimal-ui"
+    ],
+    "orientation": "any",
+    "background_color": "#292833",
     "theme_color": "#292833",
+    "categories": [
+        "news",
+        "politics",
+        "education"
+    ],
     "icons": [
         {
-            "src": "images/icons/icon-72x72.png",
-            "sizes": "72x72",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "images/icons/icon-96x96.png",
-            "sizes": "96x96",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "images/icons/icon-128x128.png",
-            "sizes": "128x128",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "images/icons/icon-144x144.png",
-            "sizes": "144x144",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "images/icons/icon-152x152.png",
-            "sizes": "152x152",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "images/icons/icon-192x192.png",
+            "src": "images/icons/icon-192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "images/icons/icon-384x384.png",
-            "sizes": "384x384",
-            "type": "image/png",
-            "purpose": "any"
-        },
-        {
-            "src": "images/icons/icon-512x512.png",
+            "src": "images/icons/icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "logo.png",
+            "src": "images/icons/maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "images/icons/maskable-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         }
     ],
-    "scope": "./"
+    "shortcuts": [
+        {
+            "name": "Live Tracker — المتتبّع المباشر",
+            "short_name": "Live",
+            "description": "Today's toll, charts and the latest figures",
+            "url": "live.html?source=pwa",
+            "icons": [
+                {
+                    "src": "images/icons/icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "Map & Timeline — الخريطة والخط الزمني",
+            "short_name": "Map",
+            "description": "Deaths in every region, day by day",
+            "url": "map.html?source=pwa",
+            "icons": [
+                {
+                    "src": "images/icons/icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "Support — الدعم",
+            "short_name": "Support",
+            "description": "Brands that support the occupation, and alternatives",
+            "url": "brands.html?source=pwa",
+            "icons": [
+                {
+                    "src": "images/icons/icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "Barcodes — الباركود",
+            "short_name": "Barcodes",
+            "description": "Barcode prefixes that tell where a product comes from",
+            "url": "barcodes.html?source=pwa",
+            "icons": [
+                {
+                    "src": "images/icons/icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "images/screens/wide-live.jpg",
+            "sizes": "1280x720",
+            "type": "image/jpeg",
+            "form_factor": "wide",
+            "label": "Live tracker: today's toll and charts — المتتبّع المباشر"
+        },
+        {
+            "src": "images/screens/wide-map.jpg",
+            "sizes": "1280x720",
+            "type": "image/jpeg",
+            "form_factor": "wide",
+            "label": "Map and timeline — الخريطة والخط الزمني"
+        },
+        {
+            "src": "images/screens/wide-support.jpg",
+            "sizes": "1280x720",
+            "type": "image/jpeg",
+            "form_factor": "wide",
+            "label": "Brands that support the occupation — العلامات الداعمة للاحتلال"
+        },
+        {
+            "src": "images/screens/narrow-live.jpg",
+            "sizes": "412x915",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Live tracker on a phone — المتتبّع على الهاتف"
+        },
+        {
+            "src": "images/screens/narrow-live-ar.jpg",
+            "sizes": "412x915",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "In Arabic — بالعربية"
+        },
+        {
+            "src": "images/screens/narrow-map.jpg",
+            "sizes": "412x915",
+            "type": "image/jpeg",
+            "form_factor": "narrow",
+            "label": "Map and timeline on a phone — الخريطة على الهاتف"
+        }
+    ],
+    "prefer_related_applications": false
 }

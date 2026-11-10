@@ -3,88 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#292833">
     <title>Offline - Palestine Crisis</title>
+    <link rel="icon" href="images/icons/icon-192.png" sizes="192x192" type="image/png">
+    <script>
+        // Same language choice as the rest of the site (app.js)
+        try { if (localStorage.getItem('language') === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch (e) {}
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #292833;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            padding: 24px 16px;
         }
-    body {
-        font-family: 'Roboto', Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-align: center;
-        padding: 20px;
-    }
-
-    .offline-container {
-        max-width: 500px;
-    }
-
-    .offline-icon {
-        font-size: 120px;
-        margin-bottom: 30px;
-        opacity: 0.8;
-    }
-
-    h1 {
-        font-size: 36px;
-        margin-bottom: 20px;
-        font-weight: 700;
-    }
-
-    p {
-        font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 30px;
-        opacity: 0.9;
-    }
-
-    .retry-button {
-        background: white;
-        color: #667eea;
-        border: none;
-        padding: 15px 40px;
-        font-size: 16px;
-        font-weight: 600;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        text-decoration: none;
-        display: inline-block;
-    }
-
-    .retry-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .cached-note {
-        margin-top: 40px;
-        font-size: 14px;
-        opacity: 0.7;
-    }
-</style>
+        .offline-container { max-width: 480px; }
+        .offline-icon { width: 120px; height: 120px; margin: 0 auto 28px; display: block; opacity: .9; }
+        h1 { font-size: 32px; margin-bottom: 16px; font-weight: 700; }
+        p { font-size: 17px; line-height: 1.6; margin-bottom: 28px; color: #d6d5de; }
+        .retry-button {
+            background: #2a9446;
+            color: #fff;
+            border: none;
+            padding: 14px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .retry-button:hover { background: #237c3a; }
+        .retry-button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        .cached-note { margin-top: 32px; font-size: 14px; color: #a9a8b5; }
+        [lang="ar"] .en, [lang="en"] .ar { display: none; }
+    </style>
 </head>
 <body>
-    <div class="offline-container">
-        <div class="offline-icon">📡</div>
-        <h1>You're Offline</h1>
+    <main class="offline-container">
+        <img class="offline-icon" src="images/icons/icon-192.png" alt="">
+        <h1><span class="en">You're offline</span><span class="ar">أنت غير متصل</span></h1>
         <p>
-            It looks like you've lost your internet connection.
-            Don't worry, some content may still be available from your cache.
+            <span class="en">This page hasn't been saved on this device yet. Pages you've opened before still work without the internet.</span>
+            <span class="ar">لم تُحفظ هذه الصفحة على جهازك بعد. الصفحات التي فتحتها من قبل ما زالت تعمل دون إنترنت.</span>
         </p>
-        <button class="retry-button" onclick="window.location.reload()">
-            Try Again
+        <button class="retry-button" type="button" onclick="window.location.reload()">
+            <span class="en">Try again</span><span class="ar">حاول مجددًا</span>
         </button>
-        <div class="cached-note">
-            <p>Palestine Crisis tracker works best with an active internet connection.</p>
-        </div>
-    </div>
+        <p class="cached-note">
+            <span class="en">The live figures update once you're back online.</span>
+            <span class="ar">تُحدَّث الأرقام المباشرة فور عودة الاتصال.</span>
+        </p>
+    </main>
 </body>
 </html>
