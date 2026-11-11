@@ -39,14 +39,15 @@ function flagOption(imageSrc, text) {
         .append(jQuery('<img class="img-flag">').attr('src', imageSrc))
         .append(document.createTextNode(text));
 }
-// Map fill for a region's death count; keep in step with the legend in live.html (<10, 10-99, 100+)
+// Map fill for a region's death count; keep in step with the legend in live.html (<10, 10-99, 100+).
+// The colours are CSS variables in style.css so the map follows the light/dark theme.
 function getColorForDeaths(deaths) {
     if (deaths < 10) {
-        return '#1C202B';
+        return 'var(--map-low)';
     } else if (deaths < 100) {
-        return '#163957';
+        return 'var(--map-mid)';
     }
-    return '#0B68AA';
+    return 'var(--map-high)';
 }
 // ============================================
 // TRANSLATION MANAGER
@@ -426,6 +427,37 @@ document.addEventListener('click', event => {
     url.hash = '';
     window.location.href = url.toString();
 });
+// Light/dark theme. Dark (body.body-dark) is the default; the inline script right after <body>
+// on each page applies a saved "light" choice before anything is drawn. Everything colour-related
+// is CSS, so switching needs no reload.
+const THEME_COLORS = { dark: '#292833', light: '#FFFFFF' };
+function currentTheme() {
+    return document.body.classList.contains('body-dark') ? 'dark' : 'light';
+}
+// The toggle offers the other theme: a sun in dark mode, a moon in light mode
+function updateThemeToggle() {
+    const theme = currentTheme();
+    const next = theme === 'dark' ? 'light' : 'dark';
+    const labels = {
+        light: currentLang === 'ar' ? 'الوضع الفاتح' : 'Light theme',
+        dark: currentLang === 'ar' ? 'الوضع الداكن' : 'Dark theme'
+    };
+    document.querySelectorAll('.theme-toggle').forEach(button => {
+        button.setAttribute('aria-label', labels[next]);
+        button.setAttribute('title', labels[next]);
+    });
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', THEME_COLORS[theme]);
+}
+document.addEventListener('click', event => {
+    if (!event.target.closest('.theme-toggle')) return;
+    const light = document.body.classList.toggle('body-dark') === false;
+    try {
+        localStorage.setItem('theme', light ? 'light' : 'dark');
+    } catch (e) { /* private mode: the choice just isn't remembered */ }
+    updateThemeToggle();
+});
+updateThemeToggle();
 // Header "Updated …" line on every page: how long ago the figures were updated, in the page
 // language ("5 minutes ago", or the date and "994 days ago" once it's over a day)
 function updateLastUpdateLines() {

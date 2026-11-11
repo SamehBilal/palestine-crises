@@ -33,6 +33,11 @@ body {
     font-weight: 400;
     /* line-height: 1.6; */
     margin: 0;
+    /* Map scale (<10, 10-99, 100+), used by the legend and by getColorForDeaths() in app.js.
+       Light theme: the template's light palette; .body-dark below swaps in the dark one. */
+    --map-low: #ACCDDC;
+    --map-mid: #4A97B9;
+    --map-high: #006491;
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -1339,15 +1344,15 @@ only screen and (min-width: 992px) and (max-width: 1199.98px) {
 }
 
 .map-status-colors .colors li span.min {
-    background-color: #1C202B;
+    background-color: var(--map-low);
 }
 
 .map-status-colors .colors li span.mid {
-    background-color: #163957;
+    background-color: var(--map-mid);
 }
 
 .map-status-colors .colors li span.max {
-    background-color: #0B68AA;
+    background-color: var(--map-high);
 }
 
 .map-content-wrap {
@@ -1609,6 +1614,12 @@ only screen and (max-width: 767.98px) {
 
 .badge-tracker-item:not(:last-child) {
     margin-bottom: 60px;
+}
+
+.body-dark {
+    --map-low: #1C202B;
+    --map-mid: #163957;
+    --map-high: #0B68AA;
 }
 
 .body-dark .header-wrapper {
@@ -1998,4 +2009,104 @@ font-weight: bold;
 
 [dir="rtl"] .dataTables_wrapper .dataTables_filter input {
     margin-right: 0.5em !important;
+}
+
+/* ============================================
+   LIGHT / DARK THEME TOGGLE
+   The menu button that switches themes (app.js). It shows the theme it switches to:
+   a sun in dark mode, a moon in light mode.
+   ============================================ */
+.theme-toggle {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.theme-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid #00CBAD;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.body-dark .theme-toggle .icon-moon,
+body:not(.body-dark) .theme-toggle .icon-sun {
+    display: none;
+}
+
+/* ============================================
+   LIGHT THEME: page-specific colours
+   The template's base styles above are its light theme and .body-dark switches to dark.
+   These cover what the site added on top in dark-only colours (the Support pages' own
+   stylesheets and inline <style> blocks), so they read correctly without .body-dark.
+   ============================================ */
+/* Support pages: demo3.css paints the body dark, and the header has no background of its own */
+body.main-container:not(.body-dark) {
+    background: #F7F8FC;
+}
+
+body:not(.body-dark) .header-wrapper {
+    background-color: #FFFFFF;
+}
+
+/* The brand teal is too pale for text on white; a darker teal keeps it readable (4.5:1) */
+body:not(.body-dark) .language-link,
+body:not(.body-dark) .help-button a,
+body:not(.body-dark) .celeb-card summary {
+    color: #00806F;
+}
+
+/* Page titles and letter headings on brands.html / celebrities.html */
+body:not(.body-dark) .main-content-wrapper h1,
+body:not(.body-dark) .glossary-item h2,
+body:not(.body-dark) .celeb-group h2 {
+    color: #171717;
+}
+
+body:not(.body-dark) .celeb-group h2 {
+    border-bottom-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Brand names under the logos */
+body:not(.body-dark) .card-title {
+    color: #333333;
+}
+
+/* Celebrity cards: white like the tracker blocks */
+body:not(.body-dark) .celeb-card {
+    background: #FFFFFF;
+    border-color: #E3E5EC;
+    color: #555555;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+body:not(.body-dark) .celeb-body h3 {
+    color: #171717;
+}
+
+body:not(.body-dark) .celeb-subtitle,
+body:not(.body-dark) #celeb-empty {
+    color: #6C6C6C;
+}
+
+/* Barcodes: dark bars and digits on the light page */
+body:not(.body-dark) .barcode > div {
+    background-color: #171717;
+}
+
+body:not(.body-dark) .barcode p {
+    color: #171717;
+}
+
+body:not(.body-dark) .barcode-caption {
+    color: #555555;
 }

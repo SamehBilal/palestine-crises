@@ -1,8 +1,8 @@
 
 // Service Worker for Palestine Crisis
 // Provides offline support and caching
-const CACHE_NAME = 'palestine-crisis-v8';
-const DATA_CACHE_NAME = 'palestine-crisis-data-v8';
+const CACHE_NAME = 'palestine-crisis-v9';
+const DATA_CACHE_NAME = 'palestine-crisis-data-v9';
 // Files to cache on install. Paths are relative to sw.js so the site also works from a subfolder,
 // and every entry must exist: cache.addAll() fails the whole install on a single 404.
 const filesToCache = [
